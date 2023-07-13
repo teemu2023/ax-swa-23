@@ -1,0 +1,63 @@
+{
+    "pathwayTitle": "restapi1",
+    "title": "restapi1 - Демонстрация использования REST API",
+    "description": "restapi1",
+    "difficulty": "beginner",
+    "time": "30 minutes",
+    "details": {
+        "steps": [
+            {
+                "title": "Готовим окружение",
+                "text": "step0.md"
+            },
+            {
+                "title": "Обзор работы cURL",
+                "text": "step1.md"
+            },
+            {
+                "title": "Задача 1",
+                "text": "step2.md"
+            },            
+            {
+                "title": "Задача 2",
+                "text": "step3.md"
+            },
+            {
+                "title": "Задача 3",
+                "text": "step4.md"
+            },            
+            {
+                "title": "Задача 4",
+                "text": "step5.md"
+            },                        
+            {
+                "title": "Задача 5",
+                "text": "step6.md"
+            }
+        ],
+        "intro": {
+            "text": "intro.md"
+        },
+        "finish": {
+            "text": "finish.md"
+        },
+        "assets": {
+            "host01": [
+                {"file": "httpbin.yaml", "target": "/root"},
+                {"file": "httpbin-openapi.yaml", "target": "/root"},
+                {"file": "prepare.sh", "target": "/usr/local/bin", "chmod": "+x"}
+            ]
+          }
+    },
+    "files": [],
+    "environment": {
+        "uilayout": "terminal",
+        "uisettings": "yaml",
+        "showide": true,
+        "uimessage1": "\u001b[32mYour Interactive Bash Terminal.\u001b[m\r\n",
+        "uimessage2": "\u001b[32mYour Interactive Bash Terminal.\u001b[m\r\n"
+    },
+    "backend": {
+        "imageid": "kubernetes-cluster-running:1.18"
+    }
+}
