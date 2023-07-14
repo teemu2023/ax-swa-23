@@ -1,7 +1,7 @@
 {
     "pathwayTitle": "monitoring1",
-    "title": "monitoring1",
-    "description": "Знакомство с Prometheus",
+    "title": "Знакомство с Prometheus",
+    "description": "monitoring1",
     "difficulty": "beginner",
     "time": "30 minutes",
     "details": {
