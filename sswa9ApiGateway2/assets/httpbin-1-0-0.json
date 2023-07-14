@@ -1,0 +1,182 @@
+{
+  "name": "httpbin",
+  "version": "1.0.0",
+  "description": "demo api",
+  "visibility": "PRIVATE",
+  "gravitee": "2.0.0",
+  "flow_mode": "DEFAULT",
+  "resources": [],
+  "properties": [],
+  "members": [
+    {
+      "source": "memory",
+      "sourceId": "admin",
+      "roles": [
+        "85aafd5a-28da-4c0a-aafd-5a28da1c0ab9"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "id": "74fd52b6-7b47-3f71-ba34-3b8aa342e211",
+      "name": "Aside",
+      "type": "SYSTEM_FOLDER",
+      "order": 0,
+      "published": true,
+      "visibility": "PUBLIC",
+      "lastModificationDate": 1640541090668,
+      "contentType": "application/json",
+      "configuration": {},
+      "homepage": false,
+      "parentPath": "",
+      "excludedAccessControls": false,
+      "accessControls": [],
+      "metadata": {},
+      "api": "70baa1f6-0b52-4413-baa1-f60b526413ec",
+      "attached_media": []
+    }
+  ],
+  "plans": [
+    {
+      "id": "23174650-a60e-33e6-a5d2-de650c95d52e",
+      "name": "http-plan-access-all",
+      "description": "demo plan access all endpoints",
+      "validation": "MANUAL",
+      "security": "API_KEY",
+      "securityDefinition": "{}",
+      "type": "API",
+      "status": "PUBLISHED",
+      "api": "70baa1f6-0b52-4413-baa1-f60b526413ec",
+      "order": 0,
+      "characteristics": [],
+      "tags": [],
+      "created_at": 1640541090763,
+      "updated_at": 1640541090763,
+      "paths": {},
+      "flows": [
+        {
+          "name": "",
+          "path-operator": {
+            "path": "/",
+            "operator": "STARTS_WITH"
+          },
+          "condition": "",
+          "consumers": [],
+          "methods": [],
+          "pre": [],
+          "post": [],
+          "enabled": true
+        }
+      ],
+      "excluded_groups": [],
+      "comment_required": false
+    },
+    {
+      "id": "0a20a7ac-60f9-3793-94b1-956b7cfd23bc",
+      "name": "demo-plan-get-only",
+      "description": "demo plan to access only GET requests to /get/** endpoints",
+      "validation": "AUTO",
+      "security": "KEY_LESS",
+      "securityDefinition": "{}",
+      "type": "API",
+      "status": "PUBLISHED",
+      "api": "70baa1f6-0b52-4413-baa1-f60b526413ec",
+      "order": 0,
+      "characteristics": [],
+      "tags": [],
+      "created_at": 1640541090706,
+      "updated_at": 1640541090706,
+      "paths": {},
+      "flows": [
+        {
+          "name": "",
+          "path-operator": {
+            "path": "/",
+            "operator": "STARTS_WITH"
+          },
+          "condition": "",
+          "consumers": [],
+          "methods": [],
+          "pre": [
+            {
+              "name": "Resource Filtering",
+              "description": "",
+              "enabled": true,
+              "policy": "resource-filtering",
+              "configuration": {
+                "whitelist": [
+                  {
+                    "pattern": "/get",
+                    "methods": [
+                      "GET"
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "post": [],
+          "enabled": true
+        }
+      ],
+      "excluded_groups": [],
+      "comment_required": false
+    }
+  ],
+  "metadata": [
+    {
+      "key": "email-support",
+      "name": "email-support",
+      "format": "MAIL",
+      "value": "${(api.primaryOwner.email)!''}",
+      "defaultValue": "support@change.me",
+      "apiId": "70baa1f6-0b52-4413-baa1-f60b526413ec"
+    }
+  ],
+  "id": "70baa1f6-0b52-4413-baa1-f60b526413ec",
+  "path_mappings": [],
+  "proxy": {
+    "virtual_hosts": [
+      {
+        "path": "/httpbin"
+      }
+    ],
+    "strip_context_path": false,
+    "preserve_host": false,
+    "groups": [
+      {
+        "name": "default-group",
+        "endpoints": [
+          {
+            "name": "default",
+            "target": "http://httpbin.default:8000",
+            "weight": 1,
+            "backup": false,
+            "type": "HTTP",
+            "inherit": true
+          }
+        ],
+        "load_balancing": {
+          "type": "ROUND_ROBIN"
+        },
+        "http": {
+          "connectTimeout": 5000,
+          "idleTimeout": 60000,
+          "keepAlive": true,
+          "readTimeout": 10000,
+          "pipelining": false,
+          "maxConcurrentConnections": 100,
+          "useCompression": true,
+          "followRedirects": false
+        }
+      }
+    ]
+  },
+  "response_templates": {},
+  "primaryOwner": {
+    "id": "cd4fc377-42bf-4674-8fc3-7742bfc674bf",
+    "email": "sbercode@none.net",
+    "displayName": "admin admin",
+    "type": "USER"
+  }
+}

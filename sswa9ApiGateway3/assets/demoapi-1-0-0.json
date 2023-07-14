@@ -1,0 +1,130 @@
+{
+  "name": "demoapi",
+  "version": "1.0.0",
+  "description": "demo api",
+  "visibility": "PRIVATE",
+  "gravitee": "2.0.0",
+  "flow_mode": "DEFAULT",
+  "resources": [],
+  "properties": [],
+  "members": [
+    {
+      "source": "memory",
+      "sourceId": "admin",
+      "roles": [
+        "e2e976b8-0295-4b12-a976-b80295cb1226"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "id": "e3d08103-1643-4868-9081-03164308680b",
+      "name": "Aside",
+      "type": "SYSTEM_FOLDER",
+      "order": 0,
+      "published": true,
+      "visibility": "PUBLIC",
+      "lastModificationDate": 1640438345390,
+      "contentType": "application/json",
+      "configuration": {},
+      "homepage": false,
+      "parentPath": "",
+      "excludedAccessControls": false,
+      "accessControls": [],
+      "metadata": {},
+      "api": "32707a13-6fb4-4146-b07a-136fb4d1464c",
+      "attached_media": []
+    }
+  ],
+  "plans": [
+    {
+      "id": "83b1dac0-11d2-4e18-b1da-c011d26e18a1",
+      "name": "demoapi-plan",
+      "description": "demo api plan",
+      "validation": "AUTO",
+      "security": "KEY_LESS",
+      "type": "API",
+      "status": "PUBLISHED",
+      "api": "32707a13-6fb4-4146-b07a-136fb4d1464c",
+      "order": 0,
+      "characteristics": [],
+      "tags": [],
+      "created_at": 1640438345418,
+      "updated_at": 1640438345418,
+      "paths": {},
+      "flows": [
+        {
+          "name": "",
+          "path-operator": {
+            "path": "/",
+            "operator": "STARTS_WITH"
+          },
+          "condition": "",
+          "consumers": [],
+          "methods": [],
+          "pre": [],
+          "post": [],
+          "enabled": true
+        }
+      ],
+      "excluded_groups": [],
+      "comment_required": false
+    }
+  ],
+  "metadata": [
+    {
+      "key": "email-support",
+      "name": "email-support",
+      "format": "MAIL",
+      "value": "${(api.primaryOwner.email)!''}",
+      "defaultValue": "support@change.me",
+      "apiId": "32707a13-6fb4-4146-b07a-136fb4d1464c"
+    }
+  ],
+  "id": "32707a13-6fb4-4146-b07a-136fb4d1464c",
+  "path_mappings": [],
+  "proxy": {
+    "virtual_hosts": [
+      {
+        "path": "/api/v1"
+      }
+    ],
+    "strip_context_path": false,
+    "preserve_host": false,
+    "groups": [
+      {
+        "name": "default-group",
+        "endpoints": [
+          {
+            "name": "default",
+            "target": "http://gateway.openfaas:8080/function/apiv1",
+            "weight": 1,
+            "backup": false,
+            "type": "HTTP",
+            "inherit": true
+          }
+        ],
+        "load_balancing": {
+          "type": "ROUND_ROBIN"
+        },
+        "http": {
+          "connectTimeout": 5000,
+          "idleTimeout": 60000,
+          "keepAlive": true,
+          "readTimeout": 10000,
+          "pipelining": false,
+          "maxConcurrentConnections": 100,
+          "useCompression": true,
+          "followRedirects": false
+        }
+      }
+    ]
+  },
+  "response_templates": {},
+  "primaryOwner": {
+    "id": "6f16305a-679b-4006-9630-5a679b300689",
+    "email": "sbercode@none.net",
+    "displayName": "admin admin",
+    "type": "USER"
+  }
+}

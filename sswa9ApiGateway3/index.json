@@ -1,0 +1,52 @@
+{
+    "pathwayTitle": "ApiGateway3",
+    "title": "ApiGateway3 - Управление версиями",
+    "description": "ApiGateway3",
+    "difficulty": "beginner",
+    "time": "30 minutes",
+    "details": {
+        "steps": [
+            {
+                "title": "Готовим окружение",
+                "text": "step0.md"
+            },
+            {
+                "title": "Публикуем  api v1",
+                "text": "step1.md"
+            },
+            {
+                "title": "Публикуем api v2",
+                "text": "step2.md"
+            },
+            {
+                "title": "Просмотр версий api",
+                "text": "step3.md"
+            }
+        ],
+        "intro": {
+            "text": "intro.md"
+        },
+        "finish": {
+            "text": "finish.md"
+        },
+        "assets": {
+            "host01": [
+                {"file": "gravitee.yaml", "target": "/tmp"},
+                {"file": "prepare.sh", "target": "/usr/local/bin", "chmod": "+x"},
+                {"file": "demoapi-1-0-0.json", "target": "/root"},
+                {"file": "demoapi-2-0-0.json", "target": "/root"}
+            ]
+          }
+    },
+    "files": [],
+    "environment": {
+        "uilayout": "terminal",
+        "uisettings": "yaml",
+        "showide": true,
+        "uimessage1": "\u001b[32mYour Interactive Bash Terminal.\u001b[m\r\n",
+        "uimessage2": "\u001b[32mYour Interactive Bash Terminal.\u001b[m\r\n"
+    },
+    "backend": {
+        "imageid": "k3s-docker"
+    }
+}
