@@ -1,6 +1,7 @@
 {
-  "title": "Configuring a Kubernetes Microservice",
-  "description": "Configure a Java Microservice using Kubernetes and MicroProfile",
+  "pathwayTitle": "kubeConfig1",
+  "title": "kubeConfig1 - Kubernetes Microservice",
+  "description": "kubeConfig1",
   "difficulty": "beginner",
   "time": "15 minutes",
   "details": {
