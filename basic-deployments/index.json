@@ -18,7 +18,10 @@
       "text": "finish.md"
     },
     "assets": {
-      "host01": [{"file": "*.yaml", "target": "/manifests"}]
+      "host01": [
+        {"file": "dep-manifest.yaml", "target": "/manifests"},
+        {"file": "rc-nginx.yaml", "target": "/manifests"}        
+    ]
     }
   },
   "environment": {
