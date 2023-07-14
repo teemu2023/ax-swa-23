@@ -49,6 +49,6 @@
   },
 	"backend": {
 		"port": 30000,
-		"dockerimage": "minikube-running"
+		"dockerimage": "k3s-docker"
   }
 }
