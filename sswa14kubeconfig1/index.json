@@ -7,32 +7,32 @@
   "details": {
     "steps": [
       {
-        "title": "",
+        "title": "1",
         "text": "step1.md",
         "code": "foreground.sh"
       },
       {
-        "title": "",
+        "title": "2",
         "text": "step2.md"
       },
       {
-        "title": "",
+        "title": "3",
         "text": "step3.md"
       },
       {
-        "title": "",
+        "title": "4",
         "text": "step4.md"
       },
       {
-        "title": "",
+        "title": "5",
         "text": "step5.md"
       },
       {
-        "title": "",
+        "title": "6",
         "text": "step6.md"
       },
       {
-        "title": "",
+        "title": "7",
         "text": "step7.md"
       }
     ],
@@ -50,6 +50,5 @@
 	"backend": {
 		"port": 30000,
 		"dockerimage": "minikube-running"
-  },
-  "embedded_survey_url": "https://docs.google.com/forms/d/e/1FAIpQLScMbLRAbaZ8NleOFYRrepdIwCbhClHK3abu3SgzMn1KT_H5iA/viewform?entry.434419381="
+  }
 }
