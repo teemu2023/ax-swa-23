@@ -1,0 +1,52 @@
+{
+  "title": "12 Factor App: 1-Codebase",
+  "description": "Learn the details of organizing all application assets in a common codebase",
+  "difficulty": "Requires a general understanding of structured programming and using git",
+  "time": "12 minutes",
+  "details": {
+    "steps": [{
+        "title": "Getting the Lab's Code from GitHub",
+        "text": "step01.md"
+      },
+      {
+        "title": "Inspecting the General Codebase",
+        "text": "step02.md"
+      },
+      {
+        "title": "Installing Dependencies",
+        "text": "step03.md"
+      },
+      {
+        "title": "Viewing the Application Code",
+        "text": "step04.md"
+      },
+      {
+        "title": "Viewing the Application's Configuration File",
+        "text": "step05.md"
+      },
+      {
+        "title": "Running Application's Tests",
+        "text": "step06.md"
+      },
+      {
+        "title": "Running the Application",
+        "text": "step07.md"
+      }
+    ],
+    "intro": {
+      "text": "intro.md",
+      "code": "foreground.sh",
+      "credits": ""
+    },
+    "finish": {
+      "text": "finish.md"
+    }
+  },
+  "environment": {
+    "uilayout": "terminal",
+    "uimessage1": "\u001b[32mStandby while the terminal loads in the required apps...\u001b[m\r\n"
+  },
+  "backend": {
+    "imageid": "nodejs:12"
+  }
+}
