@@ -41,20 +41,20 @@
         "assets": {
             "client": [
                 {
-                    "file": "setup/setup.txt",
-                    "target": "/root/setup"
+                    "file": "setup.txt",
+                    "target": "/root"
                 },
                 {
-                    "file": "setup/cloneDevonfwIdeSettings.sh",
-                    "target": "/root/setup"
+                    "file": "cloneDevonfwIdeSettings.sh",
+                    "target": "/root"
                 },
                 {
-                    "file": "setup/restoreDevonfwIde.sh",
-                    "target": "/root/setup"
+                    "file": "restoreDevonfwIde.sh",
+                    "target": "/root"
                 },
                 {
-                    "file": "setup/setup.sh",
-                    "target": "/root/setup"
+                    "file": "setup.sh",
+                    "target": "/root"
                 }
             ]
         }
