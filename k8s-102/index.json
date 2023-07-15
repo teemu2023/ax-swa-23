@@ -26,7 +26,7 @@
                 {"file": "launch-tmux.sh", "target": "/usr/local/bin/", "chmod": "+x"},
                 {"file": "wait.sh", "target": "/usr/local/bin/", "chmod": "+x"},
                 {"file": "hello-deploy.yaml", "target": "/root", "chmod": "+r"},
-                {"file": "kind-2worker-ephemeral-config", "target": "/root", "chmod": "+r"}
+                {"file": "kind-2worker-ephemeral-config.yaml", "target": "/root", "chmod": "+r"}
             ]
         },
         "intro": {
