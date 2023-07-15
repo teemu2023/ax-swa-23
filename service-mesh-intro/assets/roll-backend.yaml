@@ -1,0 +1,46 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: roll-backend
+  name: roll-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: roll-backend
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: roll-backend
+    spec:
+      containers:
+      - image: us.gcr.io/daniel-349222/roll-backend:0.0.1
+        name: roll-backend
+        resources: {}
+status: {}
+...
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: roll-backend
+  name: roll-backend
+spec:
+  ports:
+  - name: http-9300
+    port: 9300
+    protocol: TCP
+    targetPort: 9300
+  selector:
+    app: roll-backend
+  type: ClusterIP
+status:
+  loadBalancer: {}
+...
