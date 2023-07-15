@@ -1,0 +1,63 @@
+{
+    "noindex": true,
+    "title": "Kubernetes Playground using k3s",
+    "description": "Kubernetes Playground using k3s",
+    "time": "10-20 minutes",
+    "details": {
+        "steps": [
+            {
+                "title": "Kubernetes Deployment",
+                "text": "step1.md",
+                "verify": "step1-verify.sh",
+                "code": "foreground.sh"
+            },
+            {
+                "title": "Kubernetes Rollout Update",
+                "text": "step2.md",
+                "verify": "step2-verify.sh"
+            },
+            {
+                "title": "Quiz",
+                "text": "step3.md",
+                "answer": "step3-answers.md"
+            },
+            {
+                "title": "Quiz",
+                "text": "step4.md",
+                "answer": "step4-answers.md"
+            },
+            {
+                "title": "Quiz",
+                "text": "step5.md",
+                "answer": "step5-answers.md"
+            }
+        ],
+        "assets": {
+            "host01": [
+                {"file": "*.sh", "target": "/usr/local/bin/", "chmod": "+x"},
+                {"file": "*.yaml", "target": "/root", "chmod": "+r"}
+            ]
+        },
+        "intro": {
+            "text": "intro.md",
+            "courseData": "background.sh",
+            "credits": ""
+        },
+        "finish": {
+            "text": "finish.md"
+        }
+    },
+    "files": [],
+    "environment": {
+        "hideintro": false,
+        "hidefinish": false,
+        "showvisualise": false,
+        "showdashboard": true,
+        "uimessage1": "\u001b[32mYour Interactive Hands On Lab Terminal\u001b[m\r\n",
+        "uilayout": "terminal-iframe"
+    },
+    "backend": {
+        "imageid": "ubuntu",
+        "port": "8080"
+    }
+}
