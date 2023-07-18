@@ -1,48 +1,107 @@
-Теперь попробуем убрать метку с пода деплоймента, а потом его вернуть обратно:
+Стратегия развертывания **Kubernetes** определяет процедуры создания, обновления и понижения версий приложений **Kubernetes**. В традиционной программной среде развертывание или обновление приложений часто приводит к сбоям и простоям в работе. **Kubernetes** помогает избежать простоев, предоставляя различные стратегии развертывания, которые позволяют выполнять скользящие обновления на нескольких экземплярах приложений.
+Стратегии развертывания **Kubernetes** поддерживают различные требования к разработке и развертыванию приложений. Каждая стратегия развертывания **Kubernetes** имеет свои преимущества, поэтому выбор подходящей стратегии зависит только от конкретных потребностей и целей.
+Важно понимать, что по умолчанию в **Kubernetes** встроены только стратегии развертывания **RollingUpdate** и **Recreate**. Но и другие типы развертываний можно выполнить в **Kubernetes**, для этого потребуется выполнить дополнительные настройки или использовать специализированный инструментарий.
 
-Запомним в переменную `POD_NAME` имя первого пода в деплойменте: 
+## Стратегия обновления RollingUpdate
 
-`POD_NAME=$(kubectl get pod -l app=hello-demo -o jsonpath="{.items[0].metadata.name}")`{{execute T1}}
+![Kubernetes Deployments](./assets/k8s-deployments.png)
 
-С помощью команды **kubectl label** мы можем динамически добавлять, убирать и менять метки объектов. 
+Теперь давайте посмотрим, как работают *стратегии обновления*. В текущем манифесте используется **RollingUpdate**. Давайте обновим версию в манифесте на **v2**
 
-Удаляем метку **app** с первого пода:
+<pre class="file" data-filename="./deployment.yaml" data-target="insert" data-marker="          image: schetinnikov/hello-app:v1">
+          image: schetinnikov/hello-app:v2</pre>
 
-`kubectl label pod $POD_NAME app-`{{execute T1}}
+И применим манифест
 
-Проверяем, что метку действительно убрали: 
+`kubectl apply -f deployment.yaml`{{execute T1}}
 
-`kubectl get pods --show-labels`{{execute T1}}
+Во второй вкладке можем наблюдать за тем, как одновременно создаются и удаляются *поды*.
 
 ```
-controlplane $ kubectl get pods --show-labels
-NAME                               READY   STATUS    RESTARTS   AGE     LABELS
-hello-deployment-d67cff5cc-2vpkg   1/1     Running   0          2m10s   pod-template-hash=d67cff5cc
-hello-deployment-d67cff5cc-hrfh8   1/1     Running   0          6m16s   app=hello-demo,pod-template-hash=d67cff5cc
-hello-deployment-d67cff5cc-hsf6g   1/1     Running   0          6m16s   app=hello-demo,pod-template-hash=d67cff5cc
-hello-deployment-d67cff5cc-qbghj   1/1     Running   0          30s     app=hello-demo,pod-template-hash=d67cff5cc
+
+NAME                                READY   STATUS        RESTARTS   AGE
+hello-deployment-6949477748-2b9wj   1/1     Running       0          6s
+hello-deployment-6949477748-8hl8n   1/1     Running       0          10s
+hello-deployment-6949477748-zp49n   1/1     Running       0          4s
+hello-deployment-d67cff5cc-2vpkg    1/1     Terminating   0          3m28s
+hello-deployment-d67cff5cc-hrfh8    1/1     Terminating   0          7m34s
+hello-deployment-d67cff5cc-hsf6g    1/1     Terminating   0          7m34s
 ```
 
-Во второй вкладке можем наблюдать за тем, как под без метки запущен, а деплоймент создал еще одну новую поду.
+Также мы можем откатить *деплоймент*. Для этого достаточно вернуть версию назад.
 
+<pre class="file" data-filename="./deployment.yaml" data-target="insert" data-marker="          image: schetinnikov/hello-app:v2">
+          image: schetinnikov/hello-app:v1</pre>
+
+И применить манифест 
+
+`kubectl apply -f deployment.yaml`{{execute T1}}
+
+Во второй вкладке можем наблюдать за тем, как одновременно создаются и удаляются поды. 
+
+```
+NAME                                READY   STATUS              RESTARTS   AGE
+hello-deployment-6949477748-2b9wj   1/1     Terminating         0          45s
+hello-deployment-6949477748-8hl8n   1/1     Running             0          49s
+hello-deployment-6949477748-zp49n   1/1     Terminating         0          43s
+hello-deployment-d67cff5cc-ssnlk    1/1     Running             0          3s
+hello-deployment-d67cff5cc-swdqh    1/1     Running             0          5s
+hello-deployment-d67cff5cc-vbkl7    0/1     ContainerCreating   0          1s
+```
+
+Дождемся пока *деплоймент* полностью откатится.
+
+## Обновление деплоймента с помощью kubectl set image и kubectl rollout undo
+
+Мы также можем обновить версию *деплоймента* и откатить его с помощью *императивных* команд **kubectl**. 
+
+Для обновления на новую версию можно использовать **kubectl set image**:
+
+`kubectl set image deploy/hello-deployment hello-demo=schetinnikov/hello-app:v2`{{execute T1}}
+
+А чтобы откатить **kubect rollout undo**:
+
+`kubectl rollout undo deploy/hello-deployment`{{execute T1}}
+
+## Стратегия обновления Recreate
+
+Теперь посмотрим, как работает стратегия **Recreate**
+
+Правим манифест
+
+<pre class="file" data-filename="./deployment.yaml" data-target="insert" data-marker="    type: RollingUpdate">
+    type: Recreate</pre>
+
+и обновляем версию 
+
+<pre class="file" data-filename="./deployment.yaml" data-target="insert" data-marker="          image: schetinnikov/hello-app:v1">
+          image: schetinnikov/hello-app:v2</pre>
+
+Применяем манифест. 
+
+`kubectl apply -f deployment.yaml`{{execute T1}}
+
+Во второй вкладке можем наблюдать за тем, как одновременно сначала все *поды* находятся в статусе **Terminating**:
+```
+NAME                                READY   STATUS        RESTARTS   AGE
+hello-deployment-6949477748-6w8g4   1/1     Terminating   0          6m39s
+hello-deployment-6949477748-s8fqw   1/1     Terminating   0          6m41s
+hello-deployment-6949477748-vjsgg   1/1     Terminating   0          6m44s
+```
+
+А после их завершения, создаются новые:
 ```
 NAME                               READY   STATUS    RESTARTS   AGE
-hello-deployment-d67cff5cc-2vpkg   1/1     Running   0          112s
-hello-deployment-d67cff5cc-hrfh8   1/1     Running   0          5m58s
-hello-deployment-d67cff5cc-hsf6g   1/1     Running   0          5m58s
-hello-deployment-d67cff5cc-qbghj   1/1     Running   0          12s
+hello-deployment-d67cff5cc-5cq94   1/1     Running   0          5s
+hello-deployment-d67cff5cc-7p2cv   1/1     Running   0          5s
+hello-deployment-d67cff5cc-z54rr   1/1     Running   0          5s
 ```
 
-А если мы вернем поду его метку:
+## Удаление деплоймента
 
-`kubectl label pod $POD_NAME app=hello-demo`{{execute T1}}
+Теперь можем удалить *деплоймент*:
 
-Во второй вкладке можем наблюдать за тем, деплоймент удалил один из подов.
-```
-NAME                               READY   STATUS        RESTARTS   AGE
-hello-deployment-d67cff5cc-2vpkg   1/1     Running       0          2m54s
-hello-deployment-d67cff5cc-hrfh8   1/1     Running       0          7m
-hello-deployment-d67cff5cc-hsf6g   1/1     Running       0          7m
-hello-deployment-d67cff5cc-qbghj   1/1     Terminating   0          74s
-```
+`kubectl delete -f deployment.yaml`{{execute T1}}
+
+Вместе с удалением *деплоймента* будут удалены все *поды*.
 
