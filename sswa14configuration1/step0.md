@@ -12,9 +12,7 @@
 
 `kubectl config set-context --current --namespace=myapp`{{execute}}
 
-Для того, чтобы наблюдать тем за статусом объектов **Kubernetes** во втором терминале запустим команду:
+Для того, чтобы увидеть текущий статус объектов **Kubernetes** запустим команду:
 
-`watch kubectl get pods,deployments,service`{{execute T2}}
-
-> Если терминал не был до этого открыт, то команду нужно будет нажать 2 раза - первый раз будет открыт терминал, а во второй выполнится уже команда
+`kubectl get pods,deployments,service`{{execute}}
 
