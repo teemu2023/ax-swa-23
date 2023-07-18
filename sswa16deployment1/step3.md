@@ -4,7 +4,7 @@
 
 ## Стратегия обновления RollingUpdate
 
-![Kubernetes Deployments](./assets/k8s-deployments.png)
+![Kubernetes Deployments](./assets/k8s-deployments-ramped.gif)
 
 Теперь давайте посмотрим, как работают *стратегии обновления*. В текущем манифесте используется **RollingUpdate**. Давайте обновим версию в манифесте на **v2**
 
