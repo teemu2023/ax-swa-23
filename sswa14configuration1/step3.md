@@ -43,14 +43,14 @@ spec:
 
 Применим манифест
 
-`kubectl apply -f deployment.yaml`{{execute T1}}
+`kubectl apply -f deployment.yaml`{{execute}}
 
 Во втором терминале можем наблюдать за тем, как создаются *поды*. 
 Дождемся, пока деплоймент раскатится - т.е. когда все поды не окажутся в статусе  **Running**
 
 После раскатки можем убедиться, что конфигурация действительно берется из **СonfigMap** и **Secret**.
 
-`curl -s http://$CLUSTER_IP:9000/env | jq`{{execute T1}}
+`curl -s http://$CLUSTER_IP:9000/env | jq`{{execute}}
 
 ```
 controlplane $ curl -s http://$CLUSTER_IP:9000/env | jq
@@ -89,7 +89,7 @@ data:
 
 Применим манифест:
 
-`kubectl apply -f mountconfig.yaml`{{execute T1}}
+`kubectl apply -f mountconfig.yaml`{{execute}}
 
 Спецификация пода позволяет описывать и использовать хранилища.  Чтобы примонтировать внутрь пода конфигмап, нам нужно определить хранилище (volume) в спецификации пода, а потом на уже уровне контейнера описать точку монтирования. 
 
@@ -132,18 +132,18 @@ spec:
 
 Применяем манифест:
 
-`kubectl apply -f deployment.yaml`{{execute T1}}
+`kubectl apply -f deployment.yaml`{{execute}}
 
 Во втором терминале можем наблюдать за тем, как создаются *поды*. 
 Дождемся, пока *деплоймент* раскатится - т.е. когда все *поды* станут в статусе **Running**
 
 Зайдем в *поду* *деплоймента* и посмотрим, как выглядят примонтированные конфиги в третьем терминале:
 
-`kubectl exec -it deploy/hello-deployment -- /bin/bash`{{execute T3}}
+`kubectl exec -it deploy/hello-deployment -- /bin/bash`{{execute}}
 
 >  если терминал не был до этого открыт, то команду нужно будет нажать 2 раза - первый раз будет открыт терминал, а во второй выполнится уже команда.
 
-`ls /tmp/config`{{execute T3}}
+`ls /tmp/config`{{execute}}
 
 ```
 root@hello-deployment-85fbc4cd8b-c5q7h:/usr/src/app# ls /tmp/config
@@ -151,7 +151,7 @@ my.cfg  test.json
 ```
 
 
-`cat /tmp/config/test.json`{{execute T3}}
+`cat /tmp/config/test.json`{{execute}}
 ```
 root@hello-deployment-85fbc4cd8b-c5q7h:/usr/src/app# cat /tmp/config/test.json
 {
@@ -159,7 +159,7 @@ root@hello-deployment-85fbc4cd8b-c5q7h:/usr/src/app# cat /tmp/config/test.json
 }
 ```
 
-`cat /tmp/config/my.cfg`{{execute T3}}
+`cat /tmp/config/my.cfg`{{execute}}
 ```
 root@hello-deployment-85fbc4cd8b-c5q7h:/usr/src/app# cat /tmp/config/my.cfg
 foo=bar
@@ -177,11 +177,11 @@ baz=quux
 
 Применим манифест:
 
-`kubectl apply -f mountconfig.yaml`{{execute T1}}
+`kubectl apply -f mountconfig.yaml`{{execute}}
 
 Смотрим изменения:
 
-`cat /tmp/config/my.cfg`{{execute T3}}
+`cat /tmp/config/my.cfg`{{execute}}
 ```
 root@hello-deployment-85fbc4cd8b-c5q7h:/usr/src/app# cat /tmp/config/my.cfg
 foo=FOOBARBAZQUUX
