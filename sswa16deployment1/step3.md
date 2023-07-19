@@ -19,18 +19,9 @@
 
 `kubectl apply -f deployment.yaml`{{execute T1}}
 
-Во второй вкладке можем наблюдать за тем, как одновременно создаются и удаляются *поды*.
+Состояние деплоймента можно получить с помощью команд:
 
-```
-
-NAME                                READY   STATUS        RESTARTS   AGE
-hello-deployment-6949477748-2b9wj   1/1     Running       0          6s
-hello-deployment-6949477748-8hl8n   1/1     Running       0          10s
-hello-deployment-6949477748-zp49n   1/1     Running       0          4s
-hello-deployment-d67cff5cc-2vpkg    1/1     Terminating   0          3m28s
-hello-deployment-d67cff5cc-hrfh8    1/1     Terminating   0          7m34s
-hello-deployment-d67cff5cc-hsf6g    1/1     Terminating   0          7m34s
-```
+`kubectl get deploy hello-deployment `{{execute T1}}
 
 Также мы можем откатить *деплоймент*. Для этого достаточно вернуть версию назад.
 
@@ -41,17 +32,9 @@ hello-deployment-d67cff5cc-hsf6g    1/1     Terminating   0          7m34s
 
 `kubectl apply -f deployment.yaml`{{execute T1}}
 
-Во второй вкладке можем наблюдать за тем, как одновременно создаются и удаляются поды. 
+Состояние деплоймента можно получить с помощью команд:
 
-```
-NAME                                READY   STATUS              RESTARTS   AGE
-hello-deployment-6949477748-2b9wj   1/1     Terminating         0          45s
-hello-deployment-6949477748-8hl8n   1/1     Running             0          49s
-hello-deployment-6949477748-zp49n   1/1     Terminating         0          43s
-hello-deployment-d67cff5cc-ssnlk    1/1     Running             0          3s
-hello-deployment-d67cff5cc-swdqh    1/1     Running             0          5s
-hello-deployment-d67cff5cc-vbkl7    0/1     ContainerCreating   0          1s
-```
+`kubectl get deploy hello-deployment `{{execute T1}}
 
 Дождемся пока *деплоймент* полностью откатится.
 
@@ -107,21 +90,9 @@ hello-deployment-d67cff5cc-vbkl7    0/1     ContainerCreating   0          1s
 
 `kubectl apply -f deployment.yaml`{{execute T1}}
 
-Во второй вкладке можем наблюдать за тем, как одновременно сначала все *поды* находятся в статусе **Terminating**:
-```
-NAME                                READY   STATUS        RESTARTS   AGE
-hello-deployment-6949477748-6w8g4   1/1     Terminating   0          6m39s
-hello-deployment-6949477748-s8fqw   1/1     Terminating   0          6m41s
-hello-deployment-6949477748-vjsgg   1/1     Terminating   0          6m44s
-```
+Состояние деплоймента можно получить с помощью команд:
 
-А после их завершения, создаются новые:
-```
-NAME                               READY   STATUS    RESTARTS   AGE
-hello-deployment-d67cff5cc-5cq94   1/1     Running   0          5s
-hello-deployment-d67cff5cc-7p2cv   1/1     Running   0          5s
-hello-deployment-d67cff5cc-z54rr   1/1     Running   0          5s
-```
+`kubectl get deploy hello-deployment `{{execute T1}}
 
 ## Удаление деплоймента
 
