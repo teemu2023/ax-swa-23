@@ -110,6 +110,13 @@ spec:
 
 Видим подготовленный сервис *LoadBalancer*, а также нобходимое количество **Pods** непосредственно для старой и новой версии приложения.
 
+Теперь можем удалить *деплоймент*:
+
+`kubectl delete -f blue.yaml`{{execute T1}}
+`kubectl delete -f green.yaml`{{execute T1}}
+
+Вместе с удалением *деплоймента* будут удалены все *поды*.
+
 ## Выводы о стратегии обновления Blue/Green
 **Плюсы:**
 - Мгновенное развертывание/откат.
@@ -174,7 +181,57 @@ spec:
 
 Состояние деплоймента можно получить с помощью команд:
 
-`kubectl get deploy hello-deployment `{{execute T1}}
+`kubectl get deploy`{{execute T1}}
+
+Теперь создадим новый манифест для новой версии приложения
+<pre class="file" data-filename="./canary.yaml" data-target="replace">
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloworld-canary
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: helloworld
+        track: canary
+    spec:
+      containers:
+      - name: helloworld
+        image: educative/helloworld:2.0
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 50m
+          limits:
+            cpu: 100m
+</pre>
+
+Для этого развертывания мы создадим только один **Pod** (строка 6), чтобы обеспечить взаимодействие большинства наших пользователей с *v1*.
+Оба развертывания сбалансируют рабочую нагрузку между всеми **Pod**, что гарантирует, что только 25% нашей рабочей нагрузки будет приходиться на обновленный Pod.
+
+Для развертывания необходимо ввести в командную строку следующую строку:
+`kubectl apply -f canary.yaml`{{execute T1}}
+
+Состояние деплоймента можно получить с помощью команд:
+
+`kubectl get deploy`{{execute T1}}
+
+Когда убедились, что *v2* работает, просто заменим образ в нашем первом YAML-файле Deployment, stable.yaml, на educative/helloworld:2.0, вместо educative/helloworld:1.0.
+
+Затем удалите canary Deployment с помощью:
+`kubectl delete -f canary.yaml`{{execute T1}}
+
+В этом случае все **Pod** будут иметь *v2*, а нагрузка будет сбалансирована между оставшимися 3 **Pod**, но уже с *v2* приложения.
+
+Обновление Canary достигнуто!
 
 ## Выводы о стратегии обновления Canary
 
