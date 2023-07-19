@@ -13,7 +13,7 @@
 В текущем манифесте используется **RollingUpdate**. Давайте обновим версию в манифесте на **v2**
 
 <pre class="file" data-filename="./deployment.yaml" data-target="insert" data-marker="          image: schetinnikov/hello-app:v1">
-        image: schetinnikov/hello-app:v2</pre>
+    image: schetinnikov/hello-app:v2</pre>
 
 И применим манифест
 
@@ -26,7 +26,7 @@
 Также мы можем откатить *деплоймент*. Для этого достаточно вернуть версию назад.
 
 <pre class="file" data-filename="./deployment.yaml" data-target="insert" data-marker="          image: schetinnikov/hello-app:v2">
-          image: schetinnikov/hello-app:v1</pre>
+    image: schetinnikov/hello-app:v1</pre>
 
 И применить манифест 
 
