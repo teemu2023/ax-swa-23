@@ -23,6 +23,13 @@
 
 `kubectl get deploy hello-deployment `{{execute T1}}
 
+Помотрим более подробные сведения о текущей версии приложения в запущенных **Pods**:
+
+`kubectl describe deploy hello-deployment`{{execute T1}}
+
+Видим информацию об образе:
+`Image: shetinnikov/hello-app:v2`
+
 Также мы можем откатить *деплоймент*. Для этого достаточно вернуть версию назад.
 
 <pre class="file" data-filename="./deployment.yaml" data-target="insert" data-marker="          image: schetinnikov/hello-app:v2">
@@ -37,6 +44,13 @@
 `kubectl get deploy hello-deployment `{{execute T1}}
 
 Дождемся пока *деплоймент* полностью откатится.
+
+Помотрим более подробные сведения о текущей версии приложения в запущенных **Pods**:
+
+`kubectl describe deploy hello-deployment`{{execute T1}}
+
+Видим информацию об образе:
+`Image: shetinnikov/hello-app:v1`
 
 ## Обновление деплоймента с помощью kubectl set image и kubectl rollout undo
 
@@ -56,6 +70,7 @@
 - **Max surge**: сколько экземпляров необходимо добавить в дополнение к текущему количеству.
 - **Max unavailable**: Количество недоступных экземпляров во время процедуры скользящего обновления.
 
+## Выводы о стратегии обновления RollingUpdate (Ramped) 
 **Плюсы:**
 - Простота настройки.
 - Постепенное распространение версий по всем экземплярам.
@@ -101,6 +116,8 @@
 `kubectl delete -f deployment.yaml`{{execute T1}}
 
 Вместе с удалением *деплоймента* будут удалены все *поды*.
+
+## Выводы о стратегии обновления Recreate
 
 **Плюсы:**
 - Простота настройки.
