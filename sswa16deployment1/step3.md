@@ -84,7 +84,7 @@
 и обновляем версию 
 
 <pre class="file" data-filename="./deployment.yaml" data-target="insert" data-marker="          image: schetinnikov/hello-app:v1">
-          image: schetinnikov/hello-app:v2</pre>
+        image: schetinnikov/hello-app:v2</pre>
 
 Применяем манифест. 
 
