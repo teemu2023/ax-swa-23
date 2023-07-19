@@ -5,7 +5,7 @@
 Давайте поменяем количество реплик в манифесте с 2 до 3:
 
 <pre class="file" data-filename="./deployment.yaml" data-target="insert" data-marker="  replicas: 2">
-  replicas: 3</pre>
+replicas: 3</pre>
 
 И применим его.
 
@@ -56,7 +56,7 @@
 
 `kubectl delete pod $POD_NAME`{{execute T1}}
 
-Состояние деплоймента можно получить с помощью команд:
+Можно увидеть как создастся еще одна новая пода:
 
 `kubectl get deploy hello-deployment `{{execute T1}}
 
