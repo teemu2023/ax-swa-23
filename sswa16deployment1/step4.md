@@ -158,11 +158,14 @@ kind: Deployment
 metadata:
   name: helloworld
 spec:
+  selector:
+    matchLabels:
+      app: helloworld
   replicas: 3
   strategy:
     rollingUpdate:
-    maxSurge: 1
-    maxUnavailable: 1
+      maxSurge: 1
+      maxUnavailable: 1
   minReadySeconds: 5
   template:
     metadata:
@@ -200,6 +203,9 @@ kind: Deployment
 metadata:
   name: helloworld-canary
 spec:
+  selector:
+    matchLabels:
+      app: helloworld
   replicas: 1
   strategy:
     rollingUpdate:
@@ -253,6 +259,7 @@ spec:
 **Минусы:**
 - Замедленное развертывание.
 
+Две оставшиеся стратегии обновления рассмотрим тезисно.
 
 ## Стратегия обновления A/B Testing
 A/B-тестирование подразумевает проведение тестирования подмножества пользователей на предмет использования новой функциональности при определенных условиях. Обычно это не стратегия развертывания, а метод принятия бизнес-решений на основе статистики. Тем не менее, это связано и может быть реализовано путем добавления дополнительной функциональности в канареечное развертывание.
