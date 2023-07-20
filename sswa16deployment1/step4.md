@@ -31,6 +31,12 @@ spec:
 
 `kubectl apply -f blue.yaml`{{execute T1}}
 
+Состояние деплоймента можно получить с помощью команд:
+`kubectl get deploy blue-deployment `{{execute T1}}
+
+Более детальная информация:
+`kubectl describe deploy blue-deployment `{{execute T1}}
+
 Далее мы зададим эти метки в качестве селектора меток для сервиса. Сохраним это в файле service.yaml.
 <pre class="file" data-filename="./service.yaml" data-target="replace">
 apiVersion: apps/v1
@@ -41,17 +47,17 @@ spec:
   selector:
     matchLabels:
       app: blue-deployment
-      version: nanoserver-1709
+      version: hello-app:v1
   replicas: 3
   template:
     metadata:
       labels:
         app: blue-deployment
-        version: nanoserver-1709
+        version: hello-app:v1
     spec:
       containers:
         - name: blue-deployment
-          image: hello-world:nanoserver-1709
+          image: shetinnikov/hello-app:v1
 </pre>
 Теперь при создании службы будет создан балансировщик нагрузки, доступный вне кластера.
 `kubectl apply -f service.yaml`{{execute T1}}
@@ -66,17 +72,17 @@ spec:
   selector:
     matchLabels:
       app: green-deployment
-      version: nanoserver-1809
+      version: hello-app:v2
   replicas: 3
   template:
     metadata:
       labels:
         app: green-deployment
-        version: nanoserver-1809
+        version: hello-app:v2
     spec:
       containers:
         - name: green-deployment
-          image: hello-world:nanoserver-1809
+          image: shetinnikov/hello-app:v2
 </pre>
 
 Применим манифест
