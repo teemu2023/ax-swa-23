@@ -1,0 +1,43 @@
+{
+  "title": "4. Политика rate limit",
+  "description": "Рассмотрим создание политики rate limit",
+  "details": {
+    "steps": [
+      {
+        "title": "Введение",
+        "text": "intro.md"
+      },
+      {
+        "title": "Подготовка среды выполнения",
+        "text": "step1.md"
+      },
+      {
+        "title": "Установка ServiceB, настройка входящего трафика",
+        "text": "step2.md"
+      },
+      {
+        "title": "Создание EnvoyFilter",
+        "text": "step3.md"
+      },
+      {
+        "title": "Завершение",
+        "text": "finish.md"
+      }
+    ],
+    "assets": {
+      "host01": [
+        {"file": "service-b-deployment.yml", "target": "/root"},
+        {"file": "service-b-gw.yml", "target": "/root"},
+        {"file": "inbound-to-service-b-vs.yml", "target": "/root"},
+        {"file": "rate-limit-5-ef.yml", "target": "/root"},
+        {"file": "producer-internal-host.yml", "target": "/root"}
+      ]
+    }
+  },
+  "environment": {
+    "uilayout": "terminal"
+  },
+  "backend": {
+    "imageid": "k3s-istio:1.10.1"
+  }
+}

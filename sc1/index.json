@@ -1,0 +1,63 @@
+{
+  "title": "1. Конфигурация окружения и запуск прикладного сервиса в sevice mesh",
+  "description": "Изучим конфигурацию окружения и запустим прикладной сервис в sevice mesh",
+  "details": {
+    "steps": [
+      {
+        "title": "Введение",
+        "text": "intro.md"
+      },
+      {
+        "title": "Подготовка среды выполнения",
+        "text": "step1.md"
+      },
+      {
+        "title": "Конфигурация Istio",
+        "courseData": "install_istio.sh",
+        "text": "step2.md"
+      },
+      {
+        "title": "Подготовка пространства имен",
+        "text": "step3.md"
+      },
+      {
+        "title": "Запуск пода с бизнес сервисом",
+        "text": "step4.md"
+      },
+      {
+        "title": "Применение манифеста Service",
+        "text": "step5.md"
+      },
+      {
+        "title": "Применение манифеста Gateway",
+        "text": "step6.md"
+      },
+      {
+        "title": "Применение манифеста VirtualService",
+        "text": "step7.md"
+      },
+      {
+        "title": "Тестирование пути входящего трафика",
+        "text": "step8.md"
+      },
+      {
+        "title": "Завершение",
+        "text": "finish.md"
+      }
+    ],
+    "assets": {
+      "host01": [
+        {"file": "service-b-deployment.yml", "target": "/root"},
+        {"file": "producer-internal-host.yml", "target": "/root"},
+        {"file": "service-b-gw.yml", "target": "/root"},
+        {"file": "inbound-to-service-b-vs.yml", "target": "/root"}
+      ]
+    }
+  },
+  "environment": {
+    "uilayout": "terminal"
+  },
+  "backend": {
+    "imageid": "k3s-istio:1.10.1"
+  }
+}
