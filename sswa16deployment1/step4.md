@@ -39,25 +39,22 @@ spec:
 
 Далее мы зададим эти метки в качестве селектора меток для сервиса. Сохраним это в файле service.yaml.
 <pre class="file" data-filename="./service.yaml" data-target="replace">
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: blue-deployment
+apiVersion: v1
+kind: Service
+metadata: 
+  name: blue-green-service
+  labels: 
+    name: blue-deployment
+    version: nanoserver-1709
 spec:
-  selector:
-    matchLabels:
-      app: blue-deployment
-      version: hello-app:v1
-  replicas: 3
-  template:
-    metadata:
-      labels:
-        app: blue-deployment
-        version: hello-app:v1
-    spec:
-      containers:
-        - name: blue-deployment
-          image: shetinnikov/hello-app:v1
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  selector: 
+    name: blue-deployment
+    version: nanoserver-1709
+  type: LoadBalancer
 </pre>
 Теперь при создании службы будет создан балансировщик нагрузки, доступный вне кластера.
 `kubectl apply -f service.yaml`{{execute T1}}
@@ -72,23 +69,27 @@ spec:
   selector:
     matchLabels:
       app: green-deployment
-      version: hello-app:v2
+      version: nanoserver-1809
   replicas: 3
   template:
     metadata:
       labels:
         app: green-deployment
-        version: hello-app:v2
+        version: nanoserver-1809
     spec:
       containers:
         - name: green-deployment
-          image: shetinnikov/hello-app:v2
+          image: hello-world:nanoserver-1809
 </pre>
 
 Применим манифест
 `kubectl apply -f green.yaml`{{execute T1}}
 
-Далее мы зададим эти метки в качестве селектора меток для сервиса. Сохраним это в файле service.yaml.
+Давайте посмотрим общие результаты работы по подготовке приложения в **Kubernetes** запустим команду:
+
+`kubectl get pods,deployments,service`{{execute}}
+
+Далее для того чтобы перейти в режим green deployment, мы должны обновить селектор для существующего сервиса. Изменим service.yaml и поменяем версию селектора на 2, а имя на green-deployemnt. Таким образом, он будет соответствовать **Pods** в green развертывании.
 <pre class="file" data-filename="./service.yaml" data-target="replace">
 apiVersion: v1
 kind: Service
@@ -96,7 +97,7 @@ metadata:
   name: blue-green-service
   labels: 
     name: green-deployment
-    version: nanoserver-1809
+    version: v2
 spec:
   ports:
     - name: http
@@ -104,7 +105,7 @@ spec:
       targetPort: 80
   selector: 
     name: green-deployment
-    version: nanoserver-1809
+    version: v2
   type: LoadBalancer
 </pre>
 Теперь при создании службы будет создан балансировщик нагрузки, доступный вне кластера.
@@ -115,6 +116,9 @@ spec:
 `kubectl get pods,deployments,service`{{execute}}
 
 Видим подготовленный сервис *LoadBalancer*, а также нобходимое количество **Pods** непосредственно для старой и новой версии приложения.
+
+После переключения всего трафика на новую версию, старые экзмепляры можно будет выодить из эксплуатации.
+В заключение можно отметить, что развертывание по принципу "сине-зеленого" - это "все или ничего", в отличие от развертывания по принципу скользящего обновления, при котором мы не можем постепенно распространять новую версию. В этом случае все пользователи получат обновление одновременно, хотя существующим сессиям будет позволено завершить работу на старых экземплярах.
 
 Теперь можем удалить *деплоймент*:
 
