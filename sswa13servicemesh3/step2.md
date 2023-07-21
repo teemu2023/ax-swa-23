@@ -1,37 +1,30 @@
-В данном упражнении мы установим ServiceG.
+В данном упражнении мы установим ServiceB и настроим входящий трафик.
 
-Этот сервис при получении запроса на адрес http://localhost:8083/, для формирования ответа, запрашивает информацию у поставщика по адресу http://www.sberuniversity.online/index.html, получив ответ, возвращает данные в своем ответе.
+Схема создаваемой конфигурации сети:
 
-Исходный код приложения:
-`https://github.com/ArtashesAvetisyan/sbercode-scenarios/tree/master/apps/ServiceG`{{copy}}
+![Mesh configuration](../assets/scheme1-b.png)
 
-Итак, бизнес сервис совершает GET запросы на внешний поставщик по адресу: `http://www.sberuniversity.online/index.html`
+Давайте установим ServiceB:
+`kubectl apply -f service-b-deployment.yml`{{execute}}
 
-Давайте рассмотрим ответ подобного запроса:
-`curl -v http://www.sberuniversity.online/index.html`{{execute}}
+Применим Service для деплоймента выше:
+`kubectl apply -f producer-internal-host.yml`{{execute}}
 
-Среди HTTP заголовков ответа:
-`< HTTP/1.1 301 Moved Permanently`
-`< Server: nginx`
-`< Content-Length: 0`
-`< Location: https://sberuniversity.online/index.html`
+Создадим Gateway для маршрутизации запросов из ingress-шлюза в ServiceB:
+`kubectl apply -f service-b-gw.yml`{{execute}}
 
-301 Moved Permanently и Location: https://www.sberuniversity.online/index.html, тела ответа нет. Т. е. sberuniversity.online не предоставляет ни какой полезной информации по HTTP протоколу.
+И применим правило маршрутизации:
+`kubectl apply -f inbound-to-service-b-vs.yml`{{execute}}
 
-Давайте теперь совершим тот же запрос через HTTPS протокол:
-`curl -v https://sberuniversity.online/index.html`{{execute}}
+Проверим готовность подов:
+`kubectl get pods --all-namespaces`{{execute}}
 
-В теле ответа можем увидеть html-страницу.
+Все поды должны иметь статус Running, дождитесь нужного статсуса.
 
-Суть данного упражнения заключается в создании конфигураций для envoy-прокси при помощи Istio, которые бы позволили зашифровать исходящие из бизнес сервиса небезопасные HTTP сообщения и подключиться к поставщику данных через HTTPS протокол.
+И наконец совершим GET запрос по адресу ingress-шлюза:
+`curl -v http://$GATEWAY_URL/service-b`{{execute}}
 
-Для этого:
-
-1) Установим ServiceG
-
-2) Откроем входящий трафик в service mesh и направим его в ServiceG
-
-3) Откроем исходящего трафика из service mesh для получения ответов из sberuniversity.online по HTTPS протоколу на основе исходного не зашифрованного HTTP трафика.
+В случае успеха в теле ответа мы должны видеть сообщение: `Hello from ServiceB!`
 
 Перейдем к следующему шагу.
 
