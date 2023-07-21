@@ -9,6 +9,6 @@ curl -v -X {HTTP_METHOD} localhost:32100/onlineauction/{API_ENDPOINT} -H "Conten
 
 
 Также можно ознакомиться с полной спецификацией в формате OpenApi
-`httpbin-openapi.yaml`{{open}}
+`openapi.yaml`{{open}}
 
 
