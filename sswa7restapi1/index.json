@@ -1,6 +1,6 @@
 {
     "pathwayTitle": "restapi2",
-    "title": "sswa7restapi2-test - Демонстрация использования REST API",
+    "title": "sswa7restapi1-test",
     "description": "restapi2",
     "difficulty": "beginner",
     "time": "30 minutes",
@@ -30,7 +30,6 @@
             "host01": [
                 {"file": "prism.yaml", "target": "/root"},
                 {"file": "openapi.yaml", "target": "/root"},
-                {"file": "openapi.yaml", "target": "/app"},
                 {"file": "prepare.sh", "target": "/usr/local/bin", "chmod": "+x"}
             ]
           }
