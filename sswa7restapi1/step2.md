@@ -3,4 +3,4 @@
 
 Ответ:
 
-`curl -v localhost:32100/httpbin/html`
+`curl -v localhost:32100/prism/html`
