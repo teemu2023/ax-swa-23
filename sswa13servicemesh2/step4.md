@@ -1,6 +1,6 @@
 На этом шаге мы направим исходящие запросы из ServiceA в ServiceB. На схеме это выглядет слудующим образом:
 
-![Mesh configuration](../assets/sc2-2.png)
+![Mesh configuration](../assets/sswa13servicemesh2-2.png)
 
 Давайте установим ServiceB:
 `kubectl apply -f service-b-deployment.yml`{{execute}}

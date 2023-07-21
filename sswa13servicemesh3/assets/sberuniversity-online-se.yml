@@ -1,10 +1,10 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: ServiceEntry
 metadata:
-  name: www-oracle-com
+  name: www-sberuniversity-online
 spec:
   hosts:
-    - www.oracle.com
+    - www.sberuniversity.online
   ports:
     - number: 80
       name: http-port

@@ -1,5 +1,5 @@
 {
-  "title": "2. Маршрутизация трафика внутри service mesh",
+  "title": "sswa13servicemesh 2. Маршрутизация трафика внутри service mesh",
   "description": "Рассмотрим маршрутизацию трафика внутри service mesh",
   "details": {
     "steps": [

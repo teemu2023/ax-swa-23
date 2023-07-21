@@ -1,8 +1,6 @@
-На этом шаге мы создадим новое пространство имен или виртуальный кластер, который изолирован от текущего пространства имен dev-service-mesh, и будет содержать прикладной сервис, поставляющий данные для Service C.
+На этом шаге мы создадим новое пространство имен или виртуальный кластер, который изолирован от текущего пространства имен dev-service-mesh и будет содержать прикладной сервис, поставляющий данные для Service C.
 
 Весь исходящий трафик из dev-service-mesh будут направляться на egress-шлюз, который в свою очередь будет проксировать все запросы в пространство external-cluster.
-
-Новый кластер мы будем создавать аналогично тому, как это подробно представлено в упражнении  [Конфигурация окружения и запуск прикладного сервиса в sevice mesh](https://sbercode.pcbltools.ru/ui/ArtashesAvetisyan/sc1/)
 
 Давайте создадим новое пространство имен (виртуальный кластер):
 
@@ -12,7 +10,25 @@
 
 `kubectl label namespace external-cluster istio-injection=enabled`{{execute}}
 
-Развернем новый Deployment прикладного сервиса External Cluster Service:
+
+```
+kind: Gateway
+metadata:
+  name: service-ext-gw
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 443
+        name: https
+        protocol: HTTPS
+      tls:
+        mode: MUTUAL
+      hosts:
+        - "*"
+```
+Развернем приведенный выше манифест:
 
 `kubectl apply -f service-ext-deployment.yml -n external-cluster`{{execute}}
 

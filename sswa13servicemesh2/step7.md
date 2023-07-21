@@ -2,7 +2,7 @@
 
 Схема service mesh, в соотвесвтии с которой будем настраивать наш кластер:
 
-![Mesh configuration](../assets/sc2-4.png)
+![Mesh configuration](../assets/sswa13servicemesh2-4.png)
 
 Существует 3 подхода к открытию исходящего трафика в Istio:
 

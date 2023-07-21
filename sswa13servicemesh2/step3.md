@@ -1,6 +1,6 @@
 На этом шаге мы настроим service mesh согласно следующей схеме:
 
-![Mesh configuration](../assets/sc2-1.png)
+![Mesh configuration](../assets/sswa13servicemesh2-1.png)
 
 Давайте установим ServiceA:
 `kubectl apply -f serviceA-v1-deployment.yml`{{execute}}
@@ -13,8 +13,6 @@
 
 Определим правило маршрутизации:
 `kubectl apply -f inbound-to-serviceA-vs.yml`{{execute}}
-
-Подробно тип манифестов выше рассмотрены в упражнении: [Конфигурация окружения и запуск прикладного сервиса в sevice mesh](https://sbercode.pcbltools.ru/ui/ArtashesAvetisyan/sc1/)
 
 Проверим готовность подов:
 `kubectl get pods --all-namespaces`{{execute}}
