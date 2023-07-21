@@ -4,6 +4,8 @@
 
 ### Деплой приложения prism
 Для демонстрации взаимодействия по средством REST API будем использовать приложение prism.  
+Создайте ConfigMap с файлом openapi.yaml:
+`kubectl create configmap openapi-configmap --from-file=openapi.yaml`{{execute}}
 
 Для установки prism воспользуемся командой:  
 `kubectl apply -f prism.yaml`{{execute}}
