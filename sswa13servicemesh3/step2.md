@@ -12,14 +12,14 @@
 
 Среди HTTP заголовков ответа:
 `< HTTP/1.1 301 Moved Permanently`
-`< Server: AkamaiGHost`
+`< Server: nginx`
 `< Content-Length: 0`
 `< Location: https://sberuniversity.online/index.html`
 
 301 Moved Permanently и Location: https://www.sberuniversity.online/index.html, тела ответа нет. Т. е. sberuniversity.online не предоставляет ни какой полезной информации по HTTP протоколу.
 
 Давайте теперь совершим тот же запрос через HTTPS протокол:
-`curl -v https://www.sberuniversity.online/index.html`{{execute}}
+`curl -v https://sberuniversity.online/index.html`{{execute}}
 
 В теле ответа можем увидеть html-страницу.
 

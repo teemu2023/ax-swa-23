@@ -1,9 +1,9 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: www-sberuniversity-online-dr
+  name: sberuniversity-online-dr
 spec:
-  host: www.sberuniversity.online
+  host: sberuniversity.online
   trafficPolicy:
     portLevelSettings:
       - port:

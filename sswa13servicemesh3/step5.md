@@ -5,9 +5,9 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: www-sberuniversity-dr
+  name: sberuniversity-dr
 spec:
-  host: www.sberuniversity.online
+  host: sberuniversity.online
   trafficPolicy:
     portLevelSettings:
       - port:
@@ -23,10 +23,10 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: ServiceEntry
 metadata:
-  name: www-sberuniversity-online
+  name: sberuniversity-online
 spec:
   hosts:
-    - www.sberuniversity.online
+    - sberuniversity.online
   ports:
     - number: 80
       name: http-port
