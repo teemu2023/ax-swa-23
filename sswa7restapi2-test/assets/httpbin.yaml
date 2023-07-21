@@ -54,7 +54,7 @@ spec:
   - http:
       paths:
       - pathType: Prefix
-        path: /(.*)
+        path: httpbin/(.*)
         backend:
           service:
             name: httpbin

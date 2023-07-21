@@ -1,5 +1,6 @@
 ### Задача 1
 Напишите get запрос для получения HTML
 
-Ответ
+Ответ:
+
 `curl -v localhost:32100/httpbin/html`
