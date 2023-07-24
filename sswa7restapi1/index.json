@@ -29,6 +29,7 @@
         "assets": {
             "host01": [
                 {"file": "prism.yaml", "target": "/root"},
+                {"file": "prism-deployment.yaml", "target": "/root"},
                 {"file": "openapi.yaml", "target": "/root"},
                 {"file": "prepare.sh", "target": "/usr/local/bin", "chmod": "+x"}
             ]

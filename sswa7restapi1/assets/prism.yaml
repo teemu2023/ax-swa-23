@@ -1,23 +1,4 @@
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: prism-mock-server
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: prism-mock-server
-  labels:
-    app: prism-mock-server
-    service: prism-mock-server
-spec:
-  ports:
-  - name: http
-    port: 8000
-    targetPort: 80
-  selector:
-    app: prism-mock-server
----
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -35,7 +16,7 @@ spec:
       containers:
         - name: prism-mock-server
           image: docker.io/stoplight/prism:5 # Используем готовый образ Prism из Docker Hub
-          args: ["mock", "-s", "/app/openapi.yaml", "--dynamic"]
+          args: ["mock", "-h", "/app/openapi.yaml", "--dynamic"]
           ports:
             - containerPort: 32100 # Порт, который будет использоваться Prism
           volumeMounts:
