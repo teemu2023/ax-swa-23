@@ -15,9 +15,12 @@ spec:
       containers:
         - name: prism-mock-server
           image: stoplight/prism:4 # Используем готовый образ Prism из Docker Hub
-          args: ["mock", "-h", "/app/openapi.yaml", "--dynamic"]
-          ports:
-            - containerPort: 32100 # Порт, который будет использоваться Prism
+          args: 
+          - mock
+          - -h
+          - 0.0.0.0
+          - -p
+          - "80"
           volumeMounts:
             - name: openapi-volume
               mountPath: /app/openapi.yaml

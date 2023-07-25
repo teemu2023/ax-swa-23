@@ -42,6 +42,7 @@
                 {"file": "launch_k8s.sh", "target": "/root", "chmod": "+x"},
                 {"file": "prism.yaml", "target": "/root"},
                 {"file": "prism-deployment.yaml", "target": "/root"},
+                {"file": "prism-service.yaml", "target": "/root"},
                 {"file": "openapi.yaml", "target": "/root"}
             ]
         }

@@ -8,7 +8,10 @@
 `kubectl create configmap openapi-configmap --from-file=openapi.yaml`{{execute}}
 
 Для установки prism воспользуемся командой:  
-`kubectl apply -f prism.yaml`{{execute}}
+`kubectl apply -f prism-deployment.yaml`{{execute}}
+
+Для настройки prism воспользуемся командой:  
+`kubectl apply -f prism-service.yaml`{{execute}}
 
 ### Проверка окружения
 После выполнения установки prism в текущее окружении, проверим список запущенных сервисов
