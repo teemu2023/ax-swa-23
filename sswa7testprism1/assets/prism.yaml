@@ -1,0 +1,51 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prism-mock-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prism-mock-server
+  template:
+    metadata:
+      labels:
+        app: prism-mock-server
+    spec:
+      containers:
+        - name: prism-mock-server
+          image: docker.io/stoplight/prism:5 # Используем готовый образ Prism из Docker Hub
+          args: ["mock", "-h", "/app/openapi.yaml", "--dynamic"]
+          ports:
+            - containerPort: 32100 # Порт, который будет использоваться Prism
+          volumeMounts:
+            - name: openapi-volume
+              mountPath: /app/openapi.yaml
+              subPath: openapi.yaml
+      volumes:
+        - name: openapi-volume
+          configMap:
+            name: openapi-configmap
+            items:
+              - key: openapi.yaml
+                path: openapi.yaml
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: prism-ingress
+  annotations:
+      kubernetes.io/ingress.class: "nginx"
+      nginx.ingress.kubernetes.io/rewrite-target: "/$1"
+spec:
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: /prism/(.*)
+        backend:
+          service:
+            name: prism-mock-server
+            port:
+              number: 80
