@@ -35,7 +35,6 @@ spec:
       serviceAccountName: prism-mock-server
       containers:
         - name: prism-mock-server
-          serviceAccountName: prism-mock-server
           image: docker.io/stoplight/prism:5 # Используем готовый образ Prism из Docker Hub
           args: ["mock", "/app/openapi.yaml", "--dynamic"]
           ports:
