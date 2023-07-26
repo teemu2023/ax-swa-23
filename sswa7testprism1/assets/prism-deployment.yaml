@@ -14,14 +14,14 @@ spec:
     spec:
       containers:
         - name: mockserver
-          image: stoplight/prism:4 # Используем готовый образ Prism из Docker Hub
+          image: stoplight/prism:5 # Используем готовый образ Prism из Docker Hub
           args: 
           - mock
           - -h
           - 0.0.0.0
           - -p
           - "80"
-          - "/app/openapi.yaml"
+          - "/openapi.yaml"
           volumeMounts:
             - name: openapi-volume
               mountPath: /app/openapi.yaml
