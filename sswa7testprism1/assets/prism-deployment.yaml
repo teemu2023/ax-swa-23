@@ -21,7 +21,7 @@ spec:
           - 0.0.0.0
           - -p
           - "80"
-          - "/openapi.yaml"
+          - "/app/openapi.yaml"
           volumeMounts:
             - name: openapi-volume
               mountPath: /app/openapi.yaml
