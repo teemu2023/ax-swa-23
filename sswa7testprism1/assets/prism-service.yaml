@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: prism-mock-server-service
+spec:
+  selector:
+    app: prism-mock-server
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 4010
+  externalName: mockserver.default.svc.cluster.local

@@ -1,5 +1,5 @@
 {
-    "pathwayTitle": "Kubernetes deployment",
+    "pathwayTitle": "Test Prism",
     "title": "sswa7testprism1",
     "description": "Deployment",
     "difficulty": "beginner",
@@ -7,11 +7,11 @@
     "details": {
         "steps": [
             {
-                "title": "Запускаем кластер Kubernetes",
+                "title": "Запускаем кластер Kubernetes и настраиваем Mock сервер",
                 "text": "step0.md"
             },
             {
-                "title": "Создание деплоймента",
+                "title": "Задание 1",
                 "text": "step1.md"
             },
             {
@@ -40,7 +40,7 @@
         "assets": {
             "host01": [
                 {"file": "launch_k8s.sh", "target": "/root", "chmod": "+x"},
-                {"file": "prism.yaml", "target": "/root"},
+                {"file": "dns-configmap.yaml", "target": "/root"},
                 {"file": "prism-deployment.yaml", "target": "/root"},
                 {"file": "prism-service.yaml", "target": "/root"},
                 {"file": "openapi.yaml", "target": "/root"}

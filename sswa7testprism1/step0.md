@@ -10,6 +10,9 @@
 Для установки prism воспользуемся командой:  
 `kubectl apply -f prism-deployment.yaml`{{execute}}
 
+Примените ConfigMap dns-configmap.yaml:
+`kubectl apply -f dns-configmap.yaml`{{execute}}
+
 Для настройки prism воспользуемся командой:  
 `kubectl apply -f prism-service.yaml`{{execute}}
 
@@ -18,7 +21,10 @@
 
 `kubectl get po -A`{{execute}}
 
-httpbin, скорее всего, еще не запустился, поэтому дождемся, пока он станет доступен: 
-` kubectl wait --for=condition=ContainersReady --timeout=5m --all pods`{{execute}}  
+Проверка доступности mock сервера
+Удостоверьтесь, что служба работает и готова принимать запросы: 
+` kubectl get svc prism-mock-server-service`{{execute}}  
+
+Вы должны увидеть вывод с информацией о службе, включая порт, на котором служба будет доступна.
 
 На этом настройка окружения завершена.

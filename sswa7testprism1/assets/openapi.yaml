@@ -1,0 +1,50 @@
+openapi: 3.0.0
+info:
+  title: Auction API
+  version: 1.0.0
+paths:
+  /auctions/{auction_id}/bids:
+    get:
+      summary: Get all bids for an auction
+      parameters:
+        - name: auction_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    bind_id:
+                      type: integer
+                    item_id:
+                      type: integer
+                    buyer_id:
+                      type: integer
+                    amount:
+                      type: number
+                    timestamp:
+                      type: string
+                example:
+                  - bind_id: 1
+                    item_id: 1
+                    buyer_id: 4
+                    amount: 150
+                    timestamp: "2023-03-19T15:30:00Z"
+                  - bind_id: 2
+                    item_id: 1
+                    buyer_id: 5
+                    amount: 175
+                    timestamp: "2023-03-19T15:35:00Z"
+                  - bind_id: 3
+                    item_id: 1
+                    buyer_id: 6
+                    amount: 200
+                    timestamp: "2023-03-19T15:40:00Z"
