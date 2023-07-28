@@ -1,22 +1,22 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: prism-mock-serve
+  name: prism-mock-server
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: prism-mock-serve
+  name: prism-mock-server
   labels:
-    app: prism-mock-serve
-    service: prism-mock-serve
+    app: prism-mock-server
+    service: prism-mock-server
 spec:
   ports:
   - name: http
     port: 8000
     targetPort: 80
   selector:
-    app: prism-mock-serve
+    app: prism-mock-server
 ---
 apiVersion: apps/v1
 kind: Deployment
