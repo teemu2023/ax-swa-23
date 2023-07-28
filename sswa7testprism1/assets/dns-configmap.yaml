@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: dns-configmap
+  name: coredns-custom
+  namespace: kube-system
 data:
   mockserver: "prism-mock-server-service.default.svc.cluster.local"
