@@ -13,7 +13,7 @@ metadata:
 spec:
   ports:
   - name: http
-    port: 32100
+    port: 8000
     targetPort: 80
   selector:
     app: prism-mock-server
@@ -35,7 +35,9 @@ spec:
       serviceAccountName: prism-mock-server
       containers:
         - name: prism-mock-server
-          image: docker.io/stoplight/prism:5 # Используем готовый образ Prism из Docker Hub
+          image: docker.io/stoplight/prism:5
+          ports:
+          - containerPort: 80
           args: ["mock", "/app/openapi.yaml", "--dynamic", "-p", "32100"]
           volumeMounts:
             - name: openapi-volume
@@ -58,7 +60,7 @@ metadata:
       nginx.ingress.kubernetes.io/rewrite-target: "/$1"
 spec:
   rules:
-    - host: mockserver.com # Замените на желаемое имя хоста
+    - host: mockserver
       http:
         paths:
           - path: /
@@ -67,4 +69,4 @@ spec:
               service:
                 name: prism-mock-server
                 port:
-                  number: 32100
+                  number: 80
