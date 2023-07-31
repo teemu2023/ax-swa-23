@@ -1,3 +1,24 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: prism-mock-server
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prism-mock-server
+  labels:
+    app: prism-mock-server
+spec:
+  type: NodePort
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+    nodePort: 32100
+  selector:
+    app: prism-mock-server
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -12,12 +33,13 @@ spec:
       labels:
         app: prism-mock-server
     spec:
+      serviceAccountName: prism-mock-server
       containers:
         - name: prism-mock-server
-          image: docker.io/stoplight/prism:5 
-          args: ["mock", "/app/openapi.yaml", "--dynamic"]
+          image: docker.io/stoplight/prism:5
           ports:
-            - containerPort: 4010 
+          - containerPort: 8080
+          args: ["mock", "/app/openapi.yaml", "--dynamic", "-h", "0.0.0.0", "-p", "8080"]
           volumeMounts:
             - name: openapi-volume
               mountPath: /app/openapi.yaml
