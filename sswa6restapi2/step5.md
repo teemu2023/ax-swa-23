@@ -4,6 +4,8 @@
 
 Правильный ответ от сервера должен содержать информацию в формате:
 `
+HTTP/1.1 200 OK
+{"Message":"sunt enim Ut sint dolore","new_plan":"minim occaecat tempor elit","subscription_id":"do"}
 `
 
 Ответ (удалить в релизе):`curl -X PUT curl -v localhost:32100/sellers/123/subscriptions/321 -H "Content-Type: application/json" -d '{"plan_id": "plan123"}'`
