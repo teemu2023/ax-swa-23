@@ -39,7 +39,7 @@ spec:
           image: docker.io/stoplight/prism:5
           ports:
           - containerPort: 8080
-          args: ["mock", "/app/openapi.yaml", "--dynamic", "-h", "0.0.0.0", "-p", "8080"]
+          args: ["mock", "/app/openapi.yaml", "-h", "0.0.0.0", "-p", "8080"]
           volumeMounts:
             - name: openapi-volume
               mountPath: /app/openapi.yaml
