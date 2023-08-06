@@ -23,56 +23,26 @@ components:
         description:
           type: string
           description: Описание аукциона.
-          example: "Древнекитайская ваза династии Мин в хорошем состоянии."
         start_time:
           type: string
           format: date-time
           description: Время начала аукциона.
-          example: "2023-04-01T00:00:00Z"
         end_time:
           type: string
           format: date-time
           description: Время окончания аукциона.
-          example: "2023-04-05T00:00:00Z"
         starting_price:
           type: number
           description: Начальная стоимость лота аукциона.
           format: float
-          example: 500.0
         highest_bid:
           $ref: '#/components/schemas/Bid'
-          example:
-            bid:
-              name: "John Doe"
-              email: "johndoe@example.com"
-            amount: 700.0
         seller:
           $ref: '#/components/schemas/Seller'
-          example:
-            id: 123
-            name: "Jane Smith"
-            email: "janesmith@example.com"
         item:
           $ref: '#/components/schemas/Item'
-          example:
-            id: 456
-            name: "Древняя китайская ваза династии Мин"
-            description: "Древнекитайская ваза династии Мин в хорошем состоянии."
-            tags:
-              - jewelry
-              - ruby
-            image_url: "https://example.com/ancient-vase.jpg"
         bids:
           $ref: '#/components/schemas/Bids'
-          example:
-            - bid:
-              name: "John Doe"
-              email: "johndoe@example.com"
-              amount: 500.0
-            - bid:
-              name: "Jane Smith"
-              email: "janesmith@example.com"
-              amount: 700.0
       required:
         - id
         - title
@@ -82,14 +52,30 @@ components:
         - highest_bid
         - sellerId
         - item
-        - bids
       example:
-        id: 1
-        sellerId: 1
-        itemId: 1
-        startBid: 10
-        currentBid: 10
-        closingTime: '2023-04-01T12:00:00Z'
+        id: 12345
+        title: "Древняя китайская ваза династии Мин"
+        description: "Древнекитайская ваза династии Мин в хорошем состоянии."
+        start_time: "2023-04-01T00:00:00Z"
+        end_time: "2023-04-05T00:00:00Z"
+        starting_price: 500.0
+        highest_bid:
+          bid:
+            name: "John Doe"
+            email: "johndoe@example.com"
+          amount: 700.0
+        seller:
+          id: 123
+          name: "Jane Smith"
+          email: "janesmith@example.com"
+        item:
+          id: 456
+          name: "Древняя китайская ваза династии Мин"
+          description: "Древнекитайская ваза династии Мин в хорошем состоянии."
+          tags:
+            - jewelry
+            - ruby
+          image_url: "https://example.com/ancient-vase.jpg"
     Seller:
       type: object
       properties:
@@ -97,20 +83,16 @@ components:
           type: integer
           format: int64
           description: Уникальный идентификатор продавца.
-          example: 123
         name:
           type: string
           description: Имя продавца.
-          example: John Doe
         email:
           type: string
           format: email
           description: Email адрес продавца.
-          example: john.doe@example.com
         phone:
           type: string
           description: Номер телефона продавца.
-          example: +1 (123) 456-7890
         items:
           type: array
           items:
