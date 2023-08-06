@@ -17,11 +17,9 @@ components:
           type: integer
           format: int64
           description: Уникальный идентификатор для аукциона.
-          example: 12345
         title:
           type: string
           description: Заголовок аукциона.
-          example: "Древняя китайская ваза династии Мин"
         description:
           type: string
           description: Описание аукциона.
