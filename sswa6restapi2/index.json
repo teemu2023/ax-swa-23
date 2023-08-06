@@ -39,7 +39,6 @@
         },
         "assets": {
             "host01": [
-                {"file": "launch_k8s.sh", "target": "/root", "chmod": "+x"},
                 {"file": "prism.yaml", "target": "/root"},
                 {"file": "answer1.txt", "target": "/root"},
                 {"file": "answer2.txt", "target": "/root"},
