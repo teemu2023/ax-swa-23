@@ -1,17 +1,34 @@
-### Изменение тарифного плана на новый
+### Запуск mock сервера Prism для самопроверки
 
-Сформируй запрос в формате REST API, с помощью которого продавец может изменить текущий тарифный план на новый plan123.
+Сначала запустим кластер **Kubernetes**. Для этого нужно дождаться выполнения команды:
 
-Правильный ответ от сервера должен содержать среди прочего должен содержать следующую информацию:
-`
-    HTTP/1.1 200 OK
-    Connection #1 to host localhost left intact
-    {"subscription_id":"321","new_plan":"plan123","Message":"Тарифный план изменен"}
-`
+`launch.sh`{{execute}}
 
-Проверить правильность команды можно непосредственно в терминале.
+### Запуск mock сервера Prism
 
-Готовый ответ запиши в файл:
-`answer4.txt`{{open}}
+Создадим **ConfigMap** с конфигурацией на основе заранее подготовленного файла со спецификацией **OpenAPI** openapi.yaml:
+`kubectl create configmap openapi-configmap --from-file=openapi.yaml`{{execute}}
 
-Ответ (удалить в релизе):`curl -X PUT curl -v localhost:32100/sellers/123/subscriptions/321 -H "Content-Type: application/json" -d '{"plan_id": "plan123"}'`
+Для запуска Prism в кластере Kubernetes воспользуемся командой:  
+`kubectl apply -f prism.yaml`{{execute}}
+
+
+### Проверка окружения
+После выполнения установки Prism в текущее окружении, проверим список запущенных сервисов
+
+`kubectl get po -A`{{execute}}
+
+Дождитесь, когда состояние *prism-mock-server* достигнет статус **Running**.
+
+На этом настройка окружения завершена.
+
+### Пример команды для самопроверки задания 1:
+`curl -v -X GET localhost:32100/auctions`
+
+Ожидаемый ответ:
+
+### Пример команды для самопроверки задания 2:
+`curl -X POST localhost:32100/auctions/findItems -H "Content-Type: application/json" -d '{"itemName": "Китайская ваза","itemTags": ["антиквариат", "ваза", "Китай"]}'`
+
+Ожидаемый ответ:
+

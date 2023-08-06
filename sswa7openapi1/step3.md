@@ -1,14 +1,61 @@
-### Регистрация нового пользователя
+### Задания для добавления описания сущности
 
-Сформируй запрос в формате REST API, который осществляет регистрацию нового пользователя.
+Добавь соответствующее описание в секцию **components** сущности *Auctions* для извлечения списка аукционов GET запросом по пути */auctions/*.
 
-Правильный ответ от сервера должен содержать среди прочего должен содержать следующую информацию:
-`
-    {"id":"123","username":"user123","fullname":"Иванов Иван Иванович","email":"user123@example.ru","role":"buyer","icon":"onlineauction.ru/content/images/ico112233.png","Message":"Пользователь создан"}
-`
-Проверить правильность команды можно непосредственно в терминале.
+Пример команды для самопроверки задания 1:
+`curl -v -X GET localhost:32100/auctions`
 
-Готовый ответ запиши в файл:
-`answer2.txt`{{open}}
-
-Ответ (удалить в релизе):`curl -X POST localhost:32100/auth/registration -H "Content-Type: application/json" -d '{"username": "user123","fullname": "Иванов Иван Иванович","email": "user123@example.ru","role": "buyer","icon": "onlineauction.ru/content/images/ico112233.png"}'`
+Ожидаемый ответ (удалить при запуске):
+components:
+  schemas:
+    Auctions:
+      type: array
+      items:
+        $ref: '#/components/schemas/Auction'
+      example:
+        - id: 1
+          title: "Auction 1"
+          description: "Description of Auction 1"
+          start_time: "2023-08-01T12:00:00Z"
+          end_time: "2023-08-05T12:00:00Z"
+          starting_price: 100.0
+          highest_bid:
+            bid:
+              name: "John Doe"
+              email: "johndoe@example.com"
+            amount: 200.0
+          seller:
+            id: 123
+            name: "Jane Smith"
+            email: "janesmith@example.com"
+          item:
+            id: 456
+            name: "Item 1"
+            description: "Description of Item 1"
+            tags:
+              - "tag1"
+              - "tag2"
+            image_url: "https://example.com/item1.jpg"
+        - id: 2
+          title: "Auction 2"
+          description: "Description of Auction 2"
+          start_time: "2023-08-10T09:00:00Z"
+          end_time: "2023-08-15T09:00:00Z"
+          starting_price: 50.0
+          highest_bid:
+            bid:
+              name: "Jane Doe"
+              email: "janedoe@example.com"
+            amount: 100.0
+          seller:
+            id: 456
+            name: "John Smith"
+            email: "johnsmith@example.com"
+          item:
+            id: 789
+            name: "Item 2"
+            description: "Description of Item 2"
+            tags:
+              - "tag3"
+              - "tag4"
+            image_url: "https://example.com/item2.jpg"

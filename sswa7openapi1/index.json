@@ -7,11 +7,11 @@
     "details": {
         "steps": [
             {
-                "title": "Запускаем кластер Kubernetes и настраиваем Mock сервер",
+                "title": "Знакомство со спецификацией OpenAPI",
                 "text": "step0.md"
             },
             {
-                "title": "Описание работы с командой cURL",
+                "title": "Знакомство с основными сущнастями",
                 "text": "step1.md"
             },
             {
@@ -40,12 +40,7 @@
         "assets": {
             "host01": [
                 {"file": "prism.yaml", "target": "/root"},
-                {"file": "answer1.txt", "target": "/root"},
-                {"file": "answer2.txt", "target": "/root"},
-                {"file": "answer3.txt", "target": "/root"},
-                {"file": "answer4.txt", "target": "/root"},
-                {"file": "openapi.yaml", "target": "/root"},
-                {"file": "onlineauction.yaml", "target": "/root"}
+                {"file": "openapi.yaml", "target": "/root"}
             ]
         }
     },
