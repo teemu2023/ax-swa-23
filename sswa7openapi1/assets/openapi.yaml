@@ -1,15 +1,169 @@
 openapi: 3.0.0
 info:
-  title: Auction API
-  version: 1.0.0
+  title: Online Auction System
+  version: '1.0'
+  description: A online auctions platform.
+servers:
+  - url: 'https://api.onlineauction.ru/v1/'
+    description: Production server (uses live data)
+  - url: 'https://sandbox-api.onlineauction.ru:8443/v1/'
+    description: Sandbox server (uses test data)
+components:
+  schemas:
+    Auction:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Уникальный идентификатор для аукциона.
+          example: 12345
+        title:
+          type: string
+          description: Заголовок аукциона.
+          example: "Древняя китайская ваза династии Мин"
+        description:
+          type: string
+          description: Описание аукциона.
+          example: "Древнекитайская ваза династии Мин в хорошем состоянии."
+        start_time:
+          type: string
+          format: date-time
+          description: Время начала аукциона.
+          example: "2023-04-01T00:00:00Z"
+        end_time:
+          type: string
+          format: date-time
+          description: Время окончания аукциона.
+          example: "2023-04-05T00:00:00Z"
+        starting_price:
+          type: number
+          description: Начальная стоимость лота аукциона.
+          format: float
+          example: 500.0
+      required:
+        - id
+        - title
+        - start_time
+        - end_time
+        - starting_price
+        - highest_bid
+        - sellerId
+        - item
+        - bids
+      example:
+        id: 1
+        sellerId: 1
+        itemId: 1
+        startBid: 10
+        currentBid: 10
+        closingTime: '2023-04-01T12:00:00Z'
+
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Описание ошибки.
+        code:
+          type: integer
+          description: Код ошибки.
+      required:
+        - message
+        - code
+      example:
+        message: "Invalid input."
+        code: 400  
+  parameters:
+    AuctionIdParam:
+      name: auction_id
+      in: path
+      description: Уникальный идентификатор аукциона
+      required: true
+      schema:
+        type: integer
+
+    LimitQueryParam:
+      name: limit
+      in: query
+      description: Максимальное количество возвращаемых результатов
+      required: false
+      schema:
+        type: integer
+        example: 1000
+    OffsetQueryParam:
+      name: offset
+      in: query
+      description: Количество результатов, которые необходимо пропустить перед возвратом
+      required: false
+      schema:
+        type: integer
+        example: 0
+  requestBodies:
+    AuctionRequestBody:
+      description: Тело запроса для создания или обновления аукциона
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Auction'
+
+  responses:
+    Error:
+      description: Ошибка сервера.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      headers:
+        x-error-message:
+          description: Описание ошибки.
+          schema:
+            type: string
+        x-error-code:
+          description: Код ошибки.
+          schema:
+            type: integer
+    BadRequest:
+      description: Запрос был недействительным или не был понятен серверу.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Запрашиваемый ресурс не найден.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: На сервере возникла непредвиденная ошибка.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
 paths:
-  /auctions/{auction_id}/bids:
+  /auctions:
     get:
-      summary: Получение ставок по аукциону
+      summary: Извлечение списка аукционов
+      description: |
+        Извлечение списка всех аукционов в системе с возможностью фильтрации по продавцу, товару или статусу.
       parameters:
-        - name: auction_id
-          in: path
-          required: true
+        - $ref: '#/components/parameters/LimitQueryParam'
+        - $ref: '#/components/parameters/OffsetQueryParam'
+        - in: query
+          name: seller_id
+          description: Фильтр аукционов по продавцу
+          schema:
+            type: integer
+        - in: query
+          name: item_id
+          description: Фильтр аукционов по товару
+          schema:
+            type: integer
+        - in: query
+          name: status
+          description: Фильтр аукционов по статусу
           schema:
             type: string
       responses:
@@ -20,204 +174,70 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    bind_id:
-                      type: integer
-                    item_id:
-                      type: integer
-                    buyer_id:
-                      type: integer
-                    amount:
-                      type: number
-                    timestamp:
-                      type: string
-                example:
-                  - bind_id: 1
-                    item_id: 1
-                    buyer_id: 4
-                    amount: 150
-                    timestamp: "2023-03-19T15:30:00Z"
-                  - bind_id: 2
-                    item_id: 1
-                    buyer_id: 5
-                    amount: 175
-                    timestamp: "2023-03-19T15:35:00Z"
-                  - bind_id: 3
-                    item_id: 1
-                    buyer_id: 6
-                    amount: 200
-                    timestamp: "2023-03-19T15:40:00Z"
-  /auth/registration:
+                  $ref: '#/components/schemas/Auction'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
     post:
-      summary: Регистрация нового пользователя
+      summary: Создание нового аукциона
+      description: Создание нового аукциона в системе.
       requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                username:
-                  type: string
-                fullname:
-                  type: string
-                email:
-                  type: string
-                role:
-                  type: string
-                icon:
-                  type: string
+        $ref: '#/components/requestBodies/AuctionRequestBody'
       responses:
         '201':
           description: Created
+          headers:
+            Location:
+              description: URI созданного аукциона
+              schema:
+                type: string
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                  username:
-                    type: string
-                  fullname:
-                    type: string
-                  email:
-                    type: string
-                  role:
-                    type: string
-                  icon:
-                    type: string
-                  Message:
-                    type: string                    
-              example:
-                id: "123"
-                username: "user123"
-                fullname: "Иванов Иван Иванович"
-                email: "user123@example.ru"
-                role: "buyer"
-                icon: "onlineauction.ru/content/images/ico112233.png"
-                Message: "Пользователь создан"
-  /auctions/{auction_id}/binds/{bind_id}:
-    delete:
-      summary: Отмена ставки по аукциону
+                $ref: '#/components/schemas/Auction'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /auctions/{auction_id}:
+    get:
+      summary: Извлечение аукциона по идентификатору
+      description: Возвращает аукцион с указанным идентификатором, включая информацию о текущей максимальной ставке и истории торгов.
       parameters:
-        - name: auction_id
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: bind_id
-          in: path
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/AuctionIdParam'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  auction_id:
-                    type: string
-                  binds_id:
-                    type: string
-                  Message:
-                    type: string
-              example:
-                auction_id: "123"
-                binds_id: "321"
-                Message: "Ставка отменена" 
-  /sellers/{seller_id}/orders/{order_id}:
-    patch:
-      summary: Update order status for a seller
-      parameters:
-        - name: seller_id
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: order_id
-          in: path
-          required: true
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                status:
-                  type: string
-                tracking_number:
-                  type: string
-                timestamp:
-                  type: string
-                  format: date-time
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  order_id:
-                    type: string
-                  status:
-                    type: string
-                  tracking_number:
-                    type: string
-                  timestamp:
-                    type: string
-                    format: date-time
-              example:
-                order_id: "321"
-                status: "Принят покупателем"
-                tracking_number: "1234-5678-9876-5432"
-                timestamp: "2023-03-19T15:30:00Z"
-  /sellers/{seller_id}/subscriptions/{subscription_id}:
+                $ref: '#/components/schemas/Auction'
+        default:
+          $ref: '#/components/responses/Error'
     put:
-      summary: Update seller's subscription plan
+      summary: Обновление указанного аукциона
+      description: Обновляет указанный аукцион новыми данными, предоставленными в теле запроса.
       parameters:
-        - name: seller_id
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: subscription_id
-          in: path
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/AuctionIdParam'
       requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                plan_id:
-                  type: string
+        $ref: '#/components/requestBodies/AuctionRequestBody'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  subscription_id:
-                    type: string
-                  new_plan:
-                    type: string
-                  Message:
-                    type: string
-              example:
-                subscription_id: "321"
-                new_plan: "plan123"
-                Message: "Тарифный план изменен"                                               
+                $ref: '#/components/schemas/Auction'
+        default:
+          $ref: '#/components/responses/Error'
+    delete:
+      summary: Удаление указанного аукциона
+      description: Удаляет указанный аукцион.
+      parameters:
+        - $ref: '#/components/parameters/AuctionIdParam'
+      responses:
+        '204':
+          description: No Content
+        default:
+          $ref: '#/components/responses/Error'
