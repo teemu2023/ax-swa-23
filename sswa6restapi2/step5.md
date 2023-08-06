@@ -4,9 +4,9 @@
 
 Правильный ответ от сервера должен содержать среди прочего должен содержать следующую информацию:
 `
-HTTP/1.1 200 OK
-Connection #1 to host localhost left intact
-{"subscription_id":"321","new_plan":"plan123","Message":"Тарифный план изменен"}
+    HTTP/1.1 200 OK
+    Connection #1 to host localhost left intact
+    {"subscription_id":"321","new_plan":"plan123","Message":"Тарифный план изменен"}
 `
 
 Проверить правильность команды можно непосредственно в терминале.

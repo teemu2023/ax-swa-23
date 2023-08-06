@@ -4,9 +4,9 @@
 
 Правильный ответ от сервера должен содержать среди прочего должен содержать следующую информацию:
 `
-HTTP/1.1 200 OK
-Connection #0 to host localhost left intact
-[{"bind_id":1,"item_id":1,"buyer_id":4,"amount":150,"timestamp":"2023-03-19T15:30:00Z"},{"bind_id":2,"item_id":1,"buyer_id":5,"amount":175,"timestamp":"2023-03-19T15:35:00Z"},{"bind_id":3,"item_id":1,"buyer_id":6,"amount":200,"timestamp":"2023-03-19T15:40:00Z"}]
+    HTTP/1.1 200 OK
+    Connection #0 to host localhost left intact
+    [{"bind_id":1,"item_id":1,"buyer_id":4,"amount":150,"timestamp":"2023-03-19T15:30:00Z"},{"bind_id":2,"item_id":1,"buyer_id":5,"amount":175,"timestamp":"2023-03-19T15:35:00Z"},{"bind_id":3,"item_id":1,"buyer_id":6,"amount":200,"timestamp":"2023-03-19T15:40:00Z"}]
 `
 
 Проверить правильность команды можно непосредственно в терминале.

@@ -4,7 +4,7 @@
 
 Правильный ответ от сервера должен содержать среди прочего должен содержать следующую информацию:
 `
-{"id":"123","username":"user123","fullname":"Иванов Иван Иванович","email":"user123@example.ru","role":"buyer","icon":"onlineauction.ru/content/images/ico112233.png","Message":"Пользователь создан"}
+    {"id":"123","username":"user123","fullname":"Иванов Иван Иванович","email":"user123@example.ru","role":"buyer","icon":"onlineauction.ru/content/images/ico112233.png","Message":"Пользователь создан"}
 `
 Проверить правильность команды можно непосредственно в терминале.
 

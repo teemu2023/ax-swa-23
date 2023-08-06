@@ -4,9 +4,9 @@
 
 Правильный ответ от сервера должен содержать среди прочего должен содержать следующую информацию:
 `
-HTTP/1.1 200 OK
-Connection #1 to host localhost left intact
-{"order_id":"321","status":"Принят покупателем","tracking_number":"1234-5678-9876-5432","timestamp":"2023-03-19T15:30:00Z"}
+    HTTP/1.1 200 OK
+    Connection #1 to host localhost left intact
+    {"order_id":"321","status":"Принят покупателем","tracking_number":"1234-5678-9876-5432","timestamp":"2023-03-19T15:30:00Z"}
 `
 Проверить правильность команды можно непосредственно в терминале.
 
