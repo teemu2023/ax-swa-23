@@ -2,60 +2,72 @@
 
 Добавь соответствующее описание в секцию **components** сущности *Bid* и опиши соответствующие конечные точки в секции **path**, позволяющие получить список всех ставок для выбранного аукциона и сделать ставку на конкретный аукцион.
 
-Пример команды для самопроверки задания 1:
-`curl -v -X GET localhost:32100/auctions/1234/bids`
 
 Ожидаемый ответ (удалить при запуске):
-components:
-  schemas:
-    Auctions:
-      type: array
-      items:
-        $ref: '#/components/schemas/Auction'
+        Bid:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Уникальный идентификатор ставки.
+        buyer_id:
+          type: integer
+          description: Идентификатор покупателя, сделавшего ставку.
+        auction_id:
+          type: string
+          description: Идентификатор аукциона, где была сделана эта ставка.
+        amount:
+          type: number
+          format: float
+          description: Сумма ставки.
+        timestamp:
+          type: string
+          format: date-time
+          description: Время ставки.
+      required:
+        - id
+        - buyer_id
+        - auction_id
+        - amount
+        - timestamp
       example:
-        - id: 1
-          title: "Auction 1"
-          description: "Description of Auction 1"
-          start_time: "2023-08-01T12:00:00Z"
-          end_time: "2023-08-05T12:00:00Z"
-          starting_price: 100.0
-          highest_bid:
-            bid:
-              name: "John Doe"
-              email: "johndoe@example.com"
-            amount: 200.0
-          seller:
-            id: 123
-            name: "Jane Smith"
-            email: "janesmith@example.com"
-          item:
-            id: 456
-            name: "Item 1"
-            description: "Description of Item 1"
-            tags:
-              - "tag1"
-              - "tag2"
-            image_url: "https://example.com/item1.jpg"
-        - id: 2
-          title: "Auction 2"
-          description: "Description of Auction 2"
-          start_time: "2023-08-10T09:00:00Z"
-          end_time: "2023-08-15T09:00:00Z"
-          starting_price: 50.0
-          highest_bid:
-            bid:
-              name: "Jane Doe"
-              email: "janedoe@example.com"
-            amount: 100.0
-          seller:
-            id: 456
-            name: "John Smith"
-            email: "johnsmith@example.com"
-          item:
-            id: 789
-            name: "Item 2"
-            description: "Description of Item 2"
-            tags:
-              - "tag3"
-              - "tag4"
-            image_url: "https://example.com/item2.jpg"
+        id: 123
+        buyer_id: 456
+        auction_id: 789
+        amount: 100.0
+        timestamp: '2022-04-01T14:30:00Z'
+
+    /auctions/{auction_id}/bids:
+    get:
+      summary: Извлечение списка ставок для аукциона
+      description: Возвращает постраничный список всех ставок для указанного аукциона.
+      parameters:
+        - $ref: '#/components/parameters/AuctionIdParam'
+        - $ref: '#/components/parameters/LimitQueryParam'
+        - $ref: '#/components/parameters/OffsetQueryParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bids'
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: Сделать ставку на аукционе
+      description: Размещает новую ставку на указанном аукционе с указанной суммой ставки.
+      parameters:
+        - $ref: '#/components/parameters/AuctionIdParam'
+      requestBody:
+        $ref: '#/components/requestBodies/BidRequestBody'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BidResponse'
+        default:
+          $ref: '#/components/responses/Error'      
