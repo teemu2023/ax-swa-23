@@ -1,70 +1,61 @@
-### Задания для добавления описания конечной точки
+### Задания для добавления описания сущности
 
-Добавь соответствующее описание в секцию **path** для новой конечной точки, которая позволяет покупателям искать товары на всех аукционах. Поиск может быть отфильтрован по названию товара и/или тегам товара. В качестве примера можно привести поиск покупателем китайской вазы.
+Добавь соответствующее описание в секцию **components** сущности *Bid* и опиши соответствующие конечные точки в секции **path**, позволяющие получить список всех ставок для выбранного аукциона и сделать ставку на конкретный аукцион.
 
+Пример команды для самопроверки задания 1:
+`curl -v -X GET localhost:32100/auctions/1234/bids`
 
 Ожидаемый ответ (удалить при запуске):
-  /auctions/findItems:
-    post:
-      summary: Поиск товаров во всех аукционах
-      description: |
-        Эта конечная точка позволяет покупателям искать товары на всех аукционах. Поиск может быть отфильтрован по названию товара и/или тегам товара.
-      parameters:
-        - $ref: '#/components/parameters/ItemNameQueryParam'
-        - $ref: '#/components/parameters/ItemTagQueryParam'
-        - $ref: '#/components/parameters/LimitQueryParam'
-        - $ref: '#/components/parameters/OffsetQueryParam'
-      requestBody:
-        description: Тело запроса для поиска товаров
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                itemName:
-                  type: string
-                  description: Название товара для поиска
-                itemTags:
-                  type: array
-                  items:
-                    type: string
-                    description: Теги, связанные с товаром для поиска
-      responses:
-        '200':
-          description: Successfully retrieved list of items
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Item'
-          example:
-            - id: 123
-              name: "Китайская ваза династии Мин"
-              description: "Антикварная китайская ваза династии Мин в хорошем состоянии."
-              tags:
-                - "антиквариат"
-                - "ваза"
-                - "Китай"
-                - "династия Мин"
-              starting_price: 500.0
-              seller:
-                id: 456
-                name: "Антикварный магазин"
-                email: "info@antiques.com"
-              image_url: "https://example.com/vase.jpg"
-            - id: 789
-              name: "Китайская ваза с драконами"
-              description: "Редкая китайская ваза с изображением драконов."
-              tags:
-                - "антиквариат"
-                - "ваза"
-                - "Китай"
-                - "драконы"
-              starting_price: 800.0
-              seller:
-                id: 101
-                name: "Коллекционерский клуб"
-                email: "info@collectorsclub.com"
-              image_url: "https://example.com/vase2.jpg"
+components:
+  schemas:
+    Auctions:
+      type: array
+      items:
+        $ref: '#/components/schemas/Auction'
+      example:
+        - id: 1
+          title: "Auction 1"
+          description: "Description of Auction 1"
+          start_time: "2023-08-01T12:00:00Z"
+          end_time: "2023-08-05T12:00:00Z"
+          starting_price: 100.0
+          highest_bid:
+            bid:
+              name: "John Doe"
+              email: "johndoe@example.com"
+            amount: 200.0
+          seller:
+            id: 123
+            name: "Jane Smith"
+            email: "janesmith@example.com"
+          item:
+            id: 456
+            name: "Item 1"
+            description: "Description of Item 1"
+            tags:
+              - "tag1"
+              - "tag2"
+            image_url: "https://example.com/item1.jpg"
+        - id: 2
+          title: "Auction 2"
+          description: "Description of Auction 2"
+          start_time: "2023-08-10T09:00:00Z"
+          end_time: "2023-08-15T09:00:00Z"
+          starting_price: 50.0
+          highest_bid:
+            bid:
+              name: "Jane Doe"
+              email: "janedoe@example.com"
+            amount: 100.0
+          seller:
+            id: 456
+            name: "John Smith"
+            email: "johnsmith@example.com"
+          item:
+            id: 789
+            name: "Item 2"
+            description: "Description of Item 2"
+            tags:
+              - "tag3"
+              - "tag4"
+            image_url: "https://example.com/item2.jpg"
