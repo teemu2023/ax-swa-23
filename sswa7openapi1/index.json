@@ -11,24 +11,28 @@
                 "text": "step0.md"
             },
             {
-                "title": "Знакомство с основными сущнастями",
+                "title": "Знакомство со спецификацией OpenAPI",
                 "text": "step1.md"
             },
             {
-                "title": "Задание 1",
+                "title": "Знакомство со спецификацией OpenAPI",
                 "text": "step2.md"
             },
             {
-                "title": "Задание 2",
+                "title": "Задание 1",
                 "text": "step3.md"
             },
             {
-                "title": "Задание 3",
+                "title": "Задание 2",
                 "text": "step4.md"
             },
             {
-                "title": "Задание 4",
+                "title": "Задание 3",
                 "text": "step5.md"
+            },
+            {
+                "title": "Самопроверка",
+                "text": "step6.md"
             }
         ],
         "intro": {
