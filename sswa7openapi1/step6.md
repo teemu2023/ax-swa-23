@@ -34,7 +34,7 @@
 Ожидаемый ответ:
 
 ### Пример команды для самопроверки задания 3:
-`curl -X POST localhost:32100/auctions/findItems -H "Content-Type: application/json" -d '{"itemName": "Китайская ваза","itemTags": ["антиквариат", "ваза", "Китай"]}'`
+`curl -X POST localhost:32100/auctions/findItems -H "Content-Type: application/json" -d '{"itemName": "Китайская ваза","itemTags": ["антиквариат", "ваза", "Китай"]}'`{{execute}}
 
 Ожидаемый ответ:
 
