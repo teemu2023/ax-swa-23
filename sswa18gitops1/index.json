@@ -30,12 +30,14 @@
         },
         "assets": {
             "host01": [
-                {"file": "app-deployment.yaml", "target": "/root", "chmod": "+x"}
+                {"file": "app-deployment.yaml", "target": "/root", "chmod": "+x"},
+                {"file": "argocd.yaml", "target": "/root", "chmod": "+x"}
             ]
         }
     },
     "files": [
-        "app-deployment.yaml"
+        "app-deployment.yaml",
+        "argocd.yaml"
 
     ],
     "environment": {
