@@ -23,6 +23,6 @@
 `kubectl apply -f simple-app.yaml`{{execute}}
 
 Состояние деплоймента можно получить с помощью команды:
-`kubectl get deploy simple-app.yaml`{{execute}}
+`kubectl get deploy simple-app`{{execute}}
 
 Дождемся когда статус будет *Running*.

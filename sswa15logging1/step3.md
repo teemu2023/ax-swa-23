@@ -1,13 +1,16 @@
 grafana
 
-kubectl apply -f grafana.yaml
 
-kubectl apply -f grafana-service.yaml
+`kubectl apply -f grafana.yaml`{{execute}}
+
+`kubectl apply -f grafana-service`{{execute}}
 
 Get the external IP of the Grafana service:
-[dashboard](https://[[HOST_SUBDOMAIN]]-3000-[[KATACODA_HOST]].environments.katacoda.com/)
 
-kubectl get svc grafana
+
+`kubectl get svc grafana`{{execute}}
+
+[dashboard](https://[[HOST_SUBDOMAIN]]-3000-[[KATACODA_HOST]].environments.katacoda.com/)
 
 Task: Add FluentBit as a Data Source:
 

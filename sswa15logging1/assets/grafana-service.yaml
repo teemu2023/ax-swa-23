@@ -6,7 +6,8 @@ metadata:
     app: grafana
 spec:
   ports:
-  - port: 3000
+  - name: http
+    port: 3000
     protocol: TCP
     targetPort: 3000
   selector:
