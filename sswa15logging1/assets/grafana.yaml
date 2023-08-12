@@ -1,64 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
-  labels:
-    app.kubernetes.io/name: grafana
   name: grafana
+  labels:
+    app: grafana
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: grafana
-  strategy: {}
+      app: grafana
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        app.kubernetes.io/name: grafana
+        app: grafana
     spec:
       containers:
-      - args:
-        - --config=/etc/grafana/grafana.ini
+      - name: grafana
         image: grafana/grafana:latest
-        imagePullPolicy: Always
-        name: grafana
         ports:
         - containerPort: 3000
-          name: m-http
-        readinessProbe:
-          httpGet:
-            path: /robots.txt
-            port: 3000
-          successThreshold: 3
-        resources:
-          limits:
-            cpu: 200m
-            memory: 200Mi
-          requests:
-            cpu: 200m
-            memory: 200Mi
-        securityContext:
-          runAsNonRoot: true
-          runAsUser: 65534
-        volumeMounts:
-        - mountPath: /etc/grafana
-          name: grafana-config
-        - mountPath: /etc/grafana/provisioning/datasources
-          name: grafana-configds
-        - mountPath: /etc/grafana/provisioning/dashboards
-          name: grafana-configdsh
-      volumes:
-      - configMap:
-          name: grafana-config
-        name: grafana-config
-      - configMap:
-          name: grafana-configds
-        name: grafana-configds
-      - configMap:
-          name: grafana-configdsh
-        name: grafana-configdsh
-status: {}
 ---
 apiVersion: v1
 kind: Service
