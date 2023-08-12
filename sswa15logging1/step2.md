@@ -8,4 +8,4 @@
 
 `kubectl apply -f fluentbit-daemonset.yaml`{{execute}}
 
-`kubectl get pods,deployments,service`{{execute}}
+`kubectl get pods,deployments, DaemonSet, service`{{execute}}

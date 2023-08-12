@@ -3,7 +3,7 @@ grafana
 
 `kubectl apply -f grafana.yaml`{{execute}}
 
-`kubectl apply -f grafana-service`{{execute}}
+`kubectl apply -f grafana-service.yaml`{{execute}}
 
 Get the external IP of the Grafana service:
 
