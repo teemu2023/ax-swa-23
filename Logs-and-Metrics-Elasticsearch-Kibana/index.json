@@ -48,11 +48,13 @@
     },
     "assets": {
       "host01": [
-        {
-          "file": "*",
-          "target": "/root/course"
-        }
-      ]
+        {"file": "es.yaml", "target": "/root"},
+        {"file": "filebeat-kubernetes.yaml", "target": "/root"},
+        {"file": "guestbook.yaml", "target": "/root", "chmod": "+x"},
+        {"file": "kibana.yaml", "target": "/root"},
+        {"file": "metricbeat-kubernetes.yaml", "target": "/root"},
+        {"file": "metricbeat-setup.yaml", "target": "/root", "chmod": "+x"}
+    ]
     }
   },
   "environment": {
@@ -65,6 +67,6 @@
     ]
   },
   "backend": {
-    "imageid": "kubernetes-cluster-running"
+    "imageid": "kubernetes-cluster-running:1.18"
   }
 }
