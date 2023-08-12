@@ -5,6 +5,7 @@ kubectl apply -f grafana.yaml
 kubectl apply -f grafana-service.yaml
 
 Get the external IP of the Grafana service:
+[dashboard](https://[[HOST_SUBDOMAIN]]-3000-[[KATACODA_HOST]].environments.katacoda.com/)
 
 kubectl get svc grafana
 

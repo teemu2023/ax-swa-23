@@ -20,9 +20,9 @@
 `simple-app.yaml`{{open}}
 
 Применим манифст развертывания к текущемуему окружению.
-`kubectl apply -f deployment.yaml`{{execute}}
+`kubectl apply -f simple-app.yaml`{{execute}}
 
 Состояние деплоймента можно получить с помощью команды:
-`kubectl get deploy blue-deployment `{{execute}}
+`kubectl get deploy simple-app.yaml`{{execute}}
 
 Дождемся когда статус будет *Running*.
