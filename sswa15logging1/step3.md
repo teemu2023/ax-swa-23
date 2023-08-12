@@ -10,7 +10,7 @@ Get the external IP of the Grafana service:
 
 `kubectl get svc grafana`{{execute}}
 
-[dashboard](https://[[HOST_SUBDOMAIN]]-3000-[[KATACODA_HOST]].environments.katacoda.com/)
+[Grafana](https://[[HOST_SUBDOMAIN]]-30556-[[KATACODA_HOST]].environments.katacoda.com/)
 
 Task: Add FluentBit as a Data Source:
 
