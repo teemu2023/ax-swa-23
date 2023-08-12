@@ -7,10 +7,6 @@
   "details": {
       "steps": [
           {
-              "title": "Подготовка окружения",
-              "text": "step0.md"
-          },
-          {
               "title": "Приемы работы с логами в Kubernetes",
               "text": "step1.md"
           },
