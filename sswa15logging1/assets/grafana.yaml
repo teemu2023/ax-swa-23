@@ -72,11 +72,12 @@ kind: Service
 metadata:
   name: grafana
 spec:
+  type: NodePort
   ports:
-    - port: 3000
-      protocol: TCP
-      targetPort: http-grafana
+  - name: http
+    port: 3000
+    targetPort: 3000
+    nodePort: 32100
   selector:
     app: grafana
   sessionAffinity: None
-  type: LoadBalancer
