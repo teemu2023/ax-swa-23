@@ -1,0 +1,43 @@
+{
+    "pathwayTitle": "gitops1",
+    "title": "sswa18.gitops1 - Знакомство с GitOps",
+    "description": "gitops1",
+    "difficulty": "beginner",
+    "time": "30 minutes",
+    "details": {
+        "steps": [
+            {
+                "title": "Подготовка окружения",
+                "text": "step0.md"
+            },
+            {
+                "title": "Приемы работы с логами в Kubernetes",
+                "text": "step1.md"
+            }
+        ],
+        "intro": {
+            "text": "intro.md",
+            "background": "courseBase.sh",
+            "credits": ""
+        },
+        "assets": {
+            "host01": [
+                {"file": "app-deployment.yaml", "target": "/root", "chmod": "+x"},
+                {"file": "argocd.yaml", "target": "/root", "chmod": "+x"}
+            ]
+        }
+    },
+    "files": [
+        "app-deployment.yaml",
+        "argocd.yaml"
+
+    ],
+    "environment": {
+        "uilayout": "editor-terminal",
+        "uisettings": "yaml",
+        "uimessage1": "\u001b[32mYour Interactive Bash Terminal.\u001b[m\r\n"
+    },
+    "backend": {
+        "imageid": "kubernetes-cluster-running:1.18"
+    }
+}
