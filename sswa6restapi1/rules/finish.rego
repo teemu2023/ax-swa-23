@@ -5,13 +5,13 @@ package sbercode
 # правило на налифиче факта запуска curl -v localhost:32100/httpbin/ip
 allow[msg] {                                                                                                           
   input.didIpRequest == "true"
-  msg := "поздравляем, похоже, что вы запустили curl -v localhost:32100/httpbin/ip"
+  msg := "Поздравляем, похоже, что вы запустили curl -v localhost:32100/httpbin/ip"
 }
 
 # правило на отсутствие факта запуска curl -v localhost:32100/httpbin/ip
 deny[msg] {                                                                                                           
   input.didIpRequest == "false"
-  msg := "к сожалению, мы не смогли найти следов запуска curl -v localhost:32100/httpbin/ip"
+  msg := "К сожалению, мы не смогли найти следов запуска curl -v localhost:32100/httpbin/ip"
 }
 
 # 2 ---------------------------------------------------------------------------------------
@@ -19,13 +19,13 @@ deny[msg] {
 # правило на налифиче факта запуска curl -v localhost:32100/httpbin/html
 allow[msg] {                                                                                                           
   input.didHtmlRequest == "true"
-  msg := "поздравляем, похоже, что вы запустили curl -v localhost:32100/httpbin/html"
+  msg := "Поздравляем, похоже, что вы запустили curl -v localhost:32100/httpbin/html"
 }
 
 # правило на отсутствие факта запуска curl -v localhost:32100/httpbin/html
 deny[msg] {                                                                                                           
   input.didHtmlRequest == "false"
-  msg := "к сожалению, мы не смогли найти следов запуска curl -v localhost:32100/httpbin/html"
+  msg := "К сожалению, мы не смогли найти следов запуска curl -v localhost:32100/httpbin/html"
 }
 
 # 3 ---------------------------------------------------------------------------------------
@@ -33,13 +33,13 @@ deny[msg] {
 # правило на налифиче факта запуска curl -v localhost:32100/httpbin/delay/5
 allow[msg] {                                                                                                           
   input.didDelayRequest == "true"
-  msg := "поздравляем, похоже, что вы запустили curl -v localhost:32100/httpbin/delay/5"
+  msg := "Поздравляем, похоже, что вы запустили curl -v localhost:32100/httpbin/delay/5"
 }
 
 # правило на отсутствие факта запуска curl -v localhost:32100/httpbin/delay/5
 deny[msg] {                                                                                                           
   input.didDelayRequest == "false"
-  msg := "к сожалению, мы не смогли найти следов запуска curl -v localhost:32100/httpbin/delay/5"
+  msg := "К сожалению, мы не смогли найти следов запуска curl -v localhost:32100/httpbin/delay/5"
 }
 
 # 4 ---------------------------------------------------------------------------------------
@@ -47,13 +47,13 @@ deny[msg] {
 # правило на налифиче факта запуска curl -v -XPOST localhost:32100/httpbin/post -H "Content-Type: application/json" -d'{"data":"test data here"}'
 allow[msg] {                                                                                                           
   input.didPostRequest == "true"
-  msg := "поздравляем, похоже, что вы запустили curl -v -XPOST localhost:32100/httpbin/post -H \"Content-Type: application/json\" -d'{\"data\":\"test data here\"}'"
+  msg := "Поздравляем, похоже, что вы запустили curl -v -XPOST localhost:32100/httpbin/post -H \"Content-Type: application/json\" -d'{\"data\":\"test data here\"}'"
 }
 
 # правило на отсутствие факта запуска curl -v -XPOST localhost:32100/httpbin/post -H "Content-Type: application/json" -d'{"data":"test data here"}'
 deny[msg] {                                                                                                           
   input.didPostRequest == "false"
-  msg := "к сожалению, мы не смогли найти следов запуска curl -v -XPOST localhost:32100/httpbin/post -H \"Content-Type: application/json\" -d'{\"data\":\"test data here\"}'"
+  msg := "К сожалению, мы не смогли найти следов запуска curl -v -XPOST localhost:32100/httpbin/post -H \"Content-Type: application/json\" -d'{\"data\":\"test data here\"}'"
 }
 
 # 5 ---------------------------------------------------------------------------------------
@@ -67,14 +67,14 @@ allow[msg] {
   # проверяем статус запуска контейнера ингрес контроллра
   input.controllerStatus.items[0].status.conditions[_].status = "True"
 
-  msg := "поздравляем, похоже, что вы успешно инициализировали кубернетс и ингресс контроллер"
+  msg := "Поздравляем, похоже, что вы успешно инициализировали Kubernetes и Ingress контроллер"
 }
 
 
 # правило на отсуствие признаков запуска кубера и ингрес контролера
 deny[msg] { 
   count(input.controllerStatus.items) == 0
-  msg := "к сожалению, мы не смогли найти следов запуска вами кубера и ингресс контроллера (см первый шаг упражнения и команду prepare.sh)"
+  msg := "К сожалению, мы не смогли найти следов запуска вами Kubernetes и Ingress контроллера (см первый шаг упражнения и команду prepare.sh)"
 }
 
 # 6 ---------------------------------------------------------------------------------------
