@@ -6,6 +6,6 @@
 
 `kubectl apply -f argocd.yaml`{{execute}}
 
-`kubectl get pods -n argocd`{{execute}}
+`kubectl get all`{{execute}}
 
 
