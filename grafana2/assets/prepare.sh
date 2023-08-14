@@ -108,15 +108,14 @@ kind: Service
 metadata:
   name: grafana
 spec:
-  type: NodePort
   ports:
-  - name: http
-    port: 3000
-    targetPort: 3000
-    nodePort: 32100
+    - port: 3000
+      protocol: TCP
+      targetPort: http-grafana
   selector:
     app: grafana
   sessionAffinity: None
+  type: LoadBalancer
 EOF
     kubectl apply -f /tmp/grafana.yaml
     kubectl wait --for=condition=ContainersReady --timeout=5m --all pods
