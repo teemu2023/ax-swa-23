@@ -1,7 +1,7 @@
 {
-    "pathwayTitle": "gitops1",
-    "title": "sswa18.gitops1 - Знакомство с GitOps",
-    "description": "gitops1",
+    "pathwayTitle": "argocd1",
+    "title": "argocd1",
+    "description": "argocd1",
     "difficulty": "beginner",
     "time": "30 minutes",
     "details": {
