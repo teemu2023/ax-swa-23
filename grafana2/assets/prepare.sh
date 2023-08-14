@@ -41,7 +41,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: grafana
-  namespace: monitoring
   labels:
     app: grafana
 spec:
@@ -151,7 +150,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: grafana
-  namespace: monitoring
   annotations:
     prometheus.io/scrape: 'true'
     prometheus.io/port:   '3000'
