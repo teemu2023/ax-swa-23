@@ -29,7 +29,7 @@
             "host01": [
                 {"file": "grafana.yaml", "target": "/tmp"},
                 {"file": "prepare.sh", "target": "/usr/local/bin", "chmod": "+x"},
-                {"file": "grafana-monitoring.yaml", "target": "/root", "chmod": "+x"}
+                {"file": "grafana-monitoring.yaml", "target": "/root"}
             ]
           }
     },
