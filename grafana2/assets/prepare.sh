@@ -23,7 +23,7 @@ function install_ingress() {
     kubectl -n ingress-nginx wait --for=condition=available --timeout=3m deployment/ingress-nginx-controller
     test $? -eq 1 && echo "[ERROR] Ingress controller not ready" && kill "$!" && exit 1
     kubectl -n ingress-nginx patch svc ingress-nginx-controller --patch \
-      '{"spec": { "type": "NodePort", "ports": [ { "name": "http", "nodePort": 32100, "port": 3000, "protocol": "TCP", "targetPort": 3000} ] } }'
+      '{"spec": { "type": "NodePort", "ports": [ {"nodePort": 32100, "port": 3000, "protocol": "TCP", "targetPort": 3000} ] } }'
     echo done
     touch $INGRESS_DONE
   else
@@ -114,8 +114,6 @@ spec:
       targetPort: http-grafana
   selector:
     app: grafana
-  sessionAffinity: None
-  type: LoadBalancer
 EOF
     kubectl apply -f /tmp/grafana.yaml
     kubectl wait --for=condition=ContainersReady --timeout=5m --all pods
