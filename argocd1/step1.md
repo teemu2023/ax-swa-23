@@ -61,6 +61,8 @@ spec:
     бить 
 
 git init
+git config --global user.email "you@example.com"
+git config --global user.name "Your Name"
 
 Добавьте файл  app и зафиксируйте исходные файлы приложения: 
 
