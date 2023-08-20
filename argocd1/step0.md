@@ -5,6 +5,8 @@
 
 `kubectl apply -f coredns.yaml.sed`{{execute}}
 
+`kubectl create namespace argocd`{{execute}}
+
 
 `kubectl apply -f argocd.yaml`{{execute}}
 
