@@ -11,6 +11,7 @@ Step 2: Prepare Application Files
     bash
 
 mkdir gitops-tutorial
+
 cd gitops-tutorial
 
 Create a subdirectory named app:
@@ -18,6 +19,7 @@ Create a subdirectory named app:
 bash
 
 mkdir app
+
 cd app
 
 Create a Kubernetes Deployment YAML file named app-deployment.yaml:
@@ -64,6 +66,11 @@ bash
 
     git add .
     git commit -m "Initial commit"
+
+    git config --global user.email "you@example.com"
+    git config --global user.name "Your Name"
+
+
 
 Step 4: Deploy ArgoCD
 
