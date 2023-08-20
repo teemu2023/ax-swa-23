@@ -1,80 +1,122 @@
-Use kubectl (the Kubernetes command-line tool) to apply the ArgoCD installation manifest. This manifest will create the necessary resources in your Kubernetes cluster.
+Название:  Введение в GitOps с ArgoCD 
 
-bash
+Описание:  В этом руководстве вы узнаете о концепции GitOps и о том, как использовать инструмент ArgoCD для автоматизации развертывания приложений с помощью локального репозитория Git. Вы настроите простой пример, в котором изменения в репозитории Git запускают автоматическое развертывание в кластере Kubernetes. 
 
-kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+Шаг 1: Настройка 
 
-kubectl apply -f argocd.yaml
+    Откройте терминал и выполните следующие команды, чтобы создать новый каталог для учебника: 
 
-Wait for the ArgoCD components to be deployed. You can check the status using:
+    бить 
 
-bash
+    mkdir gitops-argocd-tutorial
+    cd gitops-argocd-tutorial
 
-kubectl get pods -n argocd
+Шаг 2: Подготовьте файлы приложения 
 
-Substep 2: Access ArgoCD UI
+    Внутри  gitops-argocd-tutorial , создайте подкаталог с именем  app: 
 
-    Expose the ArgoCD API server using a port-forward command. This will allow you to access the ArgoCD UI in your local browser.
+    бить 
 
-    bash
+mkdir app
+cd app
 
-kubectl port-forward svc/argocd-server -n argocd 8080:443
+Создайте простой YAML-файл развертывания Kubernetes с именем  app-deployment.yaml Для вашего приложения: 
 
-Open your web browser and navigate to http://localhost:8080. This will open the ArgoCD UI login page.
+YAML 
 
-Retrieve the initial ArgoCD admin password:
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sample-app
+  template:
+    metadata:
+      labels:
+        app: sample-app
+    spec:
+      containers:
+        - name: sample-app
+          image: nginx:latest
+          ports:
+            - containerPort: 80
 
-bash
+Вернуться к разделу  gitops-argocd-tutorial каталог: 
 
-    kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+бить 
 
-    Use the password from the previous step to log in to the ArgoCD UI. You will be prompted to change the password after the initial login.
+    cd ..
 
-Substep 3: Configure ArgoCD CLI (Optional)
+Шаг 3: Настройка кластера Kubernetes 
 
-    Install the ArgoCD CLI tool, argocd, on your local machine to interact with ArgoCD from the command line. Follow the installation instructions for your operating system: https://argoproj.github.io/argo-cd/cli_installation/
+    Предположим, что для работы с учебником доступен работающий кластер Kubernetes. Упомяните об этом в описании учебника. 
 
-    Configure the ArgoCD CLI to use the correct ArgoCD API server:
+Шаг 4: Настройка локального репозитория Git 
 
-    bash
+    Инициализируйте новый репозиторий Git в каталоге  gitops-argocd-tutorial каталог: 
 
-    argocd login localhost:8080 --username=admin --password=<your_admin_password>
+    бить 
 
-    Replace <your_admin_password> with the password you set during the initial login.
+git init
 
-Substep 4: Secure ArgoCD
+Добавьте файл  app и зафиксируйте исходные файлы приложения: 
 
-    By default, the ArgoCD API server is accessible without authentication. For a production environment, it's recommended to secure it using various methods, such as Ingress controllers, OAuth2, or HTTPS.
+бить 
 
-Substep 5: Import Application to ArgoCD
+    git add .
+    git commit -m "Initial commit"
 
-    In the ArgoCD UI, navigate to the Apps tab.
+Шаг 5: Установка и настройка ArgoCD 
 
-    Click on the New App button.
+    Предоставьте инструкции по установке ArgoCD в кластере Kubernetes. Возможно, вы захотите включить ссылку на официальное руководство по установке. 
 
-    Fill in the application details:
-        Application Name: Choose a name (e.g., sample-app).
-        Project: Select the default project.
-        Sync Policy: Choose Automatic.
-        Repository URL: Provide the URL of your local Git repository.
-        Revision: Use HEAD.
-        Path: Set to the directory containing your application YAML files (e.g., app).
+Шаг 6: Настройте приложение ArgoCD 
 
-    Click on the Create button to create the application.
+    Создайте новое приложение в ArgoCD, чтобы развернуть приложение из локального репозитория Git. 
 
-Substep 6: Observe Automatic Sync
+    YAML 
 
-    After creating the application, you will be redirected to the application details page.
+    apiVersion: argoproj.io/v1alpha1
+    kind: Application
+    metadata:
+      name: sample-app
+    spec:
+      destination:
+        name: ''
+        namespace: default
+      source:
+        path: app
+        repoURL: <your_local_git_repo_url>
+        targetRevision: HEAD
+      project: default
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
 
-    ArgoCD will automatically start syncing the application. You can see the sync progress and details on this page.
+    Примечание:  Заменить  <your_local_git_repo_url> с фактическим URL-адресом локального репозитория Git. 
 
-    Once the sync is complete, the application will be deployed to the Kubernetes cluster based on the configuration in your local Git repository.
+`kubectl apply -f argocd.yaml`{{execute}}    
 
-Substep 7: Verify Deployment
+Шаг 7: Запуск развертывания с помощью Git Push 
 
-    Use kubectl to verify that the application has been deployed to the Kubernetes cluster:
+    Внесите небольшое изменение в файл  app-deployment.yaml,  например, обновление количества реплик. 
 
-    bash
+    Зафиксируйте и отправьте изменения в локальный репозиторий Git: 
 
-kubectl get pods
+    бить 
+
+    git add app/app-deployment.yaml
+    git commit -m "Update replicas"
+    git push origin master
+
+Шаг 8: Наблюдение за автоматическим развертыванием 
+
+    В пользовательском интерфейсе ArgoCD перейдите к приложению  sample-app. . Вы увидите, что приложение автоматически синхронизируется и развертывается в кластере Kubernetes. 
+
+Шаг 9: Заключение 
+
+    Обобщите то, что было рассмотрено в руководстве, и подчеркните важность GitOps и ArgoCD для автоматизации развертывания приложений. 

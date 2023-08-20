@@ -23,8 +23,7 @@
         "assets": {
             "host01": [
                 {"file": "app-deployment.yaml", "target": "/root", "chmod": "+x"},
-                {"file": "coredns.yaml.sed", "target": "/root", "chmod": "+x"},
-                {"file": "no-tls.yaml", "target": "/root", "chmod": "+x"},
+                {"file": "get_repo_url.sh", "target": "/root", "chmod": "+x"},
                 {"file": "argocd.yaml", "target": "/root", "chmod": "+x"}
             ]
         }
