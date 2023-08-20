@@ -24,6 +24,9 @@
             "host01": [
                 {"file": "app-deployment.yaml", "target": "/root", "chmod": "+x"},
                 {"file": "get_repo_url.sh", "target": "/root", "chmod": "+x"},
+                {"file": "ingress-argocd.yaml", "target": "/root", "chmod": "+x"},
+                {"file": "ingress.yaml", "target": "/root", "chmod": "+x"},
+                {"file": "kind-argocd.yaml", "target": "/root", "chmod": "+x"},
                 {"file": "argocd.yaml", "target": "/root", "chmod": "+x"}
             ]
         }
