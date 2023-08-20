@@ -1,28 +1,28 @@
-Название:  Введение в GitOps с ArgoCD 
+Step 1: Set Up the Environment
 
-Описание:  В этом руководстве вы узнаете о концепции GitOps и о том, как использовать инструмент ArgoCD для автоматизации развертывания приложений с помощью локального репозитория Git. Вы настроите простой пример, в котором изменения в репозитории Git запускают автоматическое развертывание в кластере Kubernetes. 
+    Open Katacoda and create a new scenario.
 
-Шаг 1: Настройка 
+    Prepare a running Kubernetes cluster. You can use a pre-configured cluster within Katacoda.
 
-    Откройте терминал и выполните следующие команды, чтобы создать новый каталог для учебника: 
+Step 2: Prepare Application Files
 
-    бить 
+    Inside the terminal, create a directory for your tutorial and navigate to it:
 
-    mkdir gitops-argocd-tutorial
-    cd gitops-argocd-tutorial
+    bash
 
-Шаг 2: Подготовьте файлы приложения 
+mkdir gitops-tutorial
+cd gitops-tutorial
 
-    Внутри  gitops-argocd-tutorial , создайте подкаталог с именем  app: 
+Create a subdirectory named app:
 
-    бить 
+bash
 
 mkdir app
 cd app
 
-Создайте простой YAML-файл развертывания Kubernetes с именем  app-deployment.yaml Для вашего приложения: 
+Create a Kubernetes Deployment YAML file named app-deployment.yaml:
 
-YAML 
+yaml
 
 apiVersion: apps/v1
 kind: Deployment
@@ -44,81 +44,83 @@ spec:
           ports:
             - containerPort: 80
 
-Вернуться к разделу  gitops-argocd-tutorial каталог: 
+Return to the gitops-tutorial directory:
 
-бить 
+bash
 
     cd ..
 
-Шаг 3: Настройка кластера Kubernetes 
+Step 3: Initialize Local Git Repository
 
-    Предположим, что для работы с учебником доступен работающий кластер Kubernetes. Упомяните об этом в описании учебника. 
+    Initialize a new Git repository:
 
-Шаг 4: Настройка локального репозитория Git 
-
-    Инициализируйте новый репозиторий Git в каталоге  gitops-argocd-tutorial каталог: 
-
-    бить 
+    bash
 
 git init
-git config --global user.email "you@example.com"
-git config --global user.name "Your Name"
 
-Добавьте файл  app и зафиксируйте исходные файлы приложения: 
+Add and commit the application files:
 
-бить 
+bash
 
     git add .
     git commit -m "Initial commit"
 
-Шаг 5: Установка и настройка ArgoCD 
+Step 4: Deploy ArgoCD
 
-    Предоставьте инструкции по установке ArgoCD в кластере Kubernetes. Возможно, вы захотите включить ссылку на официальное руководство по установке. 
+    Install ArgoCD on your Kubernetes cluster. You can use Helm or the ArgoCD manifests directly.
 
-Шаг 6: Настройте приложение ArgoCD 
+Step 5: Configure ArgoCD Application
 
-    Создайте новое приложение в ArgoCD, чтобы развернуть приложение из локального репозитория Git. 
+    Create a new ArgoCD application YAML file, argocd-app.yaml:
 
-    YAML 
+    yaml
 
-    apiVersion: argoproj.io/v1alpha1
-    kind: Application
-    metadata:
-      name: sample-app
-    spec:
-      destination:
-        name: ''
-        namespace: default
-      source:
-        path: app
-        repoURL: <your_local_git_repo_url>
-        targetRevision: HEAD
-      project: default
-      syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sample-app
+spec:
+  destination:
+    name: ''
+    namespace: default
+  source:
+    path: app
+    repoURL: file:///root/gitops-tutorial
+    targetRevision: HEAD
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
 
-    Примечание:  Заменить  <your_local_git_repo_url> с фактическим URL-адресом локального репозитория Git. 
+Apply the application YAML to create the ArgoCD application:
 
-`kubectl apply -f argocd.yaml`{{execute}}    
+bash
 
-Шаг 7: Запуск развертывания с помощью Git Push 
+    kubectl apply -f argocd-app.yaml
 
-    Внесите небольшое изменение в файл  app-deployment.yaml,  например, обновление количества реплик. 
+Step 6: Observe Automatic Deployment
 
-    Зафиксируйте и отправьте изменения в локальный репозиторий Git: 
+    Monitor the ArgoCD UI or use kubectl get pods to observe the application deployment.
 
-    бить 
+Step 7: Trigger Deployment with Git Push
+
+    Modify the app-deployment.yaml file, for example, change the replicas to 3.
+
+    Commit and push the change to your local Git repository:
+
+    bash
 
     git add app/app-deployment.yaml
     git commit -m "Update replicas"
     git push origin master
 
-Шаг 8: Наблюдение за автоматическим развертыванием 
+Step 8: Verify Automatic Redeployment
 
-    В пользовательском интерфейсе ArgoCD перейдите к приложению  sample-app. . Вы увидите, что приложение автоматически синхронизируется и развертывается в кластере Kubernetes. 
+    Watch the ArgoCD UI or use kubectl get pods to see the updated deployment triggered by ArgoCD.
 
-Шаг 9: Заключение 
+Step 9: Conclusion
 
-    Обобщите то, что было рассмотрено в руководстве, и подчеркните важность GitOps и ArgoCD для автоматизации развертывания приложений. 
+    Summarize the tutorial, explaining how GitOps and ArgoCD automate application deployments.
+
+Remember to adapt the steps to the Katacoda environment and format them using Katacoda's tools to create an interactive learning experience for your tutorial users.
