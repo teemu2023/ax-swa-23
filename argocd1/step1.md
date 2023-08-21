@@ -1,8 +1,12 @@
 Step 1: Set Up the Environment
 
-    Open Katacoda and create a new scenario.
+kubectl create namespace argocd
 
-    Prepare a running Kubernetes cluster. You can use a pre-configured cluster within Katacoda.
+kubectl apply -n argocd -f argocd.yaml
+
+kubectl get all -n argocd
+
+kubectl apply -n argocd -f argocd-project.yaml
 
 Step 2: Prepare Application Files
 
