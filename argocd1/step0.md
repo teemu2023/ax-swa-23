@@ -3,22 +3,17 @@
 
 `launch.sh`{{execute}}
 
-kind create cluster --config=kind-argocd.yaml
-
-kubectl apply -f ingress.yaml
-
 `kubectl create namespace argocd`{{execute}}
 
-`kubectl apply -f argocd.yaml`{{execute}}
+`kubectl apply -n argocd -f argocd.yaml`{{execute}}
 
-kubectl apply -f ingress-argocd.yaml
+`kubectl get all -n argocd`{{execute}}
 
-kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d && echo
+`kubectl apply -n argocd -f argocd-project.yaml`{{execute}}
 
-[ArgoOps](https://[[HOST_SUBDOMAIN]]-[[KATACODA_HOST]].environments.katacoda.com/)
+`kubectl get all -n argocd`{{execute}}
 
-`kubectl get all`{{execute}}
-
+`kubectl apply -n argocd -f gogs.yaml`{{execute}}   
 
 
 
