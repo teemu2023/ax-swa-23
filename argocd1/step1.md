@@ -20,6 +20,8 @@
 
 `git commit -m "Initial commit"`{{execute}}
 
+git remote add origin <gogs_repository_url>
+
 `touch argocd-app.yaml`{{execute}}
 
 `kubectl apply -n argocd -f argocd-app.yaml`{{execute}}
