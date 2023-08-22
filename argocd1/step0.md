@@ -14,8 +14,3 @@
 `kubectl get all -n argocd`{{execute}}
 
 `kubectl apply -n argocd -f gogs.yaml`{{execute}}   
-
-
-
-
-

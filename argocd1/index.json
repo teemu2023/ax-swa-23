@@ -11,7 +11,7 @@
                 "text": "step0.md"
             },
             {
-                "title": "Приемы работы с логами в Kubernetes",
+                "title": "Приемы работы с ArgoCD",
                 "text": "step1.md"
             }
         ],
