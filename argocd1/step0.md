@@ -15,6 +15,10 @@
 
 `kubectl apply -n argocd -f gogs.yaml`{{execute}}  
 
+kubectl apply -f gogs-deployment.yaml
+
+kubectl apply -f gogs-service.yaml
+
 Получите внешний IP-адрес службы Gogs:
 
 kubectl get svc gogs
