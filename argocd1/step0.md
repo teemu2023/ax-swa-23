@@ -23,9 +23,23 @@ kubectl apply -f gogs-service.yaml
 
 kubectl get svc gogs
 
+Создание пользователя в Gogs
+В открытом терминале выполните следующие команды:
+a. Зарегистрируйте нового пользователя:
 
 EXTERNAL_IP=<gogs_external_ip>
-REPO_NAME=my-new-public-repo
+NEW_USER=<new_username>
+PASSWORD=<new_password>
 
-curl -X POST "http://$EXTERNAL_IP/api/v1/user/repos" -H "Content-Type: application/json" -d "{\"name\":\"$REPO_NAME\", \"private\": false}"
+curl -X POST "http://$EXTERNAL_IP/api/v1/admin/users" -H "Content-Type: application/json" -d "{\"username\":\"$NEW_USER\", \"password\":\"$PASSWORD\"}"
+
+
+Шаг 3: Создание нового репозитория для нового пользователя
+В том же терминале выполните следующие команды:
+a. Создайте новый репозиторий для нового пользователя:
+
+REPO_NAME=<new_repository_name>
+
+curl -X POST "http://$EXTERNAL_IP/api/v1/user/repos" -H "Content-Type: application/json" -d "{\"username\":\"$NEW_USER\", \"name\":\"$REPO_NAME\", \"private\": false}"
+
 

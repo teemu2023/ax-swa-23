@@ -4,7 +4,6 @@ metadata:
   # название приложения
   name: nginx-app 
   namespace: argocd
-    - resources-finalizer.argocd.argoproj.io
 spec:
   # то же название проекта, что в dev.yaml
   project: development 
@@ -19,7 +18,7 @@ spec:
   
   destination:
     server: https://kubernetes.default.svc
-    namespace: kuber
+    namespace: app
 
   # параметры для автоматического мониторинга и внесения изменений
   # в Git-репозитория 
