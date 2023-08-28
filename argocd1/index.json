@@ -26,6 +26,7 @@
                 {"file": "app-service.yaml", "target": "/root", "chmod": "+x"},
                 {"file": "argocd-project.yaml", "target": "/root", "chmod": "+x"},
                 {"file": "gogs.yaml", "target": "/root", "chmod": "+x"},
+                {"file": "gogs1.yaml", "target": "/root", "chmod": "+x"},
                 {"file": "gogs-deployment.yaml", "target": "/root", "chmod": "+x"},
                 {"file": "gogs-service.yaml", "target": "/root", "chmod": "+x"},
                 {"file": "application.yaml", "target": "/root", "chmod": "+x"},
