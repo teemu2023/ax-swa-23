@@ -58,8 +58,8 @@
     "assets": {
       "host01": [
         {"file": "Dockerfile", "target": "/root"},
-        {"file": "*.yaml", "target": "/root"},
-        {"file": "*.java", "target": "/root"},
+        {"file": "hello.yaml", "target": "/root"},
+        {"file": "HelloApplication.java", "target": "/root"},
         {"file": "token.sh", "target": "/usr/local/bin", "chmod": "+x"}
       ]
     }
