@@ -1,13 +1,13 @@
 {
     "pathwayTitle": "gitOPS1",
-    "title": "sswa17.gitops1 - Знакомство с подходом GitOPS",
+    "title": "sswa17.gitops1 - Знакомство с подходом GitOps",
     "description": "gitOPS1",
     "difficulty": "beginner",
     "time": "30 minutes",
     "details": {
         "steps": [
             {
-                "title": "Общая информация о GitOPS",
+                "title": "Общая информация о GitOps",
                 "text": "step0.md"
             },
             {
@@ -15,7 +15,7 @@
                 "text": "step1.md"
             },
             {
-                "title": "Приемы работы с ArgoCD",
+                "title": "Приемы работы с Argo CD",
                 "text": "step2.md"
             }
         ],
