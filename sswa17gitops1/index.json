@@ -1,13 +1,13 @@
 {
     "pathwayTitle": "gitOPS1",
-    "title": "sswa17.gitops1 - Знакомство с подходом GitOps",
+    "title": "sswa17.gitops1 - Знакомство с подходом GitOPS",
     "description": "gitOPS1",
     "difficulty": "beginner",
     "time": "30 minutes",
     "details": {
         "steps": [
             {
-                "title": "Общая информация о GitOps",
+                "title": "Общая информация о GitOPS",
                 "text": "step0.md"
             },
             {
@@ -15,7 +15,7 @@
                 "text": "step1.md"
             },
             {
-                "title": "Приемы работы с Argo CD",
+                "title": "Приемы работы с ArgoCD",
                 "text": "step2.md"
             }
         ],
@@ -26,15 +26,13 @@
         },
         "assets": {
             "host01": [
-                {"file": "app-deployment.yaml", "target": "/root", "chmod": "+x"},
-                {"file": "app-service.yaml", "target": "/root", "chmod": "+x"},
-                {"file": "argocd-project.yaml", "target": "/root", "chmod": "+x"},
-                {"file": "gogs.yaml", "target": "/root", "chmod": "+x"},
-                {"file": "gogs1.yaml", "target": "/root", "chmod": "+x"},
-                {"file": "gogs-deployment.yaml", "target": "/root", "chmod": "+x"},
-                {"file": "gogs-service.yaml", "target": "/root", "chmod": "+x"},
-                {"file": "application.yaml", "target": "/root", "chmod": "+x"},
-                {"file": "argocd.yaml", "target": "/root", "chmod": "+x"}
+                {"file": "nginx-app.yaml", "target": "/root"},
+                {"file": "argocd-project.yaml", "target": "/root"},
+                {"file": "gogs.yaml", "target": "/usr/local/etc"},
+                {"file": "prepare.sh", "target": "/usr/local/bin", "chmod": "+x"},
+                {"file": "prepare_repo.sh", "target": "/root", "chmod": "+x"},
+                {"file": "application.yaml", "target": "/root"},
+                {"file": "argocd.yaml", "target": "/usr/local/etc"}
             ]
         }
     },

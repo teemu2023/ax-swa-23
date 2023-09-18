@@ -10,7 +10,7 @@ spec:
 
   # репозиторий, из которого ArgoCD будет брать код 
   source:
-    repoURL: http://$EXTERNAL_IP/Test/test_repo.git 
+    repoURL: http://gogs-svc.gogs.svc.cluster.local/argo/gitops.git 
     targetRevision: master 
     # путь до приложения Kubernetes, деплой которого также описан
     # YAML-файлом (см. пример в репозитории)
