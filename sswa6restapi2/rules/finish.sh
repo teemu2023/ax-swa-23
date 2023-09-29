@@ -28,11 +28,3 @@ controllerStatus=$(kubectl get po -l app.kubernetes.io/component=controller -n i
 if [[ $(echo $controllerStatus | jq 2>&1) =~ "parse error:" ]]; then
     controllerStatus=$(jq --null-input --arg error "$controllerStatus" '$ARGS.named')
 fi
-
-# получаем логи из ингреса
-logs=$(kubectl logs -n ingress-nginx -l app.kubernetes.io/name=ingress-nginx 2>&1 | tail -n 100)
-
-# шаблоны ожидаемых записей в логе ингреса
-
-
-# собираем факты в результирующий json
