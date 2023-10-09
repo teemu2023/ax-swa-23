@@ -22,7 +22,7 @@ paths:
                 items:
                   type: object
                   properties:
-                    bind_id:
+                    bid_id:
                       type: integer
                     item_id:
                       type: integer
@@ -33,17 +33,17 @@ paths:
                     timestamp:
                       type: string
                 example:
-                  - bind_id: 1
+                  - bid_id: 1
                     item_id: 1
                     buyer_id: 4
                     amount: 150
                     timestamp: "2023-03-19T15:30:00Z"
-                  - bind_id: 2
+                  - bid_id: 2
                     item_id: 1
                     buyer_id: 5
                     amount: 175
                     timestamp: "2023-03-19T15:35:00Z"
-                  - bind_id: 3
+                  - bid_id: 3
                     item_id: 1
                     buyer_id: 6
                     amount: 200
@@ -98,7 +98,7 @@ paths:
                 role: "buyer"
                 icon: "onlineauction.ru/content/images/ico112233.png"
                 Message: "Пользователь создан"
-  /auctions/{auction_id}/binds/{bind_id}:
+  /auctions/{auction_id}/bids/{bid_id}:
     delete:
       summary: Отмена ставки по аукциону
       parameters:
@@ -107,7 +107,7 @@ paths:
           required: true
           schema:
             type: string
-        - name: bind_id
+        - name: bid_id
           in: path
           required: true
           schema:
@@ -122,13 +122,13 @@ paths:
                 properties:
                   auction_id:
                     type: string
-                  binds_id:
+                  bids_id:
                     type: string
                   Message:
                     type: string
               example:
                 auction_id: "123"
-                binds_id: "321"
+                bids_id: "321"
                 Message: "Ставка отменена" 
   /sellers/{seller_id}/orders/{order_id}:
     patch:
