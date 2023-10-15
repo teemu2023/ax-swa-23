@@ -1,13 +1,21 @@
 package sbercode
 
-allow[msg] {                                                                                                           
-  msg := input.message
+default ok = false
+
+ok = true {
+    input.command == "curl -v localhost:32100/auctions/12345/bids"
 }
 
-deny[msg] {                                                                                                           
-  msg := input.deny
+allow[msg] {
+    ok
+    msg := "[OK] Task completed successfully"
 }
 
-error[msg] {                                                                                                           
-  msg := input.error
+deny[msg] {
+    ok == false
+    msg := "[ERROR] Task not completed. Please try again."
+}
+
+error[msg] {
+    msg := input.error
 }
