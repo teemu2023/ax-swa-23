@@ -1,13 +1,13 @@
 {
     "pathwayTitle": "restapi1",
-    "title": "sswa6.restapi1 - Демонстрация использования REST API",
+    "title": "Демонстрация использования REST API",
     "description": "restapi1",
     "difficulty": "beginner",
     "time": "30 minutes",
     "details": {
         "steps": [
             {
-                "title": "Готовим окружение",
+                "title": "Подготовка окружения",
                 "text": "step0.md"
             },
             {
@@ -15,7 +15,7 @@
                 "text": "step1.md"
             },
             {
-                "title": "Выполняем запросы с помощью curl",
+                "title": "Отправка запросов с помощью cURL",
                 "text": "step2.md"
             }
         ],
