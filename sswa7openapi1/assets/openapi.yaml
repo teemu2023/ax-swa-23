@@ -61,20 +61,24 @@ components:
         starting_price: 500.0
         highest_bid:
           bid:
-            name: "John Doe"
-            email: "johndoe@example.com"
-          amount: 700.0
+            id: 123
+            buyer_id: 456
+            auction_id: 789
+            amount: 100.0
+            timestamp: '2022-04-01T14:30:00Z'
         seller:
           id: 123
-          name: "Jane Smith"
-          email: "janesmith@example.com"
+          name: "Джеки Чан"
+          email: "chan@example.ch"
         item:
           id: 456
           name: "Древняя китайская ваза династии Мин"
           description: "Древнекитайская ваза династии Мин в хорошем состоянии."
           tags:
-            - jewelry
-            - ruby
+            - "антиквариат"
+            - "ваза"
+            - "Китай"
+            - "династия Мин"
           image_url: "https://example.com/ancient-vase.jpg"
     Seller:
       type: object
@@ -108,32 +112,32 @@ components:
       items:
         $ref: '#/components/schemas/Seller'
       example:
-      - id: 1
-        name: John Doe
-        email: john.doe@example.com
-        phone: 555-1234
-        items:
-          - id: 1
-            name: Item 1
-            description: Description of Item 1
-            starting_price: 10.99
-          - id: 2
-            name: Item 2
-            description: Description of Item 2
-            starting_price: 5.99
-      - id: 2
-        name: Jane Doe
-        email: jane.doe@example.com
-        phone: 555-5678
-        items:
-          - id: 3
-            name: Item 3
-            description: Description of Item 3
-            starting_price: 15.99
-          - id: 4
-            name: Item 4
-            description: Description of Item 4
-            starting_price: 20.99  
+        - id: 1
+          name: John Doe
+          email: john.doe@example.com
+          phone: 555-1234
+          items:
+            - id: 1
+              name: Item 1
+              description: Description of Item 1
+              starting_price: 10.99
+            - id: 2
+              name: Item 2
+              description: Description of Item 2
+              starting_price: 5.99
+        - id: 2
+          name: Jane Doe
+          email: jane.doe@example.com
+          phone: 555-5678
+          items:
+            - id: 3
+              name: Item 3
+              description: Description of Item 3
+              starting_price: 15.99
+            - id: 4
+              name: Item 4
+              description: Description of Item 4
+              starting_price: 20.99  
     Item:
       type: object
       properties:
@@ -150,7 +154,7 @@ components:
         tags:
           type: array
           items:
-            $ref: '#/components/schemas/ItemTags'
+            $ref: '#/components/schemas/ItemTag'
         starting_price:
           type: number
           format: float
@@ -179,7 +183,7 @@ components:
         starting_price: 100.00
         seller: 456
         image: "https://example.com/images/chair.jpg"  
-    ItemTags:
+    ItemTag:
       type: object
       properties:
         id:
@@ -253,10 +257,10 @@ components:
         - address
       example:
         id: 123
-        name: John Doe
-        email: john.doe@example.com
+        name: Иван Иванов
+        email: ivan.ivanov@example.ru
         phone: +1 (555) 123-4567
-        address: 123 Main St. Anytown, USA  
+        address: 123, РФ, Москва, Новая улица, д.1, кв. 2   
     Error:
       type: object
       properties:
@@ -577,7 +581,7 @@ paths:
         '204':
           description: No Content
         default:
-          $ref: '#/components/responses/Error'
+          $ref: '#/components/responses/Error'   
   /auctions/{auction_id}/bids/{bid_id}:
     get:
       summary: Извлечение конкретной ставки для аукциона

@@ -1,70 +1,34 @@
 ### Задания для добавления описания конечной точки
 
-Добавь соответствующее описание в секцию **path** для новой конечной точки, которая позволяет покупателям искать товары на всех аукционах. Поиск может быть отфильтрован по названию товара и/или тегам товара. В качестве примера можно привести поиск покупателем китайской вазы.
+Добавь соответствующее описание в секцию **path** для новой конечной точки, которая позволяет создавать нового покупателя.
 
 
 Ожидаемый ответ (удалить при запуске):
-  /auctions/findItems:
+  /buyers:
     post:
-      summary: Поиск товаров во всех аукционах
-      description: |
-        Эта конечная точка позволяет покупателям искать товары на всех аукционах. Поиск может быть отфильтрован по названию товара и/или тегам товара.
-      parameters:
-        - $ref: '#/components/parameters/ItemNameQueryParam'
-        - $ref: '#/components/parameters/ItemTagQueryParam'
-        - $ref: '#/components/parameters/LimitQueryParam'
-        - $ref: '#/components/parameters/OffsetQueryParam'
+      summary: Создать нового покупателя
+      description: Позволяет создать нового покупателя.
       requestBody:
-        description: Тело запроса для поиска товаров
+        description: Инормация для новых покупателей.
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                itemName:
-                  type: string
-                  description: Название товара для поиска
-                itemTags:
-                  type: array
-                  items:
-                    type: string
-                    description: Теги, связанные с товаром для поиска
+              $ref: '#/components/schemas/Buyer'
+            example:
+              id: 123
+              name: Петр Петров
+              email: p.petrov@example.ru
+              phone: +1 (333) 765-4321
+              address: "122, РФ, Москва, Старая улица, д.1, кв.1"
       responses:
-        '200':
-          description: Successfully retrieved list of items
+        '201':
+          description: Создан новый покупатель.
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Item'
-          example:
-            - id: 123
-              name: "Китайская ваза династии Мин"
-              description: "Антикварная китайская ваза династии Мин в хорошем состоянии."
-              tags:
-                - "антиквариат"
-                - "ваза"
-                - "Китай"
-                - "династия Мин"
-              starting_price: 500.0
-              seller:
-                id: 456
-                name: "Антикварный магазин"
-                email: "info@antiques.com"
-              image_url: "https://example.com/vase.jpg"
-            - id: 789
-              name: "Китайская ваза с драконами"
-              description: "Редкая китайская ваза с изображением драконов."
-              tags:
-                - "антиквариат"
-                - "ваза"
-                - "Китай"
-                - "драконы"
-              starting_price: 800.0
-              seller:
-                id: 101
-                name: "Коллекционерский клуб"
-                email: "info@collectorsclub.com"
-              image_url: "https://example.com/vase2.jpg"
+                $ref: '#/components/schemas/Buyer'
+        '400':
+          description: Bad request. Invalid input.
+        '500':
+          description: Internal server error.
