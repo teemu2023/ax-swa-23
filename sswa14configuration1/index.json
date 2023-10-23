@@ -1,13 +1,13 @@
 {
     "pathwayTitle": "Kubernetes configuration",
-    "title": "sswa14.Конфигурирование приложений в Kubernetes",
+    "title": "Конфигурирование приложений в Kubernetes",
     "description": "Конфигурирование приложений в Kubernetes",
     "difficulty": "beginner",
     "time": "10 minutes",
     "details": {
         "steps": [
             {
-                "title": "Запускаем кластер Kubernetes",
+                "title": "Запуск кластера Kubernetes",
                 "text": "step0.md"
             },
             {
