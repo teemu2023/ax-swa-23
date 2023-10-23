@@ -1,21 +1,21 @@
 {
     "pathwayTitle": "ApiGateway1",
-    "title": "sswa9.ApiGateway1 - Работа с API Gateway: мапинги запросов и ответов",
+    "title": "Работа с API Gateway: Маппинги запросов и ответов",
     "description": "ApiGateway1",
     "difficulty": "beginner",
     "time": "30 minutes",
     "details": {
         "steps": [
             {
-                "title": "Готовим окружение",
+                "title": "Подготовка окружения",
                 "text": "step0.md"
             },
             {
-                "title": "Импортируем апи",
+                "title": "Импорт API",
                 "text": "step1.md"
             },
             {
-                "title": "Настраиваем маппинг ответа",
+                "title": "Настройка маппинг ответа",
                 "text": "step2.md"
             }
         ],
