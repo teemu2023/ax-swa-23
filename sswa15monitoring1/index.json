@@ -1,25 +1,25 @@
 {
     "pathwayTitle": "monitoring1",
-    "title": "sswa15.Monitoring1 - Знакомство с Prometheus",
+    "title": "Знакомство с Prometheus",
     "description": "monitoring1",
     "difficulty": "beginner",
     "time": "30 minutes",
     "details": {
         "steps": [
             {
-                "title": "Создаем и запускаем сервис",
+                "title": "Создание и запуск сервиса",
                 "text": "step0.md"
             },
             {
-                "title": "Запускаем прометеус",
+                "title": "Запуск Prometheus",
                 "text": "step1.md"
             },
             {
-                "title": "Инструментируем сервис",
+                "title": "Описание метрики приложения",
                 "text": "step2.md"
             },
             {
-                "title": "Нагружаем сервис и смотрим метрики",
+                "title": "Нагрузка сервиса и проверка метрик",
                 "text": "step3.md"
             }
         ],
