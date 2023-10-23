@@ -44,8 +44,7 @@
         "assets": {
             "host01": [
                 {"file": "prism.yaml", "target": "/root"},
-                {"file": "openapi.yaml", "target": "/root"},
-                {"file": "openapi1.yaml", "target": "/root"}
+                {"file": "openapi.yaml", "target": "/root"}
             ]
         }
     },

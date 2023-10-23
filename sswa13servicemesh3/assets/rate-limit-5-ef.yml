@@ -41,4 +41,3 @@ spec:
                 header:
                   key: x-local-rate-limit
                   value: 'true'
-            local_rate_limit_per_downstream_connection: false

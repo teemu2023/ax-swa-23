@@ -15,17 +15,17 @@ spec:
   selector:
     matchLabels:
       app: blue-deployment
-      version: nanoserver-1709
+      version: busybox-128
   replicas: 3
   template:
     metadata:
       labels:
         app: blue-deployment
-        version: nanoserver-1709
+        version: busybox-128
     spec:
       containers:
         - name: blue-deployment
-          image: hello-world:nanoserver-1709
+          image: busybox:1.28
 </pre>
 И применим манифест
 
@@ -45,7 +45,7 @@ metadata:
   name: blue-green-service
   labels: 
     name: blue-deployment
-    version: nanoserver-1709
+    version: busybox-128
 spec:
   ports:
     - name: http
@@ -53,7 +53,7 @@ spec:
       targetPort: 80
   selector: 
     name: blue-deployment
-    version: nanoserver-1709
+    version: busybox-128
   type: LoadBalancer
 </pre>
 Теперь при создании службы будет создан балансировщик нагрузки, доступный вне кластера.
@@ -69,17 +69,17 @@ spec:
   selector:
     matchLabels:
       app: green-deployment
-      version: nanoserver-1809
+      version: busybox-136
   replicas: 3
   template:
     metadata:
       labels:
         app: green-deployment
-        version: nanoserver-1809
+        version: busybox-136
     spec:
       containers:
         - name: green-deployment
-          image: hello-world:nanoserver-1809
+          image: busybox:1.36
 </pre>
 
 Применим манифест
@@ -97,7 +97,7 @@ metadata:
   name: blue-green-service
   labels: 
     name: green-deployment
-    version: v2
+    version: busybox-136
 spec:
   ports:
     - name: http
@@ -105,7 +105,7 @@ spec:
       targetPort: 80
   selector: 
     name: green-deployment
-    version: v2
+    version: busybox-136
   type: LoadBalancer
 </pre>
 Теперь при создании службы будет создан балансировщик нагрузки, доступный вне кластера.
