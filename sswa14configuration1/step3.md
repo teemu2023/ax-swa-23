@@ -57,7 +57,7 @@ controlplane $ curl -s http://$CLUSTER_IP:9000/env | jq
 {
   "DATABASE_URI": "postgresql+psycopg2://myuser:passwd@postgres.myapp.svc.cluster.local:5432/myapp",
   "HOSTNAME": "hello-deployment-5bb48d8d4b-tt4jg",
-  "GREETING": "Privet"
+  "GREETING": "Hello"
 }
 ```
 Теперь рассмотрим второй способ, то есть как можно настроить получение ConfigMap по заданному пути из контейнера. В этом случае каждый файл в директории будет соответствовать одному параметру — имя файла в качества ключа, а содержимое файла — это значение.
