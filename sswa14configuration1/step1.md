@@ -44,7 +44,7 @@ spec:
 
 Примените манифесты:
 
-`kubectl apply -f deployment.yaml -f service.yaml`{{execute T1}}
+`kubectl apply -f deployment.yaml -f service.yaml`{{execute}}
 
 Во втором терминале можно наблюдать за тем, как создаются поды. Дождитесь, пока операция развёртывания завершится, то есть когда все поды окажутся в статусе *Running*:
 
@@ -61,11 +61,11 @@ pod/hello-deployment-7d79b5c767-4hxll   1/1     Running   0          70s
 
 Сохраните **clusterIp** сервиса в переменную CLUSTER_IP, выполнив команду:
 
-`CLUSTER_IP=$(kubectl get service hello-service -o jsonpath="{.spec.clusterIP}")`{{execute T1}}
+`CLUSTER_IP=$(kubectl get service hello-service -o jsonpath="{.spec.clusterIP}")`{{execute}}
 
 Посмотрите ответ приложения:
 
-`curl -s http://$CLUSTER_IP:9000/env | jq`{{execute T1}}
+`curl -s http://$CLUSTER_IP:9000/env | jq`{{execute}}
 
 ```
 controlplane $ curl -s http://$CLUSTER_IP:9000/env | jq
@@ -115,7 +115,7 @@ spec:
 
 Примените манифест:
 
-`kubectl apply -f deployment.yaml`{{execute T1}}
+`kubectl apply -f deployment.yaml`{{execute}}
 
 Дождитесь, когда операция выполниться и все поды окажутся в статусе **Running**:
 
@@ -123,7 +123,7 @@ spec:
 
 После обновления, приложение отдает другие переменные окружения: 
 
-`curl -s http://$CLUSTER_IP:9000/env | jq`{{execute T1}}
+`curl -s http://$CLUSTER_IP:9000/env | jq`{{execute}}
 
 ```
 controlplane $ curl -s http://$CLUSTER_IP:9000/env | jq
