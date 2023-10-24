@@ -88,7 +88,7 @@ spec:
 
 `kubectl get pods,deployments,service`{{execute}}
 
-Чтобы перейти в режим green deployment, необходимо обновить селектор для существующего сервиса. Измените service.yaml, поменяв версию селектора на 2, а имя на green-deployemnt. Таким образом, он будет соответствовать подам в «зелёном» развертывании:
+Чтобы перейти в режим green deployment, необходимо обновить селектор для существующего сервиса. Измените service.yaml, поменяв версию селектора на 2, а имя на green-deployment. Таким образом, он будет соответствовать подам в «зелёном» развертывании:
 <pre class="file" data-filename="./service.yaml" data-target="replace">
 apiVersion: v1
 kind: Service
