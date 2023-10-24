@@ -1,16 +1,16 @@
-На этом шаге мы направим исходящие запросы из ServiceA в ServiceB. На схеме это выглядет слудующим образом:
+На этом шаге исходящие запросы будут направлены из ServiceA в ServiceB. На схеме это выглядит следующим образом:
 
 ![Mesh configuration](../assets/sswa13servicemesh2-2.png)
 
-Давайте установим ServiceB:
+Установите ServiceB, выполнив команду:
 `kubectl apply -f service-b-deployment.yml`{{execute}}
 
-Применим манифест Service для деплоймента выше:
+Примените манифест Service для развёртывания выше:
 `kubectl apply -f producer-internal-host.yml`{{execute}}
 
-Определим правило маршрутизации запросов из ServiceA на хост producer-internal-host.
+Далее необходимо определить правило маршрутизации запросов из ServiceA на хост producer-internal-host.
 
-Россмотрим producer-internal-host-vs:
+Рассмотрим producer-internal-host-vs:
 ```
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -29,30 +29,30 @@ spec:
               number: 80
 ```
 
-Применим данный манифест
+Примените данный манифест, выполнив команду:
 `kubectl apply -f producer-internal-host-vs.yml`{{execute}}
 
-Проверим готовность подов:
+Проверьте готовность подов:
 `kubectl get pods --all-namespaces`{{execute}}
 
-Повторим совершенный на предидущем шаге GET запрос по адресу ingress-шлюза:
+Повторите совершенный на предыдущем шаге GET запрос по адресу ingress-шлюза:
 `curl -v http://$GATEWAY_URL/service-a`{{execute}}
 
-В случае успеха ответ на совершенный вызов должен быть таким:
+В случае успеха ответ на совершенный вызов должен быть следующим:
 `Hello from ServiceA! Calling master system API... Received response from master system (http://producer-internal-host): Hello from ServiceB!`
 
-Для сравнения аналогичный вызов на предыдущем шаге возвращал такой ответ:
+Для сравнения аналогичный вызов на предыдущем шаге возвращал такой ответ: 
 `Hello from ServiceA! Calling master system API... I/O error on GET request for "http://producer-internal-host": producer-internal-host; nested exception is java.net.UnknownHostException: producer-internal-host`
 
-Теперь в кластере существуют поставщик данных для ServiceA, который связан с хостом producer-internal-host, поэтому ServiceA на этом шаге получает корректный ответ.
+Теперь в кластере существует поставщик данных для ServiceA, который связан с хостом producer-internal-host, поэтому ServiceA на этом шаге получает корректный ответ.
 
-Проверим логи доступа Envoy ingress-шлюза:
+Проверьте логи доступа Envoy ingress-шлюза:
 `kubectl logs -l app=istio-ingressgateway -n istio-system -c istio-proxy`{{execute}}
 
-Проверим логи доступа Envoy в поде с бизнес сервисом ServiceA:
+Проверьте логи доступа Envoy в поде с бизнес-сервисом ServiceA:
 `kubectl logs -l app=service-a-app -c istio-proxy`{{execute}}
 
-Проверим логи доступа Envoy в поде с бизнес сервисом ServiceB:
+Проверьте логи доступа Envoy в поде с бизнес-сервисом ServiceB:
 `kubectl logs -l app=service-b-app -c istio-proxy`{{execute}}
 
-Перейдем далее.
+Перейдите к следующему шагу.

@@ -1,6 +1,6 @@
 {
-  "title": "sswa13servicemesh 2. Маршрутизация трафика внутри service mesh",
-  "description": "Рассмотрим маршрутизацию трафика внутри service mesh",
+  "title": "Маршрутизация трафика внутри Service Mesh",
+  "description": "В данном упражнении будет отрабатываться навык маршрутизации трафика внутри Sevice Mesh.",
   "details": {
     "steps": [
       {
@@ -20,11 +20,11 @@
         "text": "step3.md"
       },
       {
-        "title": "Направление исходящих запросов из ServiceA в ServiceB.",
+        "title": "Направление исходящих запросов из ServiceA в ServiceB",
         "text": "step4.md"
       },
       {
-        "title": "Расщепление трафика из ServiceA.",
+        "title": "Разделение трафика из ServiceA",
         "text": "step5.md"
       },
       {

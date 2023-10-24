@@ -1,29 +1,29 @@
 {
     "pathwayTitle": "Kubernetes deployment",
-    "title": "sswa16.Deployment",
+    "title": "Deployment",
     "description": "Deployment",
     "difficulty": "beginner",
     "time": "30 minutes",
     "details": {
         "steps": [
             {
-                "title": "Запускаем кластер Kubernetes",
+                "title": "Запуск кластера Kubernetes",
                 "text": "step0.md"
             },
             {
-                "title": "Создание деплоймента",
+                "title": "Создание Deployment",
                 "text": "step1.md"
             },
             {
-                "title": "Масштабирование деплоймента",
+                "title": "Масштабирование Deployment",
                 "text": "step2.md"
             },
             {
-                "title": "Стратегия деплоймента",
+                "title": "Стратегия Deployment",
                 "text": "step3.md"
             },
             {
-                "title": "Стратегия деплоймента",
+                "title": "Стратегия Deployment",
                 "text": "step4.md"
             },
             {

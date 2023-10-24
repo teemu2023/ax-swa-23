@@ -1,6 +1,6 @@
-Теперь, когда мы убедились в работоспособности пути ingress-шлюз -> ServiceA -> SericeC -> external-cluster, давайте переключим 100% трафика из ServiceA в ServiceC.
+Теперь, когда Вы убедились в работоспособности пути ingress-шлюз -> ServiceA -> SericeC -> external-cluster, давайте переключим 100% трафика из ServiceA в ServiceC.
 
-Для этого нам нужно будет обновить манифест producer-internal-host-vs.
+Для этого Вам нужно будет обновить манифест producer-internal-host-vs.
 
 Рассмотрим новую версию:
 ```
@@ -21,15 +21,15 @@ spec:
               number: 80
 ```
 
-Как видите, теперь в блоке destination присутствует только хост service-c-srv, который ведет на ServiceC. Напомню, ServiceA продолжит высылать запросы на хост producer-internal-host. Но сработает перенаправление на ServiceC, вместо ServiceB.
+Как видите, теперь в блоке destination присутствует только хост service-c-srv, который ведет на ServiceC. Обратите внимание, ServiceA продолжит высылать запросы на хост producer-internal-host. Но сработает перенаправление на ServiceC, вместо ServiceB.
 
-Применим манифест:
+Примените манифест:
 `kubectl apply -f producer-internal-host-100-c-vs.yml`{{execute}}
 
-Совершим несколько запросов на ingress-шлюз:
+Совершите несколько запросов на ingress-шлюз:
 `curl -v http://$GATEWAY_URL/service-a`{{execute}}
 
-Теперь все ответы из ServiceC:
+Теперь Вы можете видеть, что все ответы из ServiceC:
 ```
 Hello from ServiceA! Calling master system API... Received response from master system (http://producer-internal-host): Hello from ServiceC! Calling master system API... Received response from master system (http://istio-ingressgateway.istio-system.svc.cluster.local/service-ext): Hello from External Cluster Service!
 ```
