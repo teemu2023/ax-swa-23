@@ -177,8 +177,7 @@ baz=quux
 `exit`{{execute}}
 
 А затем измените **ConfigMap**:
-<pre class="file" data-filename="./mountconfig.yaml" data-target="insert" data-marker="    foo=bar">
-foo=FOOBARBAZQUUX</pre>
+<pre class="file" data-filename="./mountconfig.yaml" data-target="insert" data-marker="    foo=bar">foo=FOOBARBAZQUUX</pre>
 
 Примените манифест:
 
