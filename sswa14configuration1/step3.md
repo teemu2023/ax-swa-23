@@ -194,7 +194,7 @@ root@hello-deployment-85fbc4cd8b-c5q7h:/usr/src/app# ls /tmp/config
 my.cfg  test.json
 ```
 
-А теперь проверьте изменения:
+Подождите 2-3 минуты и проверьте изменения:
 
 `cat /tmp/config/my.cfg`{{execute}}
 ```
