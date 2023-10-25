@@ -77,22 +77,22 @@ trusted-host = nexus
 
 С помощью команды docker build соберите локальный образ с меткой app:v1. Докер образ будет хранится локально.
 
-```
+`
 docker build --network=host -t app:v1 app/
-```{{execute}}
+`{{execute}}
 
 Запустите приложение с помощью docker-a в хост-сети, имя контейнера будет app-v1:
 
-```
+`
 docker run -d --net=host --name=app-v1 app:v1 
-```{{execute}}
+`{{execute}}
 
 
 Проверить работоспособность можно с помощью curl, выполнив команду:
 
-```
+`
 curl localhost:8000/probe
-```{{execute}}
+`{{execute}}
 
 Сервис должен ответить текстом «ОК» в консоли.
 
