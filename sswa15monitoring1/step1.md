@@ -10,12 +10,12 @@ Prometheus с некоторой периодичностью мониторит
 
 <pre class="file" data-filename="prometheus.yml" data-target="replace">
 global:
-scrape_interval: 15s
+  scrape_interval:     15s
 scrape_configs:
 - job_name: app
-metrics_path: '/metrics'
-static_configs:
-- targets: ['127.0.0.1:8000']
+  metrics_path: '/metrics'
+  static_configs:
+    - targets: ['127.0.0.1:8000']
 </pre>
 
 Давайте разберём настройки из этого файла.
