@@ -94,28 +94,28 @@ if __name__ == '__main__':
 
 Теперь необходимо пересобрать приложение:
 
-```
+`
 docker build --network=host -t app:metrics app/
-```{{execute}}
+`{{execute}}
 
 Запустите приложение:
 
-```
+`
 docker kill app-v1
 docker run -d --net=host --name=app-metrics app:metrics 
-```{{execute}}
+`{{execute}}
 
 Проверьте, что оно работает и /probe может нам ответить:
 
-```
+`
 curl localhost:8000/probe
-```{{execute}}
+`{{execute}}
 
 Проверьте, что метрики в формате Prometheus появились, используя curl запрос:
 
-```
+`
 curl localhost:8000/metrics
-```{{execute}}
+`{{execute}}
 
 
 Теперь, если открыть [дашборд](https://[[HOST_SUBDOMAIN]]-9090-[[KATACODA_HOST]].environments.katacoda.com/targets) Prometheus, можно увидеть, что статус таргета стал UP.
