@@ -34,7 +34,7 @@ scrape_interval: 15s - это интервал, с которым Prometheus б�
 
 Для запуска сервиса Prometheus воспользуйтесь докером и официальным образом prom/prometheus и настройте пусть к конфигурационному файлу из контейнера:
 
-```
+`
 docker run -d --net=host --name=prometheus \
    -v /root/prometheus.yml:/etc/prometheus/prometheus.yml \
    prom/prometheus \
@@ -44,7 +44,7 @@ docker run -d --net=host --name=prometheus \
    --web.console.templates=/usr/share/prometheus/consoles \
    --web.route-prefix=$(cat /usr/local/etc/sbercode-prefix)-9090/ \
    --web.external-url=http://127.0.0.1/$(cat /usr/local/etc/sbercode-prefix)-9090/
-```{{execute}}
+`{{execute}}
 
 Проверьте, работает ли Prometheus зайдя по ссылке на [дашборд Prometheus](https://[[HOST_SUBDOMAIN]]-9090-[[KATACODA_HOST]].environments.katacoda.com/).
 
