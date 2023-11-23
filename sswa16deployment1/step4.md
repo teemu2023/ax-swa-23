@@ -6,7 +6,7 @@
 Развертывание по схеме "сине-зеленый" является затратным, поскольку требует удвоения ресурсов. Прежде чем запускать платформу в промышленную эксплуатацию, необходимо провести надлежащее тестирование всей платформы. Кроме того, сложно работать с приложениями, имеющими состояние.
 
 Сначала создадим нашу синюю установку, сохранив следующий yaml в файл 'blue.yaml':
-<pre class="file" data-filename="./blue.yaml" data-target="replace">
+<pre class="file" data-filename="./blue.yaml" data-target="insert">
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,17 +15,17 @@ spec:
   selector:
     matchLabels:
       app: blue-deployment
-      version: busybox-128
+      version: nginx-124
   replicas: 3
   template:
     metadata:
       labels:
         app: blue-deployment
-        version: busybox-128
+        version: nginx-124
     spec:
       containers:
         - name: blue-deployment
-          image: busybox:1.28
+          image: nginx:1.24
 </pre>
 И применим манифест
 
@@ -38,14 +38,14 @@ spec:
 `kubectl describe deploy blue-deployment `{{execute T1}}
 
 Далее мы зададим эти метки в качестве селектора меток для сервиса. Сохраним это в файле service.yaml.
-<pre class="file" data-filename="./service.yaml" data-target="replace">
+<pre class="file" data-filename="./service.yaml" data-target="insert">
 apiVersion: v1
 kind: Service
 metadata: 
   name: blue-green-service
   labels: 
     name: blue-deployment
-    version: busybox-128
+    version: nginx-124
 spec:
   ports:
     - name: http
@@ -53,14 +53,14 @@ spec:
       targetPort: 80
   selector: 
     name: blue-deployment
-    version: busybox-128
+    version: nginx-124
   type: LoadBalancer
 </pre>
 Теперь при создании службы будет создан балансировщик нагрузки, доступный вне кластера.
 `kubectl apply -f service.yaml`{{execute T1}}
 
 Для зеленого развертывания мы развернем новое развертывание параллельно с синим развертыванием. Приведенный ниже шаблон является содержимым файла green.yaml:
-<pre class="file" data-filename="./green.yaml" data-target="replace">
+<pre class="file" data-filename="./green.yaml" data-target="insert">
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -69,17 +69,17 @@ spec:
   selector:
     matchLabels:
       app: green-deployment
-      version: busybox-136
+      version: nginx-125
   replicas: 3
   template:
     metadata:
       labels:
         app: green-deployment
-        version: busybox-136
+        version: nginx-125
     spec:
       containers:
         - name: green-deployment
-          image: busybox:1.36
+          image: nginx:1.25
 </pre>
 
 Применим манифест
@@ -90,14 +90,14 @@ spec:
 `kubectl get pods,deployments,service`{{execute}}
 
 Далее для того чтобы перейти в режим green deployment, мы должны обновить селектор для существующего сервиса. Изменим service.yaml и поменяем версию селектора на 2, а имя на green-deployemnt. Таким образом, он будет соответствовать **Pods** в green развертывании.
-<pre class="file" data-filename="./service.yaml" data-target="replace">
+<pre class="file" data-filename="./service.yaml" data-target="insert">
 apiVersion: v1
 kind: Service
 metadata: 
   name: blue-green-service
   labels: 
     name: green-deployment
-    version: busybox-136
+    version: nginx-125
 spec:
   ports:
     - name: http
@@ -105,7 +105,7 @@ spec:
       targetPort: 80
   selector: 
     name: green-deployment
-    version: busybox-136
+    version: nginx-125
   type: LoadBalancer
 </pre>
 Теперь при создании службы будет создан балансировщик нагрузки, доступный вне кластера.
@@ -152,7 +152,7 @@ spec:
 - Оценка: какие критерии мы будем использовать для определения успешности работы канарейки
 
 Наш первый файл, stable.yaml, будет представлять собой устаревшую версию, на которой будет работать большинство наших подсистем.
-<pre class="file" data-filename="./stable.yaml" data-target="replace">
+<pre class="file" data-filename="./stable.yaml" data-target="insert">
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -197,7 +197,7 @@ spec:
 `kubectl get deploy`{{execute T1}}
 
 Теперь создадим новый манифест для новой версии приложения
-<pre class="file" data-filename="./canary.yaml" data-target="replace">
+<pre class="file" data-filename="./canary.yaml" data-target="insert">
 apiVersion: apps/v1
 kind: Deployment
 metadata:
