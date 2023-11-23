@@ -6,7 +6,7 @@
 Развертывание по схеме "сине-зеленый" является затратным, поскольку требует удвоения ресурсов. Прежде чем запускать платформу в промышленную эксплуатацию, необходимо провести надлежащее тестирование всей платформы. Кроме того, сложно работать с приложениями, имеющими состояние.
 
 Сначала создадим нашу синюю установку, сохранив следующий yaml в файл 'blue.yaml':
-<pre class="file" data-filename="./blue.yaml" data-target="insert">
+<pre class="file" data-filename="./blue.yaml" data-target="replace">
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -38,7 +38,7 @@ spec:
 `kubectl describe deploy blue-deployment `{{execute T1}}
 
 Далее мы зададим эти метки в качестве селектора меток для сервиса. Сохраним это в файле service.yaml.
-<pre class="file" data-filename="./service.yaml" data-target="insert">
+<pre class="file" data-filename="./service.yaml" data-target="replace">
 apiVersion: v1
 kind: Service
 metadata: 
@@ -60,7 +60,7 @@ spec:
 `kubectl apply -f service.yaml`{{execute T1}}
 
 Для зеленого развертывания мы развернем новое развертывание параллельно с синим развертыванием. Приведенный ниже шаблон является содержимым файла green.yaml:
-<pre class="file" data-filename="./green.yaml" data-target="insert">
+<pre class="file" data-filename="./green.yaml" data-target="replace">
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -90,7 +90,7 @@ spec:
 `kubectl get pods,deployments,service`{{execute}}
 
 Далее для того чтобы перейти в режим green deployment, мы должны обновить селектор для существующего сервиса. Изменим service.yaml и поменяем версию селектора на 2, а имя на green-deployemnt. Таким образом, он будет соответствовать **Pods** в green развертывании.
-<pre class="file" data-filename="./service.yaml" data-target="insert">
+<pre class="file" data-filename="./service.yaml" data-target="replace">
 apiVersion: v1
 kind: Service
 metadata: 
@@ -152,7 +152,7 @@ spec:
 - Оценка: какие критерии мы будем использовать для определения успешности работы канарейки
 
 Наш первый файл, stable.yaml, будет представлять собой устаревшую версию, на которой будет работать большинство наших подсистем.
-<pre class="file" data-filename="./stable.yaml" data-target="insert">
+<pre class="file" data-filename="./stable.yaml" data-target="replace">
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -197,7 +197,7 @@ spec:
 `kubectl get deploy`{{execute T1}}
 
 Теперь создадим новый манифест для новой версии приложения
-<pre class="file" data-filename="./canary.yaml" data-target="insert">
+<pre class="file" data-filename="./canary.yaml" data-target="replace">
 apiVersion: apps/v1
 kind: Deployment
 metadata:

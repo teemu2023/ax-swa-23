@@ -44,7 +44,7 @@
         }
     },
     "files": [
-        "deployment.yaml"
+        "deployment.yaml", "blue.yaml", "service.yaml", "green.yaml", "stable.yaml", "canary.yaml"
     ],
     "environment": {
         "uilayout": "editor-terminal",
