@@ -156,11 +156,11 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: helloworld
+  name: nginx
 spec:
   selector:
     matchLabels:
-      app: helloworld
+      app: nginx
   replicas: 3
   strategy:
     rollingUpdate:
@@ -170,12 +170,12 @@ spec:
   template:
     metadata:
       labels:
-        app: helloworld
+        app: nginx
         track: stable
     spec:
       containers:
-      - name: helloworld
-        image: educative/helloworld:1.0
+      - name: nginx
+        image: nginx:1.24
         ports:
         - containerPort: 80
         resources:
@@ -185,7 +185,7 @@ spec:
             cpu: 100m
 </pre>
 
-В результате будет создано 3 Pods v1 с меткой app:helloworld, которую ищет наш сервис Kubernetes. Наш образ для этих Pod'ов - educative/helloworld:1.0, что означает, что эти Pod'ы будут созданы на основе старых спецификаций Pod'ов.
+В результате будет создано 3 Pods v1 с меткой app:nginx, которую ищет наш сервис Kubernetes. Наш образ для этих Pod'ов - nginx:1.25, что означает, что эти Pod'ы будут созданы на основе старых спецификаций Pod'ов.
 
 Это развертывание равномерно распределит любую рабочую нагрузку между доступными Pod.
 
@@ -201,11 +201,11 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: helloworld-canary
+  name: nginx-canary
 spec:
   selector:
     matchLabels:
-      app: helloworld
+      app: nginx
   replicas: 1
   strategy:
     rollingUpdate:
@@ -215,12 +215,12 @@ spec:
   template:
     metadata:
       labels:
-        app: helloworld
+        app: nginx
         track: canary
     spec:
       containers:
-      - name: helloworld
-        image: educative/helloworld:2.0
+      - name: nginx
+        image: nginx:1.25
         ports:
         - containerPort: 80
         resources:
@@ -230,7 +230,7 @@ spec:
             cpu: 100m
 </pre>
 
-Для этого развертывания мы создадим только один **Pod** (строка 6), чтобы обеспечить взаимодействие большинства наших пользователей с *v1*.
+Для этого развертывания мы создадим только один **Pod** (строка 6), чтобы обеспечить взаимодействие большинства наших пользователей с *1.24*.
 Оба развертывания сбалансируют рабочую нагрузку между всеми **Pod**, что гарантирует, что только 25% нашей рабочей нагрузки будет приходиться на обновленный Pod.
 
 Для развертывания необходимо ввести в командную строку следующую строку:
@@ -240,12 +240,12 @@ spec:
 
 `kubectl get deploy`{{execute T1}}
 
-Когда убедились, что *v2* работает, просто заменим образ в нашем первом YAML-файле Deployment, stable.yaml, на educative/helloworld:2.0, вместо educative/helloworld:1.0.
+Когда убедились, что *1.25* работает, просто заменим образ в нашем первом YAML-файле Deployment, stable.yaml, на nginx:1.25, вместо nginx:1.24.
 
 Затем удалите canary Deployment с помощью:
 `kubectl delete -f canary.yaml`{{execute T1}}
 
-В этом случае все **Pod** будут иметь *v2*, а нагрузка будет сбалансирована между оставшимися 3 **Pod**, но уже с *v2* приложения.
+В этом случае все **Pod** будут иметь *1.25*, а нагрузка будет сбалансирована между оставшимися 3 **Pod**, но уже с *1.25* приложения.
 
 Обновление Canary достигнуто!
 
