@@ -1,29 +1,29 @@
 {
     "pathwayTitle": "Kubernetes deployment",
-    "title": "Deployment",
+    "title": "sswa16.Deployment",
     "description": "Deployment",
     "difficulty": "beginner",
     "time": "30 minutes",
     "details": {
         "steps": [
             {
-                "title": "Запуск кластера Kubernetes",
+                "title": "Запускаем кластер Kubernetes",
                 "text": "step0.md"
             },
             {
-                "title": "Создание Deployment",
+                "title": "Создание деплоймента",
                 "text": "step1.md"
             },
             {
-                "title": "Масштабирование Deployment",
+                "title": "Масштабирование деплоймента",
                 "text": "step2.md"
             },
             {
-                "title": "Стратегия Deployment",
+                "title": "Стратегия деплоймента",
                 "text": "step3.md"
             },
             {
-                "title": "Стратегия Deployment",
+                "title": "Стратегия деплоймента",
                 "text": "step4.md"
             },
             {
@@ -44,7 +44,7 @@
         }
     },
     "files": [
-        "deployment.yaml"
+        "deployment.yaml", "blue.yaml", "service.yaml", "green.yaml", "stable.yaml", "canary.yaml"
     ],
     "environment": {
         "uilayout": "editor-terminal",
