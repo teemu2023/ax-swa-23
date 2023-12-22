@@ -6,6 +6,7 @@
 
 
 Ожидаемый ответ (удалить при запуске):
+Шаг 1
         Bid:
       type: object
       properties:
@@ -39,3 +40,5 @@
         auction_id: 789
         amount: 100.0
         timestamp: '2022-04-01T14:30:00Z'
+
+Шаг2
