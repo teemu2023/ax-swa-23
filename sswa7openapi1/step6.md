@@ -34,7 +34,7 @@
 Ожидаемый ответ должен содержать среди прочего:
 `[{"id":1,"buyer_id":123,"auction_id":456,"amount":100,"timestamp":"2022-05-01T10:00:00Z"},{"id":2,"buyer_id":456,"auction_id":789,"amount":150,"timestamp":"2022-05-02T14:00:00Z"},{"id":3,"buyer_id":789,"auction_id":123,"amount":200,"timestamp":"2022-05-03T18:00:00Z"}]`
 
-### Пример команды для самопроверки задания 4:
+### Пример команды для самопроверки задания 3:
 `curl -X POST localhost:32100/buyers -H "Content-Type: application/json" -d '{"id": 124, "name": "Петр Петров", "email": "p.petrov@example.ru", "phone": "+1 (333) 765-4321", "address": "122, РФ, Москва, Старая улица, д.1, кв.1"}'`{{execute}}
 
 Ожидаемый ответ должен содержать среди прочего:

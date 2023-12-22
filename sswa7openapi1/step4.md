@@ -1,7 +1,7 @@
-### Задания для добавления описания сущности
+### Задание 2 для добавления описания сущности
 
-Шаг 1. Добавь соответствующее описание в секцию **components** для сущности *Bid* (ставка), содержащей в том числе секцию *example*, 
-Шаг 2. Добавь описание соответствующих конечных точек (endpoints) в секции **path**, позволяющие получить список всех ставок для выбранного аукциона и сделать ставку на конкретный аукцион.
+Шаг 1. Добавь соответствующее описание в секцию **components** для сущности *Bid* (ставка), содержащей в том числе секцию *example* для id 123, 
+Шаг 2. Добавь описание соответствующих конечных точек (endpoints) в секции **path**, позволяющие получить список всех ставок для выбранного аукциона 123 и сделать ставку на конкретный аукцион 123.
 
 
 Ожидаемый ответ (удалить при запуске):
@@ -38,37 +38,3 @@
         auction_id: 789
         amount: 100.0
         timestamp: '2022-04-01T14:30:00Z'
-
-    /auctions/{auction_id}/bids:
-    get:
-      summary: Извлечение списка ставок для аукциона
-      description: Возвращает постраничный список всех ставок для указанного аукциона.
-      parameters:
-        - $ref: '#/components/parameters/AuctionIdParam'
-        - $ref: '#/components/parameters/LimitQueryParam'
-        - $ref: '#/components/parameters/OffsetQueryParam'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Bids'
-        default:
-          $ref: '#/components/responses/Error'
-    post:
-      summary: Сделать ставку на аукционе
-      description: Размещает новую ставку на указанном аукционе с указанной суммой ставки.
-      parameters:
-        - $ref: '#/components/parameters/AuctionIdParam'
-      requestBody:
-        $ref: '#/components/requestBodies/BidRequestBody'
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BidResponse'
-        default:
-          $ref: '#/components/responses/Error'      
