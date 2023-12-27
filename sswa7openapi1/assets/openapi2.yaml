@@ -1,0 +1,514 @@
+openapi: 3.0.0
+info:
+  title: Online Auction System
+  version: '1.0'
+  description: A online auctions platform.
+servers:
+  - url: 'https://api.onlineauction.ru/v1/'
+    description: Production server (uses live data)
+  - url: 'https://sandbox-api.onlineauction.ru:8443/v1/'
+    description: Sandbox server (uses test data)
+components:
+  schemas:
+    Auction:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Уникальный идентификатор для аукциона.
+        title:
+          type: string
+          description: Заголовок аукциона.
+        description:
+          type: string
+          description: Описание аукциона.
+        start_time:
+          type: string
+          format: date-time
+          description: Время начала аукциона.
+        end_time:
+          type: string
+          format: date-time
+          description: Время окончания аукциона.
+        starting_price:
+          type: number
+          description: Начальная стоимость лота аукциона.
+          format: float
+        highest_bid:
+          $ref: '#/components/schemas/Bid'
+        seller:
+          $ref: '#/components/schemas/Seller'
+        item:
+          $ref: '#/components/schemas/Item'
+        bids:
+          $ref: '#/components/schemas/Bids'
+      required:
+        - id
+        - title
+        - start_time
+        - end_time
+        - starting_price
+        - highest_bid
+        - sellerId
+        - item
+      example:
+        id: 12345
+        title: "Древняя китайская ваза династии Мин"
+        description: "Древнекитайская ваза династии Мин в хорошем состоянии."
+        start_time: "2023-04-01T00:00:00Z"
+        end_time: "2023-04-05T00:00:00Z"
+        starting_price: 500.0
+        highest_bid:
+          bid:
+            id: 123
+            buyer_id: 456
+            auction_id: 789
+            amount: 100.0
+            timestamp: '2022-04-01T14:30:00Z'
+        seller:
+          id: 123
+          name: "Джеки Чан"
+          email: "chan@example.ch"
+        item:
+          id: 456
+          name: "Древняя китайская ваза династии Мин"
+          description: "Древнекитайская ваза династии Мин в хорошем состоянии."
+          tags:
+            - "антиквариат"
+            - "ваза"
+            - "Китай"
+            - "династия Мин"
+          image_url: "https://example.com/ancient-vase.jpg"
+    Auctions:
+      type: array
+      items:
+        $ref: '#/components/schemas/Auction'
+      example:
+            - id: 123
+              name: "Китайская ваза династии Мин"
+              description: "Антикварная китайская ваза династии Мин в хорошем состоянии."
+              tags:
+                - "антиквариат"
+                - "ваза"
+                - "Китай"
+                - "династия Мин"
+              starting_price: 500.0
+              seller:
+                id: 456
+                name: "Антикварный магазин"
+                email: "info@antiques.com"
+              image_url: "https://example.com/vase.jpg"
+            - id: 789
+              name: "Китайская ваза с драконами"
+              description: "Редкая китайская ваза с изображением драконов."
+              tags:
+                - "антиквариат"
+                - "ваза"
+                - "Китай"
+                - "драконы"
+              starting_price: 800.0
+              seller:
+                id: 101
+                name: "Коллекционерский клуб"
+                email: "info@collectorsclub.com"
+              image_url: "https://example.com/vase2.jpg"          
+    Seller:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Уникальный идентификатор продавца.
+        name:
+          type: string
+          description: Имя продавца.
+        email:
+          type: string
+          format: email
+          description: Email адрес продавца.
+        phone:
+          type: string
+          description: Номер телефона продавца.
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Item'
+          description: Коллекция товаров продавца.
+      required:
+        - id
+        - name
+        - email
+        - phone
+    Sellers:
+      type: array
+      items:
+        $ref: '#/components/schemas/Seller'
+      example:
+        - id: 1
+          name: John Doe
+          email: john.doe@example.com
+          phone: 555-1234
+          items:
+            - id: 1
+              name: Item 1
+              description: Description of Item 1
+              starting_price: 10.99
+            - id: 2
+              name: Item 2
+              description: Description of Item 2
+              starting_price: 5.99
+        - id: 2
+          name: Jane Doe
+          email: jane.doe@example.com
+          phone: 555-5678
+          items:
+            - id: 3
+              name: Item 3
+              description: Description of Item 3
+              starting_price: 15.99
+            - id: 4
+              name: Item 4
+              description: Description of Item 4
+              starting_price: 20.99  
+    Item:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Уникальный идентификатор товара.
+        name:
+          type: string
+          description: Название товара.
+        description:
+          type: string
+          description: Описание товара.
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemTag'
+        starting_price:
+          type: number
+          format: float
+          description: Начальная цена товара.
+        seller:
+          type: integer
+          format: int64
+          description: Идентификатор продавца товара.
+        image:
+          type: string
+          format: url
+          description: URL сслыка на изображение товара.
+      required:
+        - id
+        - name
+        - starting_price
+        - seller
+      example:
+        id: 123
+        name: "Антикварный стул"
+        description: "Красивый антикварный стул из древесины дуба."
+        tags:
+          - "antique"
+          - "furniture"
+          - "chair"
+        starting_price: 100.00
+        seller: 456
+        image: "https://example.com/images/chair.jpg"  
+    ItemTag:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Уникальный идентификатор метки товара.
+          example: 123
+        name:
+          type: string
+          description: Название метки товара.
+          example: antique
+      required:
+        - id
+        - name
+    Bid:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Уникальный идентификатор ставки.
+        buyer_id:
+          type: integer
+          description: Идентификатор покупателя, сделавшего ставку.
+        auction_id:
+          type: string
+          description: Идентификатор аукциона, где была сделана эта ставка.
+        amount:
+          type: number
+          format: float
+          description: Сумма ставки.
+        timestamp:
+          type: string
+          format: date-time
+          description: Время ставки.
+      required:
+        - id
+        - buyer_id
+        - auction_id
+        - amount
+        - timestamp
+      example:
+        id: 123
+        buyer_id: 456
+        auction_id: 789
+        amount: 100.0
+        timestamp: '2022-04-01T14:30:00Z'  
+    Bids:
+      type: array
+      items:
+        $ref: '#/components/schemas/Bid'
+      example:
+        - id: 1
+          buyer_id: 123
+          auction_id: 456
+          amount: 100.0
+          timestamp: '2022-05-01T10:00:00Z'
+        - id: 2
+          buyer_id: 456
+          auction_id: 789
+          amount: 150.0
+          timestamp: '2022-05-02T14:00:00Z'
+        - id: 3
+          buyer_id: 789
+          auction_id: 123
+          amount: 200.0
+          timestamp: '2022-05-03T18:00:00Z' 
+    BidResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Была ли ставка успешно размещена или нет.
+        bid:
+          $ref: '#/components/schemas/Bid'
+      required:
+        - success
+    Buyer:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Уникальный идентификатор покупателя.
+        name:
+          type: string
+          description: Имя покупателя.
+        email:
+          type: string
+          format: email
+          description: Email адрес покупателя.
+        phone:
+          type: string
+          format: phone-number
+          description: Телефон покупателя.
+        address:
+          type: string
+          description: Адрес покупателя.
+      required:
+        - id
+        - name
+        - email
+        - phone
+        - address
+      example:
+        id: 123
+        name: Иван Иванов
+        email: ivan.ivanov@example.ru
+        phone: +1 (555) 123-4567
+        address: 123, РФ, Москва, Новая улица, д.1, кв. 2   
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Описание ошибки.
+        code:
+          type: integer
+          description: Код ошибки.
+      required:
+        - message
+        - code
+      example:
+        message: "Invalid input."
+        code: 400  
+  parameters:
+    AuctionIdParam:
+      name: auction_id
+      in: path
+      description: Уникальный идентификатор аукциона
+      required: true
+      schema:
+        type: integer
+    SellerIdParam:
+      name: seller_id
+      in: path
+      description: Уникальный идентификатор продавца
+      required: true
+      schema:
+        type: integer
+    BuyerIdParam:
+      name: buyer_id
+      in: path
+      description: Уникальный идентификатор покупателя
+      required: true
+      schema:
+        type: integer
+    ItemIdParam:
+      name: item_id
+      in: path
+      description: Уникальный идентификатор товара
+      required: true
+      schema:
+        type: integer
+    ItemNameQueryParam:
+      name: name
+      in: query
+      description: Название товара.
+      required: false
+      schema:
+        type: string
+    ItemTagQueryParam:
+      name: tags
+      in: query
+      description: Список тегов, разделенных запятыми, для фильтрации по ним
+      required: false
+      schema:
+        type: string        
+    BidIdParam:
+      name: bid_id
+      in: path
+      description: Уникальный идентификатор ставки
+      required: true
+      schema:
+        type: integer
+    LimitQueryParam:
+      name: limit
+      in: query
+      description: Максимальное количество возвращаемых результатов
+      required: false
+      schema:
+        type: integer
+        example: 1000
+    OffsetQueryParam:
+      name: offset
+      in: query
+      description: Количество результатов, которые необходимо пропустить перед возвратом
+      required: false
+      schema:
+        type: integer
+        example: 0
+  requestBodies:
+    AuctionRequestBody:
+      description: Тело запроса для создания или обновления аукциона
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Auction'
+    SellerRequestBody:
+      description: Тело запроса для создания или обновления продавца
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Seller'
+    BuyerRequestBody:
+      description: Тело запроса для создания или обновления покупателя
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Buyer'
+    ItemRequestBody:
+      description: Тело запроса для создания или обновления товара
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Item'
+    BidRequestBody:
+      description: Тело запроса на размещение ставки на аукционе
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Bid'
+  responses:
+    Error:
+      description: Ошибка сервера.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      headers:
+        x-error-message:
+          description: Описание ошибки.
+          schema:
+            type: string
+        x-error-code:
+          description: Код ошибки.
+          schema:
+            type: integer
+    BadRequest:
+      description: Запрос был недействительным или не был понятен серверу.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Запрашиваемый ресурс не найден.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: На сервере возникла непредвиденная ошибка.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+paths:
+  /auctions/{auction_id}/bids:
+    get:
+      summary: Извлечение списка ставок для аукциона
+      description: Возвращает постраничный список всех ставок для указанного аукциона.
+      parameters:
+        - $ref: '#/components/parameters/AuctionIdParam'
+        - $ref: '#/components/parameters/LimitQueryParam'
+        - $ref: '#/components/parameters/OffsetQueryParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bids'
+        default:
+          $ref: '#/components/responses/Error'
+    post:
+      summary: Сделать ставку на аукционе
+      description: Размещает новую ставку на указанном аукционе с указанной суммой ставки.
+      parameters:
+        - $ref: '#/components/parameters/AuctionIdParam'
+      requestBody:
+        $ref: '#/components/requestBodies/BidRequestBody'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BidResponse'
+        default:
+          $ref: '#/components/responses/Error'          
