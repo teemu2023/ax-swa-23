@@ -1,13 +1,13 @@
 {
     "pathwayTitle": "restapi2",
-    "title": "sswa6.restapi2 - Работа с REST API",
+    "title": "Работа с REST API",
     "description": "restapi2",
     "difficulty": "beginner",
     "time": "30 minutes",
     "details": {
         "steps": [
             {
-                "title": "Запускаем кластер Kubernetes и настраиваем Mock сервер",
+                "title": "Запуск кластера Kubernetes и Mock-сервера Prism",
                 "text": "step0.md"
             },
             {

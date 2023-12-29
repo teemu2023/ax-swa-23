@@ -1,20 +1,20 @@
-На данном шаге мы откроем исходящий трафик из пространсва имен dev-service-mesh для получения ответов из пространсва имен external-cluster на запросы ServiceC.
+На данном шаге будет открыт исходящий трафик из пространства имён dev-service-mesh для получения ответов из пространства имён external-cluster на запросы ServiceC.
 
-Схема service mesh, в соотвесвтии с которой будем настраивать наш кластер:
+Схема Service Mesh, в соответствии с которой будем настраивать кластер, представлена ниже:
 
 ![Mesh configuration](../assets/sswa13servicemesh2-4.png)
 
 Существует 3 подхода к открытию исходящего трафика в Istio:
 
-1) Открытый доступ из любого пода на любой внешний хост по умолчанию - удобный подход для разработки, но не безопасный и не контролируемый, поэтому в промышленной эксплуатации применяется редко.
+1) Открытый доступ из любого пода на любой внешний хост по умолчанию — удобный подход для разработки, но не безопасный и не контролируемый, поэтому в промышленной эксплуатации применяется редко.
 
 2) Отсутствие доступа на любой внешний хост исключая те, которые явно указаны в манифесте ServiceEntry.
 
-3) Направление трафика на внешний хост через единый egress шлюз - позволяет обогатить весь исходящий трафик из кластера требуемой логикой (например обогатить заголовками для аутентификации запросов), мониторировать и контролировать его. Данный подход применяться в больших промышленных системах.
+3) Направление трафика на внешний хост через единый egress-шлюз — позволяет обогатить весь исходящий трафик из кластера требуемой логикой (например, обогатить заголовками для аутентификации запросов), мониторировать и контролировать его. Данный подход применяться в больших промышленных системах.
 
 Реализуем третий подход.
 
-Развернем egress-шлюз, выполнив команду авто-конфигруации Isto:
+Разверните egress-шлюз, выполнив команду автоконфигруации Istio:
 
 `istioctl -c /etc/rancher/k3s/k3s.yaml install -y --set components.egressGateways[0].name=istio-egressgateway --set components.egressGateways[0].enabled=true --set meshConfig.accessLogFile=/dev/stdout --set meshConfig.outboundTrafficPolicy.mode=REGISTRY_ONLY --set values.pilot.resources.requests.memory=128Mi --set values.pilot.resources.requests.cpu=50m --set values.global.proxy.resources.requests.cpu=10m --set values.global.proxy.resources.requests.memory=32Mi --set values.global.proxy.resources.limits.memory=64Mi --set values.pilot.resources.limits.memory=256Mi`{{execute}}
 
@@ -27,7 +27,7 @@
 ✔ Installation complete
 ```
 
-Создадим манифест Gateway для исходящего трафика:
+Создайте манифест Gateway для исходящего трафика, выполнив команду:
 `kubectl apply -f service-ext-outbound-gw.yml`{{execute}}
 
 Рассмотрим новое правило маршрутизации:
@@ -63,27 +63,27 @@ spec:
               number: 80
 ```
 
-В соответствии с этим манифестом новое правило будет работать при вызовах на хост istio-ingressgateway.istio-system.svc.cluster.local из шлюза istio-egressgateway, а также из любого envoy-прокси в неймспейсе. Если вызов прийдет из любого envoy-прокси в неймспейсе (кроме istio-egressgateway), произойдет его перенаправление на хост istio-egressgateway. Если поступит запрос из istio-egressgateway, то он будет направлен на хост istio-ingressgateway.istio-system.svc.cluster.local. Таким образом достигается сосредоточение всех исходящих вызовов в кластере на шлюз istio-egressgateway.
+В соответствии с этим манифестом новое правило будет работать при вызовах на хост istio-ingressgateway.istio-system.svc.cluster.local из шлюза istio-egressgateway, а также из любого envoy-прокси в пространстве имён. Если вызов придёт из любого envoy-прокси в пространстве имён (кроме istio-egressgateway), произойдет его перенаправление на хост istio-egressgateway. Если поступит запрос из istio-egressgateway, то он будет направлен на хост istio-ingressgateway.istio-system.svc.cluster.local. Таким образом достигается сосредоточение всех исходящих вызовов в кластере на шлюз istio-egressgateway.
 
-Применим это правило:
+Примените это правило:
 `kubectl apply -f outbound-srv-c-to-service-ext-vs.yml`{{execute}}
 
 Теперь исходящий трафик направляется через egress-шлюз и достигает istio-ingressgateway.istio-system.svc.cluster.local.
 
-Совершим несколько запросов на ingress-шлюз, напомню, запросы из ServiceA все также балансируются между ServiceB и ServiceC:
+Совершите несколько запросов на ingress-шлюз, напомню, запросы из ServiceA все также балансируются между ServiceB и ServiceC:
 
 `curl -v http://$GATEWAY_URL/service-a`{{execute}}
 
 На этом шаге все ответы должны быть успешные и иметь вид (если поступили в ServiceA из ServiceB):
 `Hello from ServiceA! Calling master system API... Received response from master system (http://producer-internal-host): Hello from ServiceB!`
 
-Или поступили в ServiceA из ServiceC (см. схему сети выше):
+Или если поступили в ServiceA из ServiceC (см. схему сети выше):
 ```
 Hello from ServiceA! Calling master system API... Received response from master system (http://producer-internal-host): Hello from ServiceC! Calling master system API... Received response from master system (http://istio-ingressgateway.istio-system.svc.cluster.local/service-ext): Hello from External Cluster Service!
 ```
 
-Обратите внимание, что в части ответа из ServiceC присутвует ответ из кластера external-cluster по запросу `http://istio-ingressgateway.istio-system.svc.cluster.local/service-ext`
+Обратите внимание, что в части ответа из ServiceC присутствует ответ из кластера external-cluster по запросу http://istio-ingressgateway.istio-system.svc.cluster.local/service-ext.
 
-Если исходящий трафик планируется направить на хост, который не зарегистриован в сети (в другой сетевой контур, например, в открытом Интернете), то в том случае следует дополнительно создать манифест ServiceEntry с описанием ного хоста.
+Если исходящий трафик планируется направить на хост, который не зарегистрирован в сети (в другой сетевой контур, например, в открытом Интернете), то в этом случае следует дополнительно создать манифест ServiceEntry с описанием данного хоста.
 
-Перейдем далее.
+Перейдите к следующему шагу.

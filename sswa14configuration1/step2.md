@@ -1,14 +1,14 @@
-Передавать конфигурацию через **env** не всегда удобно. Т.к. для разных сред, конфигурация может отличаться, а значит, придется хранить несколько версий манифеста одного и того же деплоймента, но с разными настройками.  Также хранение конфигов напрямую в деплойментах нарушает один из принципов  12 факторных приложений. В соответствии с ним, мы должны отделять конфигурацию приложения от артефактов билда и деплоя.
+Передавать конфигурацию через **env** не всегда удобно. Так как для разных сред, конфигурация может отличаться, придётся хранить несколько версий манифеста одной и той же операции развёртывания, но с разными настройками. Также хранение параметров напрямую в настройках развёртывания нарушает один из принципов 12 факторных приложений. В соответствии с этим, необходимо отделять конфигурацию приложения от артефактов сборки и развёртывания.
 
 Поэтому в Kubernetes есть объекты ConfigMap и Secret, которые позволяют хранить конфигурацию приложения отдельно от манифестов приложения.
 
-Для начала рассмотрим как можно создавать ConfigMap и Secret-ы. 
+Для начала рассмотрим как можно создавать ConfigMap и Secret.
 
 Прежде всего, ConfigMap и Secret, как и любые объекты в Kubernetes можно описать в файле и потом применить манифест.
 
 ## Создание ConfigMap из манифеста
 
-Создадим манифест **configmap.yaml**
+Создайте манифест **configmap.yaml**
 
 <pre class="file" data-filename="./configmap.yaml" data-target="replace">
 apiVersion: v1
@@ -16,16 +16,16 @@ kind: ConfigMap
 metadata:
   name: hello-config
 data:
-  GREETING: Privet
+  GREETING: Hello
 </pre>
 
-Помимо стандартных атрибутов apiVersion, kind, metadata в конфигмапе есть атрибут data, где хранятся данные конфигурации.
+Помимо стандартных атрибутов apiVersion, kind, metadata в ConfigMap есть атрибут data, где хранятся данные конфигурации.
 
-Применим манифест **configmap.yaml**: 
+Примените манифест **configmap.yaml**: 
 
 `kubectl apply -f configmap.yaml`{{execute T1}}
 
-Получить **ConfigMap**  можно также как и любой объект:
+Получить **ConfigMap** можно также как и любой объект:
 
 `kubectl get cm hello-config`{{execute T1}}
 
@@ -39,6 +39,8 @@ hello-config   1      5s
 
 `kubectl describe configmap hello-config`{{execute T1}}
 
+Так же можно посмотреть данные конфигурации:
+
 ```
 controlplane $ kubectl describe configmap hello-config
 Name:         hello-config
@@ -49,16 +51,15 @@ Data
 ====
 GREETING:
 ----
-Privet
+Hello
 Events:  <none>
 ```
-И можем посмотреть в том числе данные конфигурации. 
-
-Теперь посмотрим с вами Secret.  
+Теперь перейдём к созданию **Secret**.  
 
 ## Создание Secret из манифеста
 
-Создадим манифест **secret.yaml**
+Создайте манифест **secret.yaml**
+
 <pre class="file" data-filename="./secret.yaml" data-target="replace">
 apiVersion: v1
 kind: Secret
@@ -68,11 +69,11 @@ data:
   DATABASE_URI: cG9zdGdyZXNxbCtwc3ljb3BnMjovL215dXNlcjpwYXNzd2RAcG9zdGdyZXMubXlhcHAuc3ZjLmNsdXN0ZXIubG9jYWw6NTQzMi9teWFwcA==
 </pre>
 
-Данные в объекте **ConfigMap** хранятся как есть, а в **Secret**-е кодируются в **base64** . 
+Данные в объекте **ConfigMap** хранятся как есть, а в **Secret** кодируются в **base64**.
 
-Например, значение `DATABASE_URI` закодировано в **base64**.
+Например, значение DATABASE_URI закодировано в **base64**.
 
-Давайте с вами раскодируем значение из DATABASE_URI:
+Раскодируйте значение из DATABASE_URI, выполнив команду:
 
 `echo 'cG9zdGdyZXNxbCtwc3ljb3BnMjovL215dXNlcjpwYXNzd2RAcG9zdGdyZXMubXlhcHAuc3ZjLmNsdXN0ZXIubG9jYWw6NTQzMi9teWFwcA==' | base64 -d`{{execute T1}}
 
@@ -81,7 +82,7 @@ controlplane $ echo 'cG9zdGdyZXNxbCtwc3ljb3BnMjovL215dXNlcjpwYXNzd2RAcG9zdGdyZXM
 postgresql+psycopg2://myuser:passwd@postgres.myapp.svc.cluster.local:5432/myapp
 ```
 
-Когда создаем **Secret** с помощью манифестов, то кодировать нужно самостоятельно. Например, с помощью утилиты **base64**: 
+Когда создаётся **Secret** с помощью манифестов, то кодировать нужно самостоятельно. Например, с помощью утилиты **base64**: 
 
 `echo -n 'postgresql+psycopg2://myuser:passwd@postgres.myapp.svc.cluster.local:5432/myapp' | base64`{{execute T1}}
 
@@ -91,7 +92,7 @@ cG9zdGdyZXNxbCtwc3ljb3BnMjovL215dXNlcjpwYXNzd2RAcG9zdGdyZXMubXlhcHAuc3ZjLmNs
 dXN0ZXIubG9jYWw6NTQzMi9teWFwcA==
 ```
 
-Применим манифест **secret.yaml**: 
+Примените манифест **secret.yaml**: 
 
 `kubectl apply -f secret.yaml`{{execute T1}}
 
@@ -105,7 +106,7 @@ NAME           TYPE     DATA   AGE
 hello-secret   Opaque   1      3s
 ```
 
-Если мы сделаем `kubectl describe`, то данных из **Secret**-а мы не получи: 
+Если выполнить команду `kubectl describe`, то данных из **Secret** Вы не получите:: 
 
 `kubectl describe secret hello-secret`{{execute T1}}
 
@@ -115,7 +116,7 @@ hello-secret   Opaque   1      3s
 
 `kubectl get secret -o yaml hello-secret`{{execute T1}}
 
-Чтобы получить значение конкретного параметра **Secret**-а из командной строки, можно воспользоваться параметром **jsonpath** и **base64**:
+Чтобы получить значение конкретного параметра **Secret** из командной строки, можно воспользоваться параметром **jsonpath** и **base64**:
 
 `kubectl get secret hello-secret -o jsonpath="{.data.DATABASE_URI}" | base64 -d`{{execute T1}}
 
@@ -127,7 +128,7 @@ controlplane $
 
 ## Создание ConfigMap из командной строки
 
-Создать **ConfigMap** и **Secret** можно и с помощью *императивных* команд **Kubernetes**. 
+Создать **ConfigMap** и **Secret** можно и с помощью императивных команд **Kubernetes**.
 
 Самый простой способ создать **ConfigMap** или **Secret** из строковых литералов.
 
@@ -135,11 +136,11 @@ controlplane $
 
 `kubectl create configmap {имя конфигмапы} --from-literal={ключ1}={значение1} --from-literal={ключ2}={значение2} ...`
 
-Давайте создадим:
+Создайте **ConfigMap**:
 
-`kubectl create configmap hello-config-literal --from-literal=GREETING=Preved --from-literal=GREETING2=ALLOHA`{{execute T1}}
+`kubectl create configmap hello-config-literal --from-literal=GREETING=Hello --from-literal=GREETING2=ALLOHA`{{execute T1}}
 
-И проверим, что **ConfigMap** создался правильно:
+Проверьте, что **ConfigMap** создался правильно:
 
 `kubectl describe configmap hello-config-literal`{{execute T1}}
 
@@ -154,7 +155,7 @@ Data
 ====
 GREETING:
 ----
-Preved
+Hello
 GREETING2:
 ----
 ALLOHA
@@ -165,11 +166,11 @@ Events:  <none>
 
 Для **Secret** чуть по-другому выглядит команда, но очень похоже: `kubectl create secret generic {имя секрета} --from-literal={ключ1}={значение1} --from-literal={ключ2}={значение2} ...`
 
-Давайте создадим **Secret** с `PASSWORD=SuperCoolPassword2`. Данные в команду передаются чистые, незакодированные, а **Kubernetes** сам занимается их кодированием:
+Создайте **Secret** с `PASSWORD=SuperCoolPassword2`. Данные в команду передаются чистые, незакодированные, а **Kubernetes** сам занимается их кодированием:
 
 `kubectl create secret generic hello-secret-literal --from-literal=PASSWORD=SuperCoolPassword2`{{execute T1}}
 
-Проверим, что данные закодированы:
+Проверьте, что данные закодированы:
 
 `kubectl get secret hello-secret-literal -o jsonpath="{.data.PASSWORD}"`{{execute T1}}
 
@@ -179,7 +180,7 @@ U3VwZXJDb29sUGFzc3dvcmQy
 controlplane $ 
 ```
 
-И что совпадают с теми данными, что мы отправляли в команде:
+Проверьте, что данные совпадают с теми данными, которые отправляли в команде:
 
 `kubectl get secret hello-secret-literal -o jsonpath="{.data.PASSWORD}" | base64 -d`{{execute T1}}
 
@@ -189,7 +190,7 @@ U3VwZXJDb29sUGFzc3dvcmQy
 controlplane $ 
 ```
 
-Теперь удалим **Secret** и **ConfigMap**, чтобы они нам не мешали:
+Удалите **Secret** и **ConfigMap**, чтобы они Вам не мешали:
 
 `kubectl delete secret hello-secret-literal`{{execute T1}}
 
@@ -197,21 +198,21 @@ controlplane $
 
 ## Создание ConfigMap из файлов
 
-Есть еще возможность создавать **ConfigMap** и **Secret** из файлов. В общем случае передается имя директории. И для каждого файла создается пара, где ключом является имя файла, а значением - его содержимое. Для **ConfigMap** данные сохраняются как есть, а данные для **Secret** кодируются в **base64**. 
+Есть ещё возможность создавать **ConfigMap** и **Secret** из файлов. В общем случае передаётся имя директории. И для каждого файла создаётся пара, где ключом является имя файла, а значением — его содержимое. Для **ConfigMap** данные сохраняются как есть, а данные для **Secret** кодируются в **base64**. 
 
-Давайте с вами создадим директорию `hello-configmap-dir`, а в ней файлы `GREETING` и `GREETING2`:
+Создайте директорию `hello-configmap-dir`, а в ней файлы `GREETING` и `GREETING2`:
 
 `mkdir hello-configmap-dir`{{execute T1}}
 
-`echo 'Preved' > hello-configmap-dir/GREETING`{{execute T1}}
+`echo 'Hello' > hello-configmap-dir/GREETING`{{execute T1}}
 
 `echo 'ALLOHA' > hello-configmap-dir/GREETING2`{{execute T1}}
 
-Теперь с помощью команды `kubectl create configmap {имя конфигмапы} --from-file={путь до директории}`  мы  можем создать **ConfigMap**:
+Теперь с помощью команды `kubectl create configmap {имя конфигмапы} --from-file={путь до директории}` можно создать **ConfigMap**:
 
 `kubectl create configmap hello-configmap-from-file --from-file=hello-configmap-dir`{{execute T1}}
 
-И проверим, что **ConfigMap** создался правильно:
+Проверьте, что **ConfigMap** создался правильно:
 
 `kubectl describe configmaps hello-configmap-from-file`{{execute T1}}
 
@@ -230,7 +231,7 @@ ALLOHA
 
 GREETING:
 ----
-Preved
+Hello
 
 Events:  <none>
 controlplane $ 
@@ -238,9 +239,9 @@ controlplane $
 
 ## Создание Secret из файлов
 
-Для **Secret**-ов это работает аналогично:
+Для **Secret** это работает аналогично.
 
-Давайте с вами создадим директорию `hello-secret-dir`, а в ней файл `DATABASE_URI` и `PASSWORD`. В содержимом файла должны хранится данные в незакодированном виде, **Kubernetes** сам их закодирует. 
+Создайте директорию `hello-secret-dir`, а в ней файлы `DATABASE_URI` и `PASSWORD`. В содержимом файла должны хранится данные в незакодированном виде, **Kubernetes** сам их закодирует. 
 
 `mkdir hello-secret-dir`{{execute T1}}
 
@@ -248,11 +249,11 @@ controlplane $
 
 `echo 'SuperCoolStrongPassword' > hello-secret-dir/PASSWORD`{{execute T1}}
 
-Теперь с помощью команды `kubectl create secret generic {имя секрета} --from-file={путь до директории}`  мы можем создать секрет. 
+Теперь с помощью команды `kubectl create secret generic {имя секрета} --from-file={путь до директории}` можно создать секрет. 
 
 `kubectl create secret generic hello-secret-from-file --from-file=hello-secret-dir`{{execute T1}}
 
-Проверим, что данные закодированы:
+Проверьте, что данные закодированы:
 
 `kubectl get secret hello-secret-from-file -o jsonpath="{.data.PASSWORD}"`{{execute T1}}
 
@@ -268,7 +269,7 @@ cG9zdGdyZXNxbCtwc3ljb3BnMjovL215dXNlcjpwYXNzd2RAcG9zdGdyZXMubXlhcHAuc3ZjLmNsdXN0
 controlplane $
 ```
 
-И что совпадают с теми данными, что мы отправляли в команде:
+Проверьте, что данные совпадают с теми данными, что были отправлены в команде:
 
 `kubectl get secret hello-secret-from-file -o jsonpath="{.data.PASSWORD}" | base64 -d`{{execute T1}}
 
@@ -277,7 +278,7 @@ controlplane $ kubectl get secret hello-secret-from-file -o jsonpath="{.data.PAS
 SuperCoolStrongPassword
 ```
 
-Теперь удалим **Secret** и **ConfigMap**, чтобы они нам не мешали:
+Удалите **Secret** и **ConfigMap**, чтобы они Вам не мешали:
 
 `kubectl delete secret hello-secret-from-file`{{execute T1}}
 

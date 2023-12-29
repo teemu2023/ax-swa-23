@@ -1,21 +1,21 @@
 {
     "pathwayTitle": "ApiGateway2",
-    "title": "sswa9.ApiGateway2 - Авторизация",
+    "title": "Авторизация",
     "description": "ApiGateway2",
     "difficulty": "beginner",
     "time": "30 minutes",
     "details": {
         "steps": [
             {
-                "title": "Готовим окружение",
+                "title": "Подготовка окружения",
                 "text": "step0.md"
             },
             {
-                "title": "Импортируем апи и настраиваем доступ",
+                "title": "Импорт API и настройка доступа",
                 "text": "step1.md"
             },
             {
-                "title": "Настраиваем разграничение доступа",
+                "title": "Настройка разграничения доступа",
                 "text": "step2.md"
             }
         ],
