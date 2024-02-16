@@ -1,11 +1,15 @@
 package sbercode
 
-allow[msg] {                                                                                                           
-  msg := input.message
+allow[msg] {
+	res := input.results[_]
+	res.httpbin_retcode == "OK"
+	msg := "[OK] /probe отвечает"
 }
 
-deny[msg] {                                                                                                           
-  msg := input.deny
+deny[msg] {
+	res := input.results[_]
+	res.httpbin_retcode != "OK"
+	msg := sprintf("[ERROR] /probe не отвечает")
 }
 
 error[msg] {                                                                                                           
